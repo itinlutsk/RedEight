@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Red Eight Workshop services — custom furniture builds, full-frame restoration and bespoke reupholstery. Made by hand in Toronto, Canada.">
+  <meta name="description" content="Red Eight Workshop services — custom furniture builds, full-frame restoration and bespoke reupholstery. Toronto, Canada.">
   <title>Services — Red Eight Workshop</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,117 +13,61 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ── DARK theme (default) ── */
     :root, [data-theme="dark"] {
-      --c-bg:    #111111;
-      --c-bg2:   #181818;
-      --c-ink:   #f0ece3;
-      --c-mid:   #888888;
-      --c-line:  #262626;
-      --c-red:   #E8231A;
-      --c-red-d: #b51b14;
-      --c-nav:   rgba(17,17,17,.92);
+      --c-bg:    #111111; --c-bg2:   #181818; --c-ink:   #f0ece3;
+      --c-mid:   #888888; --c-line:  #262626; --c-red:   #E8231A;
+      --c-red-d: #b51b14; --c-nav:   rgba(17,17,17,.92);
       --c-nav-border: rgba(255,255,255,.06);
     }
     [data-theme="light"] {
-      --c-bg:    #f5f0eb;
-      --c-bg2:   #ede8e1;
-      --c-ink:   #1a1a1a;
-      --c-mid:   #666666;
-      --c-line:  #d5d0c8;
-      --c-red:   #E8231A;
-      --c-red-d: #b51b14;
-      --c-nav:   rgba(245,240,235,.95);
+      --c-bg:    #f5f0eb; --c-bg2:   #ede8e1; --c-ink:   #1a1a1a;
+      --c-mid:   #666666; --c-line:  #d5d0c8; --c-red:   #E8231A;
+      --c-red-d: #b51b14; --c-nav:   rgba(245,240,235,.95);
       --c-nav-border: rgba(0,0,0,.1);
     }
     html { transition: background-color .3s, color .3s; scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--c-bg);
-      color: var(--c-ink);
-      -webkit-font-smoothing: antialiased;
-      font-size: 16px; line-height: 1.65; overflow-x: hidden;
-    }
-
-    h1,h2,h3,h4,h5,h6 {
-      font-family: 'Inter', sans-serif; font-weight: 800;
-      letter-spacing: -0.025em; color: var(--c-ink); margin: 0;
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--c-bg); color: var(--c-ink); -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: -0.025em; color: var(--c-ink); margin: 0; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
     /* ── UTILITIES ── */
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: .6rem;
-      font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red);
-    }
+    .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); }
     .eyebrow::before { content: ''; display: block; width: 1.4rem; height: 1.5px; background: var(--c-red); }
-
-    .sec-num { font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); }
-    .sec-divider { width: 2.5rem; height: 2px; background: var(--c-red); margin: 1.1rem 0; }
     .bg-bg2 { background: var(--c-bg2) !important; }
 
     /* ── BUTTONS ── */
-    .btn-r8 {
-      display: inline-flex; align-items: center; gap: .45rem;
-      padding: .85rem 1.7rem; background: var(--c-red); color: #fff;
-      font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
-      border: none; cursor: pointer; transition: background .2s;
-    }
+    .btn-r8 { display: inline-flex; align-items: center; gap: .45rem; padding: .85rem 1.7rem; background: var(--c-red); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; }
     .btn-r8:hover { background: var(--c-red-d); color: #fff; }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: .45rem;
-      padding: .85rem 1.7rem; background: transparent; color: var(--c-ink);
-      font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
-      border: 1px solid var(--c-line); transition: border-color .2s, color .2s;
-    }
+    .btn-outline { display: inline-flex; align-items: center; gap: .45rem; padding: .85rem 1.7rem; background: transparent; color: var(--c-ink); font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: 1px solid var(--c-line); transition: border-color .2s, color .2s; }
     .btn-outline:hover { border-color: var(--c-red); color: var(--c-red); }
 
-    .card-link { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-red); display: inline-flex; align-items: center; gap: .4rem; transition: gap .2s; }
-    .card-link:hover { gap: .7rem; }
-
     /* ── NAVBAR ── */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: var(--c-nav); backdrop-filter: blur(14px);
-      border-bottom: 1px solid transparent;
-      transition: border-color .3s, padding .3s, background .3s;
-      padding: 1.3rem 0;
-    }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--c-nav); backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s, background .3s; padding: 1.3rem 0; }
     .site-nav.scrolled { border-bottom-color: var(--c-line); padding: .9rem 0; }
-
-    .theme-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 2.4rem; height: 2.4rem; background: transparent; border: 1px solid var(--c-line);
-      color: var(--c-mid); font-size: 1.05rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0;
-    }
+    .theme-btn { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; background: transparent; border: 1px solid var(--c-line); color: var(--c-mid); font-size: 1.05rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; }
     .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
-
     .nav-logo { display: flex; align-items: center; gap: .85rem; }
     .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
     .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); }
-
     .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
     .nav-links a { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--c-ink); }
+    .nav-links a:hover { color: var(--c-ink); }
     .nav-links a.active { color: var(--c-red); }
-
     .nav-toggle { display: none; background: none; border: none; color: var(--c-ink); font-size: 1.5rem; cursor: pointer; padding: .15rem; line-height: 1; }
     @media (max-width: 767px) { .nav-links { display: none; } .nav-toggle { display: block; } }
 
     /* ── SIDE DRAWER ── */
     .drawer-backdrop { position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,.55); opacity: 0; pointer-events: none; transition: opacity .35s ease; }
     .drawer-backdrop.open { opacity: 1; pointer-events: all; }
-    .side-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1200; width: min(340px, 88vw); background: var(--c-bg); border-left: 1px solid var(--c-line); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .38s cubic-bezier(.4,0,.2,1); overflow-y: auto; }
+    .side-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1200; width: min(340px,88vw); background: var(--c-bg); border-left: 1px solid var(--c-line); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .38s cubic-bezier(.4,0,.2,1); overflow-y: auto; }
     .side-drawer.open { transform: translateX(0); }
     .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--c-line); flex-shrink: 0; }
     .drawer-close { background: none; border: 1px solid var(--c-line); color: var(--c-mid); font-size: 1.1rem; width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, color .2s; }
     .drawer-close:hover { border-color: var(--c-red); color: var(--c-red); }
     .drawer-nav { padding: 1.6rem 1.4rem; border-bottom: 1px solid var(--c-line); }
-    .drawer-nav a { display: flex; align-items: center; justify-content: space-between; padding: .95rem 0; font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; color: var(--c-ink); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .drawer-nav a { display: flex; align-items: center; justify-content: space-between; padding: .95rem 0; font-size: 1.15rem; font-weight: 800; color: var(--c-ink); border-bottom: 1px solid var(--c-line); transition: color .2s; }
     .drawer-nav a:last-child { border-bottom: none; }
     .drawer-nav a:hover { color: var(--c-red); }
     .drawer-nav a i { font-size: .7rem; opacity: .4; transition: opacity .2s, transform .2s; }
@@ -144,121 +88,44 @@
     .drawer-footer-copy { font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--c-mid); }
     .drawer-red-bar { width: 1.8rem; height: 2px; background: var(--c-red); }
 
-    /* ── SECTIONS ── */
-    .r8-sec { padding: 5.5rem 0; border-top: 1px solid var(--c-line); }
-    @media (max-width: 575px) { .r8-sec { padding: 3.5rem 0; } }
-
-    /* ── MEDIA WRAP ── */
-    .img-wrap { position: relative; overflow: hidden; background: var(--c-bg2); }
-    .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.25,.46,.45,.94); display: block; }
-    .img-wrap:hover img { transform: scale(1.04); }
-    .img-wrap::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.2); opacity: 0; transition: opacity .45s ease; pointer-events: none; z-index: 1; }
-    .img-wrap:hover::after { opacity: 1; }
-
     /* ── PAGE HERO ── */
-    .page-hero {
-      min-height: 54vh; display: flex; align-items: flex-end;
-      position: relative; overflow: hidden; padding-top: 5rem;
-    }
+    .page-hero { min-height: 52vh; display: flex; align-items: flex-end; position: relative; overflow: hidden; }
     .page-hero-img { position: absolute; inset: 0; }
     .page-hero-img img { width: 100%; height: 100%; object-fit: cover; }
-    .page-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.15) 100%); }
-    .page-hero-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 40%); z-index: 1; }
-    .page-hero-body { position: relative; z-index: 2; padding: 5rem 0 4.5rem; width: 100%; }
-    .page-hero-label { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c-red); display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
-    .page-hero-label::before { content: ''; display: block; width: 1.6rem; height: 1.5px; background: var(--c-red); }
-    .page-hero h1 { font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.0; color: #fff; }
-    .page-hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.58); max-width: 38ch; margin-top: 1rem; line-height: 1.8; }
-    .page-hero-breadcrumb {
-      position: absolute; bottom: 1.6rem; right: 1.6rem; z-index: 3;
-      font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.35);
-    }
+    .page-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,.82) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,.15) 100%); }
+    .page-hero-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 45%); z-index: 1; }
+    .page-hero-body { position: relative; z-index: 2; padding: 7rem 0 4.5rem; width: 100%; }
+    .page-hero-eyebrow { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c-red); display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .page-hero-eyebrow::before { content: ''; display: block; width: 1.6rem; height: 1.5px; background: var(--c-red); }
+    .page-hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.0; color: #fff; }
+    .page-hero h1 span { color: var(--c-red); }
+    .page-hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.55); max-width: 38ch; margin-top: .9rem; line-height: 1.8; }
+    .page-hero-breadcrumb { position: absolute; bottom: 1.6rem; right: 1.6rem; z-index: 3; font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.35); }
     .page-hero-breadcrumb a { color: rgba(255,255,255,.35); transition: color .2s; }
     .page-hero-breadcrumb a:hover { color: rgba(255,255,255,.7); }
 
-    /* ── SERVICE DETAIL SECTIONS ── */
-    .svc-num { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c-red); margin-bottom: .5rem; }
-    .svc-title { font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.05; }
-    .svc-body { font-size: 1rem; color: var(--c-mid); line-height: 1.85; margin-bottom: 1rem; }
-    .svc-img { aspect-ratio: 5/6; }
+    /* ── SERVICE SECTIONS ── */
+    .svc-sec { padding: 6rem 0; border-top: 1px solid var(--c-line); }
+    @media (max-width: 575px) { .svc-sec { padding: 4rem 0; } }
 
-    /* include list */
-    .svc-includes { list-style: none; padding: 0; margin: 1.4rem 0 1.8rem; }
-    .svc-includes li {
-      display: flex; align-items: flex-start; gap: .65rem;
-      padding: .65rem 0; border-bottom: 1px solid var(--c-line);
-      font-size: .92rem; color: var(--c-ink); line-height: 1.55;
-    }
-    .svc-includes li:first-child { border-top: 1px solid var(--c-line); }
-    .svc-includes li i { color: var(--c-red); margin-top: .18rem; flex-shrink: 0; font-size: .8rem; }
+    .svc-img-wrap { position: relative; overflow: hidden; aspect-ratio: 5/6; }
+    .svc-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.25,.46,.45,.94); }
+    .svc-img-wrap:hover img { transform: scale(1.04); }
+    .svc-img-wrap::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.18); opacity: 0; transition: opacity .45s; pointer-events: none; }
+    .svc-img-wrap:hover::after { opacity: 1; }
 
-    /* stat pills */
-    .svc-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.8rem; border-top: 1px solid var(--c-line); }
-    .svc-stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -.04em; color: var(--c-ink); line-height: 1; }
-    .svc-stat-lbl { font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-top: .2rem; }
-
-    /* ── PROCESS ── */
-    .process-step {
-      display: flex; gap: 1.6rem; align-items: flex-start;
-      padding: 2rem 0; border-bottom: 1px solid var(--c-line);
-    }
-    .process-step:first-child { border-top: 1px solid var(--c-line); }
-    .process-num {
-      font-size: 3rem; font-weight: 900; letter-spacing: -.05em; line-height: 1;
-      color: var(--c-red); opacity: .25; flex-shrink: 0; width: 3.5rem; text-align: right;
-    }
-    .process-content { flex: 1; }
-    .process-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: .45rem; }
-    .process-desc { font-size: .95rem; color: var(--c-mid); line-height: 1.8; margin: 0; }
-    .process-tag { display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); border: 1px solid var(--c-line); padding: .18rem .5rem; margin-bottom: .6rem; }
-
-    /* ── MATERIALS GRID ── */
-    .mat-card {
-      padding: 1.8rem 1.6rem; border: 1px solid var(--c-line);
-      transition: border-color .25s, background .25s;
-    }
-    .mat-card:hover { border-color: var(--c-red); background: rgba(232,35,26,.03); }
-    .mat-icon { font-size: 1.4rem; color: var(--c-red); margin-bottom: .9rem; }
-    .mat-title { font-size: 1rem; font-weight: 800; letter-spacing: -.015em; margin-bottom: .4rem; }
-    .mat-desc { font-size: .88rem; color: var(--c-mid); line-height: 1.75; margin: 0; }
-
-    /* ── FAQ ── */
-    .r8-accordion .accordion-button {
-      background: transparent; color: var(--c-ink);
-      font-size: 1rem; font-weight: 700; letter-spacing: -.01em;
-      padding: 1.3rem 0; border-bottom: 1px solid var(--c-line);
-      box-shadow: none;
-    }
-    .r8-accordion .accordion-button::after {
-      filter: none; background-image: none; content: '\002B';
-      font-size: 1.2rem; color: var(--c-red); font-weight: 300;
-    }
-    .r8-accordion .accordion-button:not(.collapsed)::after { content: '\2212'; }
-    .r8-accordion .accordion-button:not(.collapsed) { color: var(--c-red); background: transparent; }
-    .r8-accordion .accordion-item { background: transparent; border: none; border-top: 1px solid var(--c-line); }
-    .r8-accordion .accordion-item:last-child { border-bottom: 1px solid var(--c-line); }
-    .r8-accordion .accordion-body { padding: 0 0 1.4rem; color: var(--c-mid); font-size: .95rem; line-height: 1.85; }
-    .r8-accordion .accordion-collapse { border: none; }
+    .svc-num { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c-red); margin-bottom: .55rem; }
+    .svc-title { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; color: var(--c-ink); }
+    .svc-divider { width: 2.5rem; height: 2px; background: var(--c-red); margin: 1.2rem 0 1.4rem; }
+    .svc-desc { font-size: 1.05rem; color: var(--c-mid); line-height: 1.85; margin: 0 0 2rem; max-width: 42ch; }
+    .svc-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 
     /* ── CTA BAND ── */
     .cta-band { background: var(--c-ink); color: var(--c-bg); padding: 5.5rem 0; position: relative; overflow: hidden; }
     .cta-band::before { content: ''; position: absolute; top: -50%; left: -8%; width: 55%; height: 200%; background: radial-gradient(ellipse, rgba(232,35,26,.18) 0%, transparent 60%); pointer-events: none; }
-    .cta-band h2 { color: var(--c-bg); font-size: clamp(1.9rem, 4.5vw, 3.6rem); font-weight: 900; letter-spacing: -.03em; }
+    .cta-band h2 { color: var(--c-bg); font-size: clamp(1.9rem, 4.5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; }
     .cta-band h2 em { color: var(--c-red); font-style: normal; font-weight: 800; }
-    .cta-band p { color: rgba(17,17,17,.58); max-width: 44ch; margin: 0 auto; font-size: 1.05rem; line-height: 1.8; }
-
-    /* ── CONTACT FORM ── */
-    .r8-input, .r8-select, .r8-textarea {
-      background: var(--c-bg2); border: 1px solid var(--c-line); color: var(--c-ink);
-      border-radius: 0; font-size: .82rem; padding: .75rem .9rem; width: 100%;
-      font-family: 'Inter', sans-serif; transition: border-color .2s; outline: none;
-    }
-    .r8-input::placeholder, .r8-textarea::placeholder { color: var(--c-mid); }
-    .r8-input:focus, .r8-select:focus, .r8-textarea:focus { border-color: var(--c-red); }
-    .r8-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .9rem center; }
-    .r8-select option { background: var(--c-bg2); color: var(--c-ink); }
-    .r8-label { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); display: block; margin-bottom: .35rem; }
+    .cta-band p { color: rgba(17,17,17,.55); max-width: 44ch; margin: 0 auto; font-size: 1.05rem; line-height: 1.8; }
 
     /* ── FOOTER ── */
     .site-footer { background: var(--c-bg2); border-top: 1px solid var(--c-line); padding: 3.5rem 0 1.8rem; }
@@ -272,9 +139,7 @@
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; }
-    .d2 { transition-delay: .2s; }
-    .d3 { transition-delay: .3s; }
+    .d1 { transition-delay: .12s; } .d2 { transition-delay: .24s; }
   </style>
 </head>
 <body>
@@ -294,12 +159,8 @@
         <li><a href="/#contact">Contact</a></li>
       </ul>
       <div class="d-flex align-items-center gap-3">
-        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
-          <i class="bi bi-sun"></i>
-        </button>
-        <button class="nav-toggle" id="navToggle" aria-label="Menu">
-          <i class="bi bi-list"></i>
-        </button>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
       </div>
     </div>
   </div>
@@ -323,11 +184,7 @@
   </nav>
   <div class="drawer-contact">
     <p class="drawer-contact-label">Contact us</p>
-    <div class="drawer-contact-item">
-      <i class="bi bi-telephone"></i>
-      <div><a href="tel:+14165550178">+1 (416) 555-0178</a><br>
-      <span style="font-size:.78rem;color:var(--c-mid)">Mon – Fri, 9 am – 5 pm ET</span></div>
-    </div>
+    <div class="drawer-contact-item"><i class="bi bi-telephone"></i><div><a href="tel:+14165550178">+1 (416) 555-0178</a><br><span style="font-size:.78rem;color:var(--c-mid)">Mon – Fri, 9 am – 5 pm ET</span></div></div>
     <div class="drawer-contact-item"><i class="bi bi-envelope"></i><a href="mailto:hello@redeightworkshop.ca">hello@redeightworkshop.ca</a></div>
     <div class="drawer-contact-item"><i class="bi bi-geo-alt"></i><span>Toronto, Ontario, Canada</span></div>
   </div>
@@ -349,17 +206,13 @@
 <!-- ── PAGE HERO ──────────────────────────────────────────────────── -->
 <div class="page-hero">
   <div class="page-hero-img">
-    <img src="/images/services/custom-builds.png" alt="Red Eight Workshop craftsman" loading="eager">
+    <img src="/images/services/custom-builds.png" alt="Red Eight Workshop" loading="eager">
   </div>
   <div class="container">
     <div class="page-hero-body">
-      <p class="page-hero-label">Red Eight Workshop</p>
-      <h1>Three services.<br><span style="color:var(--c-red)">Done properly.</span></h1>
-      <p class="page-hero-sub">Custom furniture builds, full-frame restoration and bespoke reupholstery — each handled by the same hands, start to finish.</p>
-      <div class="d-flex flex-wrap gap-3 mt-4">
-        <a href="#custom-builds" class="btn-r8">Custom builds <i class="bi bi-arrow-down"></i></a>
-        <a href="/#contact" class="btn-outline-white" style="border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)">Get a quote</a>
-      </div>
+      <p class="page-hero-eyebrow">What we do</p>
+      <h1>Three services.<br><span>Done properly.</span></h1>
+      <p class="page-hero-sub">Each job is handled by the same hands, start to finish. No sub-contractors, no shortcuts.</p>
     </div>
   </div>
   <div class="page-hero-breadcrumb">
@@ -367,266 +220,69 @@
   </div>
 </div>
 
-<!-- ── SERVICE 01: CUSTOM BUILDS ─────────────────────────────────── -->
-<section class="r8-sec" id="custom-builds">
+<!-- ── 01 CUSTOM FURNITURE BUILDS ────────────────────────────────── -->
+<section class="svc-sec" id="custom-builds">
   <div class="container">
-    <div class="row align-items-center g-5 g-lg-6">
+    <div class="row align-items-center g-5 g-xl-6">
       <div class="col-lg-5 reveal">
-        <div class="img-wrap svc-img">
-          <img src="/images/services/custom-builds.png" alt="Custom furniture build at Red Eight Workshop" loading="lazy">
+        <div class="svc-img-wrap">
+          <img src="/images/services/custom-builds.png" alt="Custom furniture builds" loading="lazy">
         </div>
       </div>
       <div class="col-lg-6 offset-lg-1 reveal d1">
-        <p class="svc-num">01 · Custom builds</p>
-        <h2 class="svc-title mt-2">Built from<br><span style="color:var(--c-red)">your brief.</span></h2>
-        <div class="sec-divider"></div>
-        <p class="svc-body">Every custom build starts with a conversation — what you have, what you need, how the piece will be used and where it will live. We design in-house, build every component ourselves, and only use kiln-dried hardwood for load-bearing frames.</p>
-        <p class="svc-body">We work in oak, ash, walnut and maple. Upholstered components use the same lead upholsterers as our restoration work. Nothing goes through a sub-contractor.</p>
-        <ul class="svc-includes">
-          <li><i class="bi bi-check2"></i>Chairs, dining tables, banquettes and casegoods</li>
-          <li><i class="bi bi-check2"></i>Mortise & tenon and doweled joinery — no pocket screws</li>
-          <li><i class="bi bi-check2"></i>Custom dimensions, finishes and fabric/leather choices</li>
-          <li><i class="bi bi-check2"></i>Hospitality contract grades available</li>
-          <li><i class="bi bi-check2"></i>Stamped, numbered and warrantied</li>
-        </ul>
-        <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
-        <div class="svc-stats">
-          <div><div class="svc-stat-num">30+</div><div class="svc-stat-lbl">Day lead time</div></div>
-          <div><div class="svc-stat-num">8</div><div class="svc-stat-lbl">Finish options</div></div>
-          <div><div class="svc-stat-num">5yr</div><div class="svc-stat-lbl">Frame warranty</div></div>
+        <p class="svc-num">01</p>
+        <h2 class="svc-title">Custom furniture<br>builds</h2>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Chairs, dining tables, banquettes and casegoods, designed and built to spec. Solid hardwood frames, joinery done by hand. We work from your drawings, your reference photos, or a brief on the back of a napkin.</p>
+        <div class="svc-actions">
+          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/#products" class="btn-outline">See the work</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SERVICE 02: RESTORATION ───────────────────────────────────── -->
-<section class="r8-sec bg-bg2" id="restoration">
+<!-- ── 02 FRAME RESTORATION ──────────────────────────────────────── -->
+<section class="svc-sec bg-bg2" id="restoration">
   <div class="container">
-    <div class="row align-items-center g-5 g-lg-6">
+    <div class="row align-items-center g-5 g-xl-6">
       <div class="col-lg-6 order-lg-1 reveal">
-        <p class="svc-num">02 · Frame restoration</p>
-        <h2 class="svc-title mt-2">If the bones<br><span style="color:var(--c-red)">are good.</span></h2>
-        <div class="sec-divider"></div>
-        <p class="svc-body">A well-built antique frame is worth saving. We strip pieces to the bare wood, assess every joint, re-spring, re-web, and rebuild from the inside out. We tell you honestly what can be done — and what can't.</p>
-        <p class="svc-body">We work on chairs, sofas, club chairs, settees, and decorative seating from any era. Frames that are too far gone don't get patched; they get rebuilt or we'll say so.</p>
-        <ul class="svc-includes">
-          <li><i class="bi bi-check2"></i>Full structural assessment before work begins</li>
-          <li><i class="bi bi-check2"></i>Re-springing — eight-way hand-tied or sinuous wire</li>
-          <li><i class="bi bi-check2"></i>Re-webbing with jute and elasticated support</li>
-          <li><i class="bi bi-check2"></i>Joint repair, doweling, and frame consolidation</li>
-          <li><i class="bi bi-check2"></i>Wood finishing — stripped, stained and lacquered or oiled</li>
-        </ul>
-        <a href="/#contact" class="btn-r8">Book a restoration assessment <i class="bi bi-arrow-right"></i></a>
-        <div class="svc-stats">
-          <div><div class="svc-stat-num">420+</div><div class="svc-stat-lbl">Pieces restored</div></div>
-          <div><div class="svc-stat-num">11</div><div class="svc-stat-lbl">Years in trade</div></div>
+        <p class="svc-num">02</p>
+        <h2 class="svc-title">Frame<br>restoration</h2>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">If the bones are good, we'll save it. Joint repair, re-gluing, re-doweling, new springs and webbing on traditional pieces. We work on chairs, sofas, antiques and the occasional unicorn. Honest assessment first.</p>
+        <div class="svc-actions">
+          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/#products" class="btn-outline">See the work</a>
         </div>
       </div>
       <div class="col-lg-5 offset-lg-1 order-lg-2 reveal d1">
-        <div class="img-wrap svc-img">
-          <img src="/images/services/restoration.png" alt="Frame restoration work at Red Eight Workshop" loading="lazy">
+        <div class="svc-img-wrap">
+          <img src="/images/services/restoration.png" alt="Frame restoration" loading="lazy">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SERVICE 03: REUPHOLSTERY ──────────────────────────────────── -->
-<section class="r8-sec" id="reupholstery">
+<!-- ── 03 REUPHOLSTERY ───────────────────────────────────────────── -->
+<section class="svc-sec" id="reupholstery">
   <div class="container">
-    <div class="row align-items-center g-5 g-lg-6">
+    <div class="row align-items-center g-5 g-xl-6">
       <div class="col-lg-5 reveal">
-        <div class="img-wrap svc-img">
-          <img src="/images/services/reupholstery.png" alt="Reupholstery work at Red Eight Workshop" loading="lazy">
+        <div class="svc-img-wrap">
+          <img src="/images/services/reupholstery.png" alt="Reupholstery" loading="lazy">
         </div>
       </div>
       <div class="col-lg-6 offset-lg-1 reveal d1">
-        <p class="svc-num">03 · Reupholstery</p>
-        <h2 class="svc-title mt-2">Inside and<br><span style="color:var(--c-red)">out.</span></h2>
-        <div class="sec-divider"></div>
-        <p class="svc-body">We finish the inside the way we finish the outside. Hand-cut leather and fabric, hand-stitched detailing, properly tensioned and tacked. No staple guns on show work. Everything below the fabric matters to us.</p>
-        <p class="svc-body">We carry a curated range of full-grain leathers and natural-fibre fabrics, or we'll work with client-supplied material. Every hide is inspected before cutting.</p>
-        <ul class="svc-includes">
-          <li><i class="bi bi-check2"></i>Full-grain leather and natural-fibre fabric work</li>
-          <li><i class="bi bi-check2"></i>Hand-cut and hand-stitched details</li>
-          <li><i class="bi bi-check2"></i>Proper padding replacement — horsehair, foam, down</li>
-          <li><i class="bi bi-check2"></i>Contrast piping, tufting and button work</li>
-          <li><i class="bi bi-check2"></i>Client-supplied fabrics accepted</li>
-        </ul>
-        <a href="/#contact" class="btn-r8">Enquire about reupholstery <i class="bi bi-arrow-right"></i></a>
-        <div class="svc-stats">
-          <div><div class="svc-stat-num">12+</div><div class="svc-stat-lbl">Hide options</div></div>
-          <div><div class="svc-stat-num">8</div><div class="svc-stat-lbl">Craftspeople</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── HOW IT WORKS ───────────────────────────────────────────────── -->
-<section class="r8-sec bg-bg2">
-  <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4 reveal">
-        <p class="sec-num">How it works</p>
-        <h2 class="mt-2" style="font-size:clamp(1.9rem,3.5vw,2.6rem)">From first call<br>to <span style="color:var(--c-red)">delivery.</span></h2>
-        <div class="sec-divider"></div>
-        <p style="color:var(--c-mid);font-size:.95rem;line-height:1.85">Every job follows the same process. You'll know where your piece is at every stage — we don't go quiet after the deposit.</p>
-        <a href="/#contact" class="btn-outline mt-4">Start your project</a>
-      </div>
-      <div class="col-lg-7 offset-lg-1 reveal d1">
-        <div class="process-step">
-          <div class="process-num">01</div>
-          <div class="process-content">
-            <span class="process-tag">Week 1</span>
-            <h4 class="process-title">Send us photos and measurements</h4>
-            <p class="process-desc">Email us photos of the piece and its dimensions. We'll come back with an honest initial assessment — what can be saved, what needs to be rebuilt, and a rough cost range.</p>
-          </div>
-        </div>
-        <div class="process-step">
-          <div class="process-num">02</div>
-          <div class="process-content">
-            <span class="process-tag">Week 1–2</span>
-            <h4 class="process-title">In-shop assessment and quote</h4>
-            <p class="process-desc">For restoration and reupholstery work, we'll ask you to bring the piece in. We strip it down, assess the frame and spring work, and give you a firm written quote within a week.</p>
-          </div>
-        </div>
-        <div class="process-step">
-          <div class="process-num">03</div>
-          <div class="process-content">
-            <span class="process-tag">Week 2–3</span>
-            <h4 class="process-title">Material and fabric selection</h4>
-            <p class="process-desc">Choose from our full-grain leather and fabric range in the shop. We'll also work with client-supplied material. You'll see and touch every option before we cut anything.</p>
-          </div>
-        </div>
-        <div class="process-step">
-          <div class="process-num">04</div>
-          <div class="process-content">
-            <span class="process-tag">Lead time: 30–90 days</span>
-            <h4 class="process-title">Build or restoration work</h4>
-            <p class="process-desc">We do the work on our shop floor — no sub-contractors, no off-site production. You'll get a progress update at the midpoint and when the piece is ready for final review.</p>
-          </div>
-        </div>
-        <div class="process-step" style="border-bottom:none">
-          <div class="process-num">05</div>
-          <div class="process-content">
-            <span class="process-tag">Delivery</span>
-            <h4 class="process-title">Delivery or collection</h4>
-            <p class="process-desc">We offer white-glove delivery and installation across the GTA. Smaller pieces can be collected from the shop. Every piece leaves with a care card and our shop stamp.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── MATERIALS ─────────────────────────────────────────────────── -->
-<section class="r8-sec">
-  <div class="container">
-    <div class="text-center mb-5">
-      <p class="sec-num reveal">Materials</p>
-      <h2 class="mt-2 reveal d1" style="font-size:clamp(1.7rem,3vw,2.4rem)">We tell you <span style="color:var(--c-red)">what's underneath</span></h2>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-6 col-lg-3 reveal">
-        <div class="mat-card">
-          <div class="mat-icon"><i class="bi bi-tree"></i></div>
-          <h4 class="mat-title">Hardwood frames</h4>
-          <p class="mat-desc">Kiln-dried white oak, ash, walnut and maple. Mortise & tenon and pegged joinery. No MDF in load-bearing parts.</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 reveal d1">
-        <div class="mat-card">
-          <div class="mat-icon"><i class="bi bi-layers"></i></div>
-          <h4 class="mat-title">Full-grain leather</h4>
-          <p class="mat-desc">Hides sourced from three Canadian and European tanneries. Inspected on arrival. We don't use bonded or corrected-grain leather.</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 reveal d2">
-        <div class="mat-card">
-          <div class="mat-icon"><i class="bi bi-grid-3x3"></i></div>
-          <h4 class="mat-title">Natural-fibre fabrics</h4>
-          <p class="mat-desc">Mohair, linen, wool and contract-grade synthetic velvet. All fabrics tested for rub count before we offer them to clients.</p>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 reveal d3">
-        <div class="mat-card">
-          <div class="mat-icon"><i class="bi bi-circle-square"></i></div>
-          <h4 class="mat-title">Interior padding</h4>
-          <p class="mat-desc">Horsehair on traditional pieces, high-resilience foam on contemporary builds, down-blend on premium upholstery. No cheap polyester fill.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── FAQ ───────────────────────────────────────────────────────── -->
-<section class="r8-sec bg-bg2">
-  <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4 reveal">
-        <p class="sec-num">Common questions</p>
-        <h2 class="mt-2" style="font-size:clamp(1.7rem,3vw,2.4rem)">Before you <span style="color:var(--c-red)">call.</span></h2>
-        <div class="sec-divider"></div>
-        <p style="color:var(--c-mid);font-size:.92rem;line-height:1.85">Anything not answered here — call or email us directly. We prefer a real conversation to a long form.</p>
-        <div class="mt-4 pt-2">
-          <div style="font-size:.78rem;color:var(--c-mid);margin-bottom:.3rem;font-weight:600">+1 (416) 555-0178</div>
-          <a href="mailto:hello@redeightworkshop.ca" style="font-size:.78rem;color:var(--c-red)">hello@redeightworkshop.ca</a>
-        </div>
-      </div>
-      <div class="col-lg-7 offset-lg-1 reveal d1">
-        <div class="accordion r8-accordion" id="faqAccordion">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                How much does a custom piece cost?
-              </button>
-            </h2>
-            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">Custom builds range widely depending on complexity and materials. A simple solid-oak side chair starts around $1,800. A full dining set in walnut with upholstered seats runs $6,000–$12,000. Restoration and reupholstery jobs start at $400 for a simple chair. We'll always give you a firm quote before work begins.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                How long does restoration or reupholstery take?
-              </button>
-            </h2>
-            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">Most restoration and reupholstery jobs take 4–8 weeks once we have the piece in the shop and fabric selected. Custom furniture builds are typically 8–14 weeks from deposit to delivery. We'll give you a specific timeline on your quote, and we stick to it.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                Do you work with trade clients and designers?
-              </button>
-            </h2>
-            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">Yes. We work with interior designers, architects and hospitality operators regularly. We offer trade pricing on repeat work, provide COM (client's own material) service, and can handle multiple-piece orders for hospitality installations. Contact us directly to discuss a trade account.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                Can you tell me if my piece is worth restoring?
-              </button>
-            </h2>
-            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">Often, yes. Send us clear photos of the frame (stripped of fabric if possible) and the current condition. We'll give you an honest initial opinion for free. Some pieces aren't worth the cost of restoration — we'll tell you that too, and explain why.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                Do you offer delivery?
-              </button>
-            </h2>
-            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">We offer white-glove delivery and placement across the Greater Toronto Area. For larger custom installations, we'll coordinate with your interior designer or site team. Smaller pieces can be collected directly from the workshop by appointment.</div>
-            </div>
-          </div>
+        <p class="svc-num">03</p>
+        <h2 class="svc-title">Reupholstery</h2>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Strip-to-frame reupholstery on chairs, sofas, dining seats and headboards. Hand-cut fabric, hidden tacking, hand-stitched detail where it matters. The job takes as long as it takes — usually three to five weeks.</p>
+        <div class="svc-actions">
+          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/#products" class="btn-outline">See the work</a>
         </div>
       </div>
     </div>
@@ -636,10 +292,10 @@
 <!-- ── CTA BAND ───────────────────────────────────────────────────── -->
 <div class="cta-band">
   <div class="container">
-    <div class="text-center" style="max-width:640px;margin:0 auto;position:relative">
+    <div class="text-center" style="max-width:600px;margin:0 auto;position:relative">
       <p class="eyebrow" style="justify-content:center">Start a project</p>
       <h2 class="mt-3">Got a piece worth keeping?<br><em>Bring it in.</em></h2>
-      <p class="mt-3 mb-4">Send us photos and dimensions and we'll come back with an honest assessment — what can be saved, what should be rebuilt, what it'll cost.</p>
+      <p class="mt-3 mb-4">Send us photos and we'll come back with an honest assessment — what can be saved, what it'll cost.</p>
       <div class="d-flex flex-wrap justify-content-center gap-3">
         <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
         <a href="tel:+14165550178" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">+1 (416) 555-0178</a>
@@ -682,10 +338,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  /* ── THEME ── */
   const themeBtn = document.getElementById('themeBtn');
   const html     = document.documentElement;
-
   function applyTheme(t) {
     html.dataset.theme = t;
     localStorage.setItem('r8-theme', t);
@@ -694,41 +348,25 @@
   applyTheme(localStorage.getItem('r8-theme') || 'light');
   themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
 
-  /* ── NAV scroll ── */
   const nav = document.getElementById('siteNav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
 
-  /* ── Side drawer ── */
   const toggle   = document.getElementById('navToggle');
   const drawer   = document.getElementById('sideDrawer');
   const backdrop = document.getElementById('drawerBackdrop');
   const dClose   = document.getElementById('drawerClose');
-
-  function openMob() {
-    drawer.classList.add('open');
-    backdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    toggle.querySelector('i').className = 'bi bi-x-lg';
-  }
-  function closeMob() {
-    drawer.classList.remove('open');
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
-    toggle.querySelector('i').className = 'bi bi-list';
-  }
-
+  function openMob()  { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; toggle.querySelector('i').className='bi bi-x-lg'; }
+  function closeMob() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; toggle.querySelector('i').className='bi bi-list'; }
   toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
   dClose.addEventListener('click', closeMob);
   backdrop.addEventListener('click', closeMob);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMob(); });
 
-  /* ── Reveal on scroll ── */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ── Footer year ── */
   document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
