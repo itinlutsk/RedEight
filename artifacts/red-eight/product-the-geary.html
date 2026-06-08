@@ -125,9 +125,23 @@
     .info-col { display: flex; flex-direction: column; gap: 0; }
     @media (min-width: 992px) { .info-col { position: sticky; top: 6rem; } }
 
+    .product-meta-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .meta-tag { font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); border: 1px solid var(--c-line); padding: .25rem .6rem; }
+
     .product-sku-line { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .6rem; }
-    .product-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.2rem; }
+    .product-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; margin-bottom: .8rem; }
+
+    .product-price-line { display: flex; align-items: baseline; gap: .8rem; margin-bottom: 1.2rem; }
+    .price-label { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); }
+    .price-value { font-size: 1rem; font-weight: 700; color: var(--c-ink); }
+    .price-value--amount { font-size: 1.2rem; font-weight: 800; color: var(--c-red); }
+
     .product-desc { font-size: 1rem; color: var(--c-mid); line-height: 1.85; margin-bottom: 1.8rem; }
+    .product-desc p { margin: 0 0 .8rem; }
+    .product-desc p:last-child { margin-bottom: 0; }
+    .product-desc ul, .product-desc ol { padding-left: 1.2em; margin: .5rem 0 .8rem; }
+    .product-desc li { margin-bottom: .3rem; }
+    .product-desc strong { color: var(--c-ink); font-weight: 700; }
 
     /* divider */
     .info-divider { border: none; border-top: 1px solid var(--c-line); margin: 1.5rem 0; }
@@ -330,9 +344,20 @@
     <!-- INFO COLUMN -->
     <div class="info-col reveal">
 
+      <div class="product-meta-tags">
+        <span class="meta-tag">Chairs</span>
+        <span class="meta-tag">Residential</span>
+      </div>
+
       <p class="product-sku-line">No. R8-101 · Armchair</p>
       <h1 class="product-title">The Geary</h1>
-      <p class="product-desc">A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise &amp; tenon joinery, hand-finished.</p>
+
+      <div class="product-price-line">
+        <span class="price-label">Price</span>
+        <span class="price-value">Quote on request</span>
+      </div>
+
+      <div class="product-desc"><p>A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise &amp; tenon joinery, hand-finished.</p></div>
 
       <hr class="info-divider">
 
@@ -373,41 +398,6 @@
         <button class="share-icon" id="copyLinkBtn" title="Copy link"><i class="bi bi-link-45deg"></i></button>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- ── SPECS ──────────────────────────────────────────────────────── -->
-<div class="specs-section">
-  <div class="container">
-    <div class="d-flex align-items-center justify-content-between mb-5">
-      <p class="eyebrow">Specifications</p>
-    </div>
-    <div class="specs-grid reveal">
-      <div>
-        <p class="spec-group-title">Dimensions</p>
-        <div class="spec-row"><span class="spec-key">Width</span><span class="spec-val">29 in (74 cm)</span></div>
-        <div class="spec-row"><span class="spec-key">Depth</span><span class="spec-val">32 in (81 cm)</span></div>
-        <div class="spec-row"><span class="spec-key">Height</span><span class="spec-val">31 in (79 cm)</span></div>
-        <div class="spec-row"><span class="spec-key">Seat height</span><span class="spec-val">17 in (43 cm)</span></div>
-        <div class="spec-row"><span class="spec-key">Arm height</span><span class="spec-val">24 in (61 cm)</span></div>
-      </div>
-      <div>
-        <p class="spec-group-title">Materials</p>
-        <div class="spec-row"><span class="spec-key">Frame</span><span class="spec-val">Solid white oak</span></div>
-        <div class="spec-row"><span class="spec-key">Joinery</span><span class="spec-val">Mortise &amp; tenon</span></div>
-        <div class="spec-row"><span class="spec-key">Seat platform</span><span class="spec-val">Webbed solid oak</span></div>
-        <div class="spec-row"><span class="spec-key">Cushion fill</span><span class="spec-val">HR foam + down wrap</span></div>
-        <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">28 lb (13 kg)</span></div>
-      </div>
-      <div>
-        <p class="spec-group-title">Details</p>
-        <div class="spec-row"><span class="spec-key">Finish options</span><span class="spec-val">8 standard</span></div>
-        <div class="spec-row"><span class="spec-key">COM accepted</span><span class="spec-val">Yes</span></div>
-        <div class="spec-row"><span class="spec-key">Custom dimensions</span><span class="spec-val">Available</span></div>
-        <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">30–45 days</span></div>
-        <div class="spec-row"><span class="spec-key">Country of origin</span><span class="spec-val">Canada</span></div>
-      </div>
     </div>
   </div>
 </div>
