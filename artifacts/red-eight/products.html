@@ -154,6 +154,29 @@
     .footer-links a:hover { color: var(--c-ink); }
     .footer-copy { font-size: .62rem; font-weight: 600; letter-spacing: .1em; color: var(--c-mid); margin: 0; }
 
+    /* ── PAGINATION ── */
+    .pagination-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 2.5rem; margin-top: 1rem; border-top: 1px solid var(--c-line); }
+    .pagination-info { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); }
+    .pagination-info strong { color: var(--c-ink); }
+    .pagination-pages { display: flex; align-items: center; gap: .35rem; }
+    .pg-btn {
+      min-width: 2.4rem; height: 2.4rem; padding: 0 .6rem;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: 1px solid var(--c-line);
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      color: var(--c-mid); cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .pg-btn:hover { border-color: var(--c-ink); color: var(--c-ink); }
+    .pg-btn.active { background: var(--c-red); border-color: var(--c-red); color: #fff; }
+    .pg-btn:disabled { opacity: .3; cursor: not-allowed; pointer-events: none; }
+    .pg-arrow { font-size: .9rem; }
+    .pg-ellipsis { color: var(--c-mid); font-size: .75rem; padding: 0 .2rem; user-select: none; }
+
+    /* product card page-hide animation */
+    .product-card.pg-hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; padding: 0; border: none; }
+    .cat-section.pg-empty { display: none; }
+
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
@@ -454,7 +477,7 @@
           </div>
           <div class="product-grid">
 
-            <article class="product-card reveal" data-type="hospitality">
+            <article class="product-card reveal" data-type="hospitality" data-pg-idx="7">
               <div class="product-card-media">
                 <img src="/images/products/project-hotel.png" alt="Hotel Lobby Suite" loading="lazy">
                 <span class="product-badge product-badge--dark">Commission</span>
@@ -476,6 +499,12 @@
             </article>
 
           </div>
+        </div>
+
+        <!-- ── PAGINATION BAR ── -->
+        <div class="pagination-bar" id="paginationBar">
+          <p class="pagination-info" id="pgInfo">Showing <strong>1–4</strong> of <strong>8</strong> pieces</p>
+          <nav class="pagination-pages" id="pgPages" aria-label="Catalogue pages"></nav>
         </div>
 
       </div>
@@ -578,20 +607,123 @@
   }, { rootMargin: '-30% 0px -60% 0px' });
   sections.forEach(id => { const el = document.getElementById(id); if (el) sectionIO.observe(el); });
 
-  // Type filter
-  document.getElementById('typeFilter').addEventListener('click', e => {
-    const btn = e.target.closest('.filter-btn');
-    if (!btn) return;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.filter;
-    document.querySelectorAll('.product-card').forEach(card => {
-      const show = f === 'all' || card.dataset.type === f;
-      card.style.opacity = show ? '1' : '0.2';
-      card.style.pointerEvents = show ? '' : 'none';
-      card.style.transition = 'opacity .35s ease';
+  // ── PAGINATION ────────────────────────────────────────────────────
+  (function () {
+    const PER_PAGE   = 4;
+    const allCards   = Array.from(document.querySelectorAll('.product-card'));
+    const catSections = Array.from(document.querySelectorAll('.cat-section'));
+    const pgPages    = document.getElementById('pgPages');
+    const pgInfo     = document.getElementById('pgInfo');
+    let currentPage  = 1;
+    let activeFilter = 'all';
+
+    function visibleCards() {
+      return allCards.filter(c => activeFilter === 'all' || c.dataset.type === activeFilter);
+    }
+
+    function totalPages() {
+      return Math.ceil(visibleCards().length / PER_PAGE);
+    }
+
+    function goTo(page) {
+      currentPage = page;
+      const visible = visibleCards();
+      const start   = (page - 1) * PER_PAGE;
+      const end     = start + PER_PAGE;
+
+      // Fade out first, then update
+      allCards.forEach(c => { c.style.transition = 'opacity .25s ease'; c.style.opacity = '0'; });
+
+      setTimeout(() => {
+        allCards.forEach((c, i) => {
+          const idx     = visible.indexOf(c);
+          const onPage  = idx >= start && idx < end;
+          c.classList.toggle('pg-hidden', !onPage);
+          c.style.opacity = '';
+          c.style.transition = '';
+        });
+
+        // Hide empty category sections
+        catSections.forEach(sec => {
+          const hasVisible = Array.from(sec.querySelectorAll('.product-card')).some(c => !c.classList.contains('pg-hidden'));
+          sec.classList.toggle('pg-empty', !hasVisible);
+        });
+
+        // Update info text
+        const shown = visible.slice(start, end);
+        const from  = visible.length ? start + 1 : 0;
+        const to    = Math.min(end, visible.length);
+        pgInfo.innerHTML = `Showing <strong>${from}–${to}</strong> of <strong>${visible.length}</strong> piece${visible.length !== 1 ? 's' : ''}`;
+
+        renderButtons();
+
+        // Scroll to top of catalogue
+        const catalogue = document.querySelector('.catalogue-layout');
+        if (catalogue) { catalogue.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      }, 200);
+    }
+
+    function renderButtons() {
+      const total = totalPages();
+      pgPages.innerHTML = '';
+
+      // Prev
+      const prev = document.createElement('button');
+      prev.className = 'pg-btn pg-arrow';
+      prev.innerHTML = '<i class="bi bi-chevron-left"></i>';
+      prev.disabled = currentPage === 1;
+      prev.addEventListener('click', () => goTo(currentPage - 1));
+      pgPages.appendChild(prev);
+
+      // Page numbers with ellipsis
+      const range = buildRange(currentPage, total);
+      range.forEach(item => {
+        if (item === '…') {
+          const el = document.createElement('span');
+          el.className = 'pg-ellipsis';
+          el.textContent = '…';
+          pgPages.appendChild(el);
+        } else {
+          const btn = document.createElement('button');
+          btn.className = 'pg-btn' + (item === currentPage ? ' active' : '');
+          btn.textContent = item;
+          btn.addEventListener('click', () => goTo(item));
+          pgPages.appendChild(btn);
+        }
+      });
+
+      // Next
+      const next = document.createElement('button');
+      next.className = 'pg-btn pg-arrow';
+      next.innerHTML = '<i class="bi bi-chevron-right"></i>';
+      next.disabled = currentPage === total;
+      next.addEventListener('click', () => goTo(currentPage + 1));
+      pgPages.appendChild(next);
+
+      // Hide bar if only 1 page
+      document.getElementById('paginationBar').style.display = total <= 1 ? 'none' : '';
+    }
+
+    function buildRange(cur, total) {
+      if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+      if (cur <= 4)  return [1, 2, 3, 4, 5, '…', total];
+      if (cur >= total - 3) return [1, '…', total-4, total-3, total-2, total-1, total];
+      return [1, '…', cur - 1, cur, cur + 1, '…', total];
+    }
+
+    // Init
+    goTo(1);
+
+    // Type filter — re-paginate on filter change
+    document.getElementById('typeFilter').addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      goTo(1);
     });
-  });
+  })();
 </script>
 </body>
 </html>
