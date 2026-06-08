@@ -342,24 +342,45 @@
     /* ── MEDIA WRAP ── */
     .img-wrap {
       position: relative; overflow: hidden;
-      background: var(--c-bg2); border: 1px solid var(--c-line);
+      background: var(--c-bg2);
     }
-    .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; display: block; }
-    .img-wrap:hover img { transform: scale(1.05); }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.25,.46,.45,.94); display: block; }
+    .img-wrap:hover img { transform: scale(1.06); }
+    /* hover scrim */
+    .img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,.28); opacity: 0;
+      transition: opacity .45s ease; pointer-events: none; z-index: 1;
+    }
+    .img-wrap:hover::after { opacity: 1; }
+    /* view arrow */
+    .img-wrap .img-view {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .45s ease; pointer-events: none;
+    }
+    .img-wrap:hover .img-view { opacity: 1; }
+    .img-wrap .img-view span {
+      width: 2.4rem; height: 2.4rem; border: 1.5px solid rgba(255,255,255,.7);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .9rem;
+      transform: scale(.8); transition: transform .35s ease;
+    }
+    .img-wrap:hover .img-view span { transform: scale(1); }
     .img-wrap .media-tag {
-      position: absolute; bottom: .75rem; left: .75rem;
+      position: absolute; bottom: .75rem; left: .75rem; z-index: 3;
       font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.18); padding: .28rem .55rem;
-      background: rgba(0,0,0,.3);
+      color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.22); padding: .28rem .55rem;
+      background: rgba(0,0,0,.35); backdrop-filter: blur(4px);
     }
     .img-wrap .badge-red {
-      position: absolute; top: .75rem; left: .75rem; z-index: 2;
+      position: absolute; top: .75rem; left: .75rem; z-index: 3;
       background: var(--c-red); color: #fff;
       font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
       padding: .22rem .55rem;
     }
     .img-wrap .badge-dark {
-      position: absolute; top: .75rem; left: .75rem; z-index: 2;
+      position: absolute; top: .75rem; left: .75rem; z-index: 3;
       background: var(--c-bg); color: var(--c-ink);
       font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
       padding: .22rem .55rem; border: 1px solid var(--c-line);
@@ -375,13 +396,18 @@
     .service-card:hover .card-link { gap: .7rem; }
 
     /* ── CRAFT STRIP ── */
-    .craft-item { padding: 1.8rem 1.6rem; border-right: 1px solid var(--c-line); transition: background .25s; }
+    .craft-item {
+      padding: 2rem 1.8rem;
+      border-right: 1px solid var(--c-line);
+      border-bottom: 2px solid transparent;
+      transition: background .3s ease, border-bottom-color .3s ease;
+    }
     .craft-item:last-child { border-right: none; }
-    .craft-item:hover { background: rgba(255,255,255,.025); }
+    .craft-item:hover { background: rgba(232,35,26,.04); border-bottom-color: var(--c-red); }
     .craft-num   { font-size: .62rem; font-weight: 700; letter-spacing: .17em; color: var(--c-red); }
-    .craft-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; margin: .55rem 0 .45rem; transition: color .2s; }
+    .craft-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; margin: .6rem 0 .5rem; transition: color .2s; }
     .craft-item:hover .craft-title { color: var(--c-red); }
-    .craft-desc  { font-size: 1rem; color: var(--c-mid); line-height: 1.75; margin: 0; }
+    .craft-desc  { font-size: .95rem; color: var(--c-mid); line-height: 1.8; margin: 0; }
 
     /* ── PRODUCT CARDS ── */
     .product-card .img-wrap { aspect-ratio: 4/5; margin-bottom: .9rem; }
@@ -399,28 +425,35 @@
     .stat-label { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-top: .28rem; }
 
     /* ── PROJECTS ── */
-    .project-card .img-wrap.tall { aspect-ratio: 4/5; }
-    .project-card .img-wrap.wide { aspect-ratio: 16/9; }
-    .project-tag-red { display: inline-block; background: var(--c-red); color: #fff; font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: .22rem .55rem; margin-bottom: .45rem; }
-    .project-tag     { display: inline-block; border: 1px solid var(--c-line); color: var(--c-mid); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: .22rem .55rem; margin-bottom: .45rem; }
-    .project-title   { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; color: var(--c-ink); margin-bottom: .35rem; transition: color .2s; }
+    .project-card .img-wrap { aspect-ratio: 4/5; }
+    .project-tag-red { display: inline-block; background: var(--c-red); color: #fff; font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: .22rem .55rem; margin-bottom: .5rem; }
+    .project-tag     { display: inline-block; color: var(--c-mid); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5rem; padding: .22rem 0; }
+    .project-title   { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; color: var(--c-ink); margin-bottom: .35rem; transition: color .2s; line-height: 1.3; }
     .project-card:hover .project-title { color: var(--c-red); }
+    .project-card .card-desc { font-size: .92rem; }
 
     /* ── REVIEWS ── */
     .review-card {
       background: var(--c-bg2);
-      border-top: 3px solid var(--c-red);
-      border-left: 1px solid var(--c-line);
-      border-right: 1px solid var(--c-line);
-      border-bottom: 1px solid var(--c-line);
-      padding: 1.8rem 1.5rem; height: 100%;
+      padding: 2rem 1.8rem;
+      height: 100%;
       display: flex; flex-direction: column; gap: 1.2rem;
+      position: relative;
+      transition: transform .3s ease;
     }
-    .review-quote { font-size: 1.05rem; font-weight: 400; line-height: 1.75; color: var(--c-ink); flex: 1; }
-    .review-quote::before { content: '"'; color: var(--c-red); font-size: 1.25em; margin-right: .04em; }
-    .review-author { padding-top: 1rem; border-top: 1px solid var(--c-line); }
-    .review-name { font-size: 1rem; font-weight: 700; color: var(--c-ink); }
-    .review-role { font-size: .6rem; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--c-mid); margin-top: .12rem; }
+    .review-card:hover { transform: translateY(-4px); }
+    .review-card::before {
+      content: '\201C';
+      position: absolute; top: .8rem; right: 1.4rem;
+      font-size: 6rem; line-height: 1;
+      color: var(--c-red); opacity: .1;
+      font-weight: 900; pointer-events: none; user-select: none;
+    }
+    .review-quote { font-size: 1rem; font-weight: 400; line-height: 1.8; color: var(--c-ink); flex: 1; }
+    .review-author { padding-top: 1rem; border-top: 1px solid var(--c-line); display: flex; align-items: center; gap: .7rem; }
+    .review-author-dot { width: 2rem; height: 2px; background: var(--c-red); flex-shrink: 0; }
+    .review-name { font-size: .95rem; font-weight: 700; color: var(--c-ink); }
+    .review-role { font-size: .58rem; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--c-mid); margin-top: .1rem; }
 
     /* ── CTA BAND ── */
     .cta-band { background: var(--c-ink); color: var(--c-bg); padding: 5.5rem 0; position: relative; overflow: hidden; }
@@ -687,7 +720,7 @@
     <div class="row g-4">
       <div class="col-md-4">
         <article class="service-card reveal">
-          <div class="img-wrap"><img src="/images/services/custom-builds.png" alt="Custom furniture builds" loading="lazy"><div class="media-tag">No. 01</div></div>
+          <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/services/custom-builds.png" alt="Custom furniture builds" loading="lazy"><div class="media-tag">No. 01</div></div>
           <p class="card-num">Service 01</p>
           <h3 class="card-title">Custom furniture builds</h3>
           <p class="card-desc">Chairs, dining tables, banquettes and casegoods, designed and built to spec. Solid hardwood frames, joinery done by hand.</p>
@@ -696,7 +729,7 @@
       </div>
       <div class="col-md-4">
         <article class="service-card reveal d1">
-          <div class="img-wrap"><img src="/images/services/restoration.png" alt="Frame restoration" loading="lazy"><div class="media-tag">No. 02</div></div>
+          <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/services/restoration.png" alt="Frame restoration" loading="lazy"><div class="media-tag">No. 02</div></div>
           <p class="card-num">Service 02</p>
           <h3 class="card-title">Frame restoration</h3>
           <p class="card-desc">If the bones are good, we'll save it. Re-springing, re-webbing, joint repair and structural rebuilds on chairs, sofas and antiques.</p>
@@ -705,7 +738,7 @@
       </div>
       <div class="col-md-4">
         <article class="service-card reveal d2">
-          <div class="img-wrap"><img src="/images/services/reupholstery.png" alt="Reupholstery" loading="lazy"><div class="media-tag">No. 03</div></div>
+          <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/services/reupholstery.png" alt="Reupholstery" loading="lazy"><div class="media-tag">No. 03</div></div>
           <p class="card-num">Service 03</p>
           <h3 class="card-title">Reupholstery</h3>
           <p class="card-desc">Hand-cut leather and fabric work, hand-stitched detailing, hidden tacking. We finish the inside the way we finish the outside.</p>
@@ -744,13 +777,13 @@
       <a href="#contact" class="card-link reveal d2" style="font-size:.62rem">View full catalogue <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="row g-4 g-lg-5">
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><span class="badge-red">Bestseller</span><img src="/images/products/chair-geary.png" alt="The Geary" loading="lazy"></div><p class="product-sku">No. R8-101 · Armchair</p><h3 class="product-name">The Geary</h3><p class="product-desc">A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise & tenon joinery, hand-finished.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal d1"><div class="img-wrap"><span class="badge-dark">Restoration line</span><img src="/images/products/chair-holloway.png" alt="The Holloway" loading="lazy"></div><p class="product-sku">No. R8-102 · Wingback</p><h3 class="product-name">The Holloway</h3><p class="product-desc">A traditional wingback with hand-tied springs. Available restored from existing frames or built new. Solid hardwood frame.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal d2"><div class="img-wrap"><img src="/images/products/chair-bellwoods.png" alt="The Bellwoods" loading="lazy"></div><p class="product-sku">No. R8-103 · Dining chair</p><h3 class="product-name">The Bellwoods</h3><p class="product-desc">Designed for high-volume hospitality. Ash frame, full-grain leather seat, contract-grade. Stamped and serialised.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><img src="/images/products/chair-annex.png" alt="The Annex Club" loading="lazy"></div><p class="product-sku">No. R8-104 · Club chair</p><h3 class="product-name">The Annex Club</h3><p class="product-desc">A reading chair. Down-and-feather seat, hand-stitched edge roll. Built to be sat in for hours. White oak frame.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal d1"><div class="img-wrap"><img src="/images/products/table-geary.png" alt="The Geary Table" loading="lazy"></div><p class="product-sku">No. R8-201 · Dining table</p><h3 class="product-name">The Geary Table</h3><p class="product-desc">Solid walnut or oak top, trestle base. Custom lengths from 180–360 cm. Hand-finished with oil or lacquer.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal d2"><div class="img-wrap"><img src="/images/products/table-bistro.png" alt="The Bistro" loading="lazy"></div><p class="product-sku">No. R8-202 · Bistro table</p><h3 class="product-name">The Bistro</h3><p class="product-desc">Cast-iron base, solid oak top. 60, 70 or 80 cm round. Stackable in storage. Ideal for hospitality settings.</p></article></div>
-      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><img src="/images/products/sideboard-geary.png" alt="The Geary Sideboard" loading="lazy"></div><p class="product-sku">No. R8-301 · Sideboard</p><h3 class="product-name">The Geary Sideboard</h3><p class="product-desc">Solid hardwood, hand-cut dovetails, soft-close hardware. Three lengths available. Brass detail hardware.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><span class="badge-red">Bestseller</span><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-geary.png" alt="The Geary" loading="lazy"></div><p class="product-sku">No. R8-101 · Armchair</p><h3 class="product-name">The Geary</h3><p class="product-desc">A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise & tenon joinery, hand-finished.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal d1"><div class="img-wrap"><span class="badge-dark">Restoration line</span><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-holloway.png" alt="The Holloway" loading="lazy"></div><p class="product-sku">No. R8-102 · Wingback</p><h3 class="product-name">The Holloway</h3><p class="product-desc">A traditional wingback with hand-tied springs. Available restored from existing frames or built new. Solid hardwood frame.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal d2"><div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-bellwoods.png" alt="The Bellwoods" loading="lazy"></div><p class="product-sku">No. R8-103 · Dining chair</p><h3 class="product-name">The Bellwoods</h3><p class="product-desc">Designed for high-volume hospitality. Ash frame, full-grain leather seat, contract-grade. Stamped and serialised.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-annex.png" alt="The Annex Club" loading="lazy"></div><p class="product-sku">No. R8-104 · Club chair</p><h3 class="product-name">The Annex Club</h3><p class="product-desc">A reading chair. Down-and-feather seat, hand-stitched edge roll. Built to be sat in for hours. White oak frame.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal d1"><div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/table-geary.png" alt="The Geary Table" loading="lazy"></div><p class="product-sku">No. R8-201 · Dining table</p><h3 class="product-name">The Geary Table</h3><p class="product-desc">Solid walnut or oak top, trestle base. Custom lengths from 180–360 cm. Hand-finished with oil or lacquer.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal d2"><div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/table-bistro.png" alt="The Bistro" loading="lazy"></div><p class="product-sku">No. R8-202 · Bistro table</p><h3 class="product-name">The Bistro</h3><p class="product-desc">Cast-iron base, solid oak top. 60, 70 or 80 cm round. Stackable in storage. Ideal for hospitality settings.</p></article></div>
+      <div class="col-md-6 col-lg-4"><article class="product-card reveal"><div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/sideboard-geary.png" alt="The Geary Sideboard" loading="lazy"></div><p class="product-sku">No. R8-301 · Sideboard</p><h3 class="product-name">The Geary Sideboard</h3><p class="product-desc">Solid hardwood, hand-cut dovetails, soft-close hardware. Three lengths available. Brass detail hardware.</p></article></div>
     </div>
   </div>
 </section>
@@ -793,23 +826,23 @@
       <a href="#" class="card-link reveal d2" style="font-size:.62rem">All projects <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="row g-4">
-      <div class="col-lg-6 reveal">
+      <div class="col-lg-4 reveal">
         <article class="project-card">
-          <div class="img-wrap tall"><div class="media-tag">Restoration</div><img src="/images/products/chair-holloway.png" alt="The Holloway wingback" loading="lazy"></div>
-          <div class="mt-3"><span class="project-tag-red">Private commission</span><h3 class="project-title">The Holloway wingback</h3><p class="card-desc">A 1940s wingback rebuilt from the frame up — new eight-way ties, full horsehair pad, hand-stitched edges. Three generations in one chair.</p></div>
+          <div class="img-wrap"><div class="media-tag">Restoration</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-holloway.png" alt="The Holloway wingback" loading="lazy"></div>
+          <div class="mt-3"><span class="project-tag-red">Private commission</span><h3 class="project-title">The Holloway Wingback</h3><p class="card-desc mb-0">A 1940s wingback rebuilt from the frame up — eight-way ties, horsehair pad, hand-stitched edges.</p></div>
         </article>
       </div>
-      <div class="col-lg-6">
-        <div class="d-flex flex-column gap-4 h-100">
-          <article class="project-card reveal d1">
-            <div class="img-wrap wide"><div class="media-tag">Hospitality</div><img src="/images/products/chair-bellwoods.png" alt="Bellwoods Tavern" loading="lazy"></div>
-            <div class="mt-3"><span class="project-tag">Restaurant</span><h3 class="project-title">Bellwoods Tavern</h3><p class="card-desc mb-0">42 dining chairs and a 14-metre banquette run in full-grain saddle leather.</p></div>
-          </article>
-          <article class="project-card reveal d2">
-            <div class="img-wrap wide"><div class="media-tag">Studio</div><img src="/images/products/chair-annex.png" alt="The Annex Library" loading="lazy"></div>
-            <div class="mt-3"><span class="project-tag">Commercial</span><h3 class="project-title">The Annex Library</h3><p class="card-desc mb-0">Bespoke reading-room seating designed in-house. Solid white oak, mohair upholstery.</p></div>
-          </article>
-        </div>
+      <div class="col-lg-4 reveal d1">
+        <article class="project-card">
+          <div class="img-wrap"><div class="media-tag">Hospitality</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/chair-bellwoods.png" alt="Bellwoods Tavern" loading="lazy"></div>
+          <div class="mt-3"><span class="project-tag">Restaurant</span><h3 class="project-title">Bellwoods Tavern</h3><p class="card-desc mb-0">42 dining chairs and a 14-metre banquette run in full-grain saddle leather.</p></div>
+        </article>
+      </div>
+      <div class="col-lg-4 reveal d2">
+        <article class="project-card">
+          <div class="img-wrap"><div class="media-tag">Hospitality</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/products/project-hotel.png" alt="Fairmont Residences" loading="lazy"></div>
+          <div class="mt-3"><span class="project-tag">Hotel</span><h3 class="project-title">Fairmont Residences</h3><p class="card-desc mb-0">Bespoke lobby reception desk and lounge seating in solid white oak and aged brass.</p></div>
+        </article>
       </div>
     </div>
   </div>
@@ -823,9 +856,24 @@
       <h2 class="mt-2 reveal d1" style="font-size:clamp(1.7rem,3.5vw,2.6rem)">What clients say <em style="color:var(--c-red);font-weight:800;font-style:normal">after delivery</em></h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-4 reveal"><div class="review-card"><p class="review-quote">They saved a chair my grandmother had reupholstered fifty years ago. Down to the original spring system. I have it in my living room and it will outlive me.</p><div class="review-author"><div class="review-name">Sarah W.</div><div class="review-role">Private client · Toronto</div></div></div></div>
-      <div class="col-md-4 reveal d1"><div class="review-card"><p class="review-quote">We ordered forty-two chairs and a banquette. They arrived on the day they said they would, finished the way they said they'd be. That's harder to find than it should be.</p><div class="review-author"><div class="review-name">Marco D.</div><div class="review-role">Operations · Bellwoods Group</div></div></div></div>
-      <div class="col-md-4 reveal d2"><div class="review-card"><p class="review-quote">I send all my restoration clients to Red Eight. They tell people the truth about what can and can't be saved, and they price it fairly.</p><div class="review-author"><div class="review-name">Helen K.</div><div class="review-role">Interior designer · Studio HKD</div></div></div></div>
+      <div class="col-md-4 reveal">
+        <div class="review-card">
+          <p class="review-quote">They saved a chair my grandmother had reupholstered fifty years ago. Down to the original spring system. I have it in my living room and it will outlive me.</p>
+          <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Sarah W.</div><div class="review-role">Private client · Toronto</div></div></div>
+        </div>
+      </div>
+      <div class="col-md-4 reveal d1">
+        <div class="review-card">
+          <p class="review-quote">We ordered forty-two chairs and a banquette. They arrived on the day they said they would, finished the way they said they'd be. That's harder to find than it should be.</p>
+          <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Marco D.</div><div class="review-role">Operations · Bellwoods Group</div></div></div>
+        </div>
+      </div>
+      <div class="col-md-4 reveal d2">
+        <div class="review-card">
+          <p class="review-quote">I send all my restoration clients to Red Eight. They tell people the truth about what can and can't be saved, and they price it fairly.</p>
+          <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Helen K.</div><div class="review-role">Interior designer · Studio HKD</div></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -858,7 +906,7 @@
     <div class="row g-4">
       <div class="col-md-4 reveal">
         <article class="journal-card">
-          <div class="img-wrap"><span class="badge-red">Featured</span><img src="/images/blog/blog-leather.png" alt="Full-grain leather" loading="lazy"></div>
+          <div class="img-wrap"><span class="badge-red">Featured</span><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/blog/blog-leather.png" alt="Full-grain leather" loading="lazy"></div>
           <div class="d-flex align-items-center gap-3"><span class="journal-tag">Materials</span><span class="journal-read">14 min read</span></div>
           <h3 class="journal-title">Why we only buy full-grain leather — and how to tell the difference</h3>
           <p class="card-desc">There are four grades of leather sold to upholstery shops. Three of them shouldn't be in your living room.</p>
@@ -867,7 +915,7 @@
       </div>
       <div class="col-md-4 reveal d1">
         <article class="journal-card">
-          <div class="img-wrap"><img src="/images/blog/blog-springs.png" alt="Eight-way springs" loading="lazy"></div>
+          <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/blog/blog-springs.png" alt="Eight-way springs" loading="lazy"></div>
           <div class="d-flex align-items-center gap-3"><span class="journal-tag">Technique</span><span class="journal-read">9 min read</span></div>
           <h3 class="journal-title">Eight-way hand-tied: what it is and why it costs what it costs</h3>
           <p class="card-desc">The seat construction every upholsterer says they offer and few actually do.</p>
@@ -876,7 +924,7 @@
       </div>
       <div class="col-md-4 reveal d2">
         <article class="journal-card">
-          <div class="img-wrap"><img src="/images/blog/blog-restoration.png" alt="Restoration guide" loading="lazy"></div>
+          <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="/images/blog/blog-restoration.png" alt="Restoration guide" loading="lazy"></div>
           <div class="d-flex align-items-center gap-3"><span class="journal-tag">Restoration</span><span class="journal-read">6 min read</span></div>
           <h3 class="journal-title">When to restore, when to walk away: a frame-by-frame guide</h3>
           <p class="card-desc">Not every old chair is worth saving. Here's what we look at first when a piece arrives.</p>
