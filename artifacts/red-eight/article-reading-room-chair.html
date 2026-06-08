@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Red Eight Workshop journal — notes on materials, technique, restoration and the craft of bespoke furniture. Toronto, Canada.">
-  <title>Journal — Red Eight Workshop</title>
+  <meta name="description" content="Six rounds of drawings, two prototypes, one chair the library couldn't stop ordering. The process behind a quiet piece. By Lena Park.">
+  <title>From sketch to seat — Red Eight Workshop Journal</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -17,13 +17,11 @@
       --c-bg:    #111111; --c-bg2:   #181818; --c-ink:   #f0ece3;
       --c-mid:   #888888; --c-line:  #262626; --c-red:   #E8231A;
       --c-red-d: #b51b14; --c-nav:   rgba(17,17,17,.92);
-      --c-nav-border: rgba(255,255,255,.06);
     }
     [data-theme="light"] {
       --c-bg:    #f5f0eb; --c-bg2:   #ede8e1; --c-ink:   #1a1a1a;
       --c-mid:   #666666; --c-line:  #d5d0c8; --c-red:   #E8231A;
       --c-red-d: #b51b14; --c-nav:   rgba(245,240,235,.95);
-      --c-nav-border: rgba(0,0,0,.1);
     }
     html { transition: background-color .3s, color .3s; scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; }
@@ -35,7 +33,6 @@
     /* ── UTILITIES ── */
     .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); }
     .eyebrow::before { content: ''; display: block; width: 1.4rem; height: 1.5px; background: var(--c-red); }
-    .bg-bg2 { background: var(--c-bg2) !important; }
 
     /* ── BUTTONS ── */
     .btn-r8 { display: inline-flex; align-items: center; gap: .45rem; padding: .85rem 1.7rem; background: var(--c-red); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; }
@@ -88,52 +85,48 @@
     .drawer-footer-copy { font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--c-mid); }
     .drawer-red-bar { width: 1.8rem; height: 2px; background: var(--c-red); }
 
-    /* ── PAGE HERO ── */
-    .page-hero { min-height: 45vh; display: flex; align-items: flex-end; position: relative; overflow: hidden; background: var(--c-bg2); }
-    .page-hero-body { position: relative; z-index: 2; padding: 7rem 0 4.5rem; width: 100%; }
-    .page-hero-eyebrow { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c-red); display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
-    .page-hero-eyebrow::before { content: ''; display: block; width: 1.6rem; height: 1.5px; background: var(--c-red); }
-    .page-hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1.0; color: var(--c-ink); }
-    .page-hero h1 span { color: var(--c-red); }
-    .page-hero-sub { font-size: 1.05rem; color: var(--c-mid); max-width: 44ch; margin-top: .9rem; line-height: 1.8; }
-    .page-hero-breadcrumb { position: absolute; bottom: 1.6rem; right: 1.6rem; z-index: 3; font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); }
-    .page-hero-breadcrumb a { color: var(--c-mid); transition: color .2s; }
-    .page-hero-breadcrumb a:hover { color: var(--c-ink); }
+    /* ── ARTICLE HERO ── */
+    .article-hero { position: relative; min-height: 70vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .article-hero-img { position: absolute; inset: 0; }
+    .article-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+    .article-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.1) 100%); }
+    .article-hero-body { position: relative; z-index: 2; padding: 7rem 0 4rem; width: 100%; }
+    .back-link { display: inline-flex; align-items: center; gap: .5rem; font-size: .65rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.45); transition: color .2s; margin-bottom: 2rem; }
+    .back-link:hover { color: rgba(255,255,255,.9); }
+    .back-link i { font-size: .6rem; }
+    .article-tag-hero { display: inline-block; padding: .22rem .75rem; font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; background: var(--c-red); color: #fff; margin-bottom: .9rem; }
+    .article-hero h1 { font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; color: #fff; max-width: 20ch; margin-bottom: 1.4rem; }
+    .article-hero-meta { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+    .meta-author { font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.9); }
+    .meta-sep { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.3); flex-shrink: 0; }
+    .meta-date { font-size: .75rem; color: rgba(255,255,255,.45); }
+    .meta-read { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); }
 
-    /* ── TAG PILL ── */
-    .tag-pill { display: inline-block; padding: .22rem .7rem; font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--c-line); color: var(--c-mid); }
+    /* ── ARTICLE BODY ── */
+    .article-body { padding: 5rem 0; }
+    .article-lede { font-size: 1.22rem; line-height: 1.85; color: var(--c-ink); font-weight: 400; margin-bottom: 2.2rem; max-width: 68ch; }
+    .article-text { font-size: 1.05rem; line-height: 1.9; color: var(--c-mid); margin-bottom: 2rem; max-width: 68ch; }
+    .article-divider { width: 3rem; height: 2px; background: var(--c-red); margin: 2.8rem 0; }
 
-    /* ── FEATURED ARTICLE ── */
-    .featured-wrap { border-top: 1px solid var(--c-line); padding: 5rem 0; }
-    .featured-img { position: relative; overflow: hidden; aspect-ratio: 16/9; }
-    .featured-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.25,.46,.45,.94); }
-    .featured-wrap:hover .featured-img img { transform: scale(1.03); }
-    .featured-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); margin-bottom: .5rem; }
-    .featured-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -.035em; line-height: 1.1; color: var(--c-ink); margin-bottom: 1rem; }
-    .featured-desc { font-size: 1rem; color: var(--c-mid); line-height: 1.85; max-width: 44ch; margin-bottom: 1.4rem; }
-    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .article-meta-author { font-size: .72rem; font-weight: 700; color: var(--c-ink); }
-    .article-meta-date { font-size: .68rem; color: var(--c-mid); }
-    .article-meta-read { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c-mid); }
-    .article-meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--c-line); flex-shrink: 0; }
+    /* ── VIDEO BLOCK ── */
+    .video-block { position: relative; aspect-ratio: 16/9; background: var(--c-bg2); border: 1px solid var(--c-line); overflow: hidden; margin: 2.5rem 0; }
+    .video-block iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: var(--c-mid); }
+    .video-placeholder i { font-size: 3rem; color: var(--c-line); }
+    .video-placeholder p { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
 
-    /* ── ARTICLE GRID ── */
-    .grid-sec { padding: 0 0 5rem; }
-    .article-card { border-top: 1px solid var(--c-line); padding-top: 1.6rem; display: flex; flex-direction: column; height: 100%; cursor: pointer; }
-    .article-card-img { position: relative; overflow: hidden; aspect-ratio: 4/3; margin-bottom: 1.2rem; }
-    .article-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .65s cubic-bezier(.25,.46,.45,.94); }
-    .article-card:hover .article-card-img img { transform: scale(1.05); }
-    .article-card-img::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.15); opacity: 0; transition: opacity .4s; }
-    .article-card:hover .article-card-img::after { opacity: 1; }
-    .article-card-tag { margin-bottom: .7rem; }
-    .article-card-title { font-size: 1.08rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; color: var(--c-ink); margin-bottom: .65rem; transition: color .2s; }
-    .article-card:hover .article-card-title { color: var(--c-red); }
-    .article-card-desc { font-size: .88rem; color: var(--c-mid); line-height: 1.8; margin-bottom: 1rem; flex: 1; }
-    .article-card-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-top: auto; padding-top: .9rem; border-top: 1px solid var(--c-line); }
-    .article-card-byline { font-size: .68rem; color: var(--c-mid); }
-    .article-card-read { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-red); display: flex; align-items: center; gap: .3rem; }
-    .article-card-read i { font-size: .55rem; transition: transform .2s; }
-    .article-card:hover .article-card-read i { transform: translateX(3px); }
+    /* ── SHARE BAR ── */
+    .share-bar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.8rem 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); margin: 3rem 0; }
+    .share-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); }
+    .share-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .95rem; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--c-line); color: var(--c-mid); transition: border-color .2s, color .2s; }
+    .share-btn:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* ── AUTHOR CARD ── */
+    .author-card { background: var(--c-bg2); border: 1px solid var(--c-line); padding: 1.8rem 2rem; display: flex; gap: 1.4rem; align-items: flex-start; }
+    .author-avatar { width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--c-line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; font-weight: 800; color: var(--c-mid); }
+    .author-name { font-size: .9rem; font-weight: 800; color: var(--c-ink); margin-bottom: .2rem; }
+    .author-role { font-size: .72rem; color: var(--c-red); font-weight: 600; letter-spacing: .06em; margin-bottom: .55rem; }
+    .author-bio { font-size: .85rem; color: var(--c-mid); line-height: 1.75; margin: 0; }
 
     /* ── CTA BAND ── */
     .cta-band { background: var(--c-ink); color: var(--c-bg); padding: 5.5rem 0; position: relative; overflow: hidden; }
@@ -152,9 +145,8 @@
     .footer-copy { font-size: .62rem; font-weight: 600; letter-spacing: .1em; color: var(--c-mid); margin: 0; }
 
     /* ── REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; }
   </style>
 </head>
 <body>
@@ -218,156 +210,83 @@
   </div>
 </aside>
 
-<!-- ── PAGE HERO ──────────────────────────────────────────────────── -->
-<div class="page-hero">
+<!-- ── ARTICLE HERO ───────────────────────────────────────────────── -->
+<div class="article-hero">
+  <div class="article-hero-img">
+    <img src="/images/blog/blog-hardwood.png" alt="From sketch to seat: how the Reading-room chair came together" loading="eager">
+  </div>
   <div class="container">
-    <div class="page-hero-body">
-      <p class="page-hero-eyebrow">From the bench</p>
-      <h1>Notes on making<br>things <span>properly.</span></h1>
-      <p class="page-hero-sub">Materials, technique, restoration, design. Written by the people who do the work.</p>
-    </div>
-  </div>
-  <div class="page-hero-breadcrumb">
-    <a href="/">Home</a> <span style="margin:0 .4rem;opacity:.4">/</span> Journal
-  </div>
-</div>
-
-<!-- ── FEATURED ARTICLE ───────────────────────────────────────────── -->
-<div class="featured-wrap">
-  <div class="container reveal">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-7">
-        <div class="featured-img">
-          <img src="/images/blog/blog-leather.png" alt="Why we only buy full-grain leather" loading="eager">
-          <div style="position:absolute;top:1.2rem;left:1.2rem;z-index:2;background:var(--c-red);color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:.28rem .75rem">Featured</div>
-        </div>
-      </div>
-      <div class="col-lg-4 offset-lg-1">
-        <div class="featured-label">Materials · 14 min read</div>
-        <h2 class="featured-title">Why we only buy full-grain leather — and how to tell the difference</h2>
-        <p class="featured-desc">There are four grades of leather sold to upholstery shops. Three of them shouldn't be in your living room. Here's how to read a hide before it ends up on a chair you'll regret in eighteen months.</p>
-        <div class="article-meta mb-3">
-          <span class="article-meta-author">Mark Lockhart</span>
-          <span class="article-meta-sep"></span>
-          <span class="article-meta-date">14 March 2025</span>
-        </div>
-        <a href="#" class="btn-r8" style="pointer-events:none;opacity:.5">Read article <i class="bi bi-arrow-right"></i></a>
+    <div class="article-hero-body">
+      <a href="/journal.html" class="back-link"><i class="bi bi-arrow-left"></i> Back to journal</a>
+      <div><span class="article-tag-hero">Design</span></div>
+      <h1>From sketch to seat: how the Reading-room chair came together</h1>
+      <div class="article-hero-meta">
+        <span class="meta-author">Lena Park</span>
+        <span class="meta-sep"></span>
+        <span class="meta-date">22 October 2024</span>
+        <span class="meta-sep"></span>
+        <span class="meta-read">10 min read</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── ARTICLE GRID ───────────────────────────────────────────────── -->
-<section class="grid-sec">
+<!-- ── ARTICLE BODY ───────────────────────────────────────────────── -->
+<div class="article-body">
   <div class="container">
-    <div class="row g-4 g-lg-5">
+    <div class="row">
+      <div class="col-lg-8 col-xl-7">
 
-      <!-- 02 Eight-way hand-tied -->
-      <div class="col-md-6 col-lg-4 reveal">
-        <article class="article-card">
-          <div class="article-card-img">
-            <img src="/images/blog/blog-springs.png" alt="Eight-way hand-tied" loading="lazy">
+        <p class="article-lede reveal">Six rounds of drawings, two prototypes, one chair the library couldn't stop ordering. The process behind a quiet piece.</p>
+
+        <div class="article-divider reveal"></div>
+
+        <p class="article-text reveal">Designing a chair that invites people to stay for three hours requires more than ergonomics. Here's the design process behind one of our best-selling pieces.</p>
+
+        <!-- VIDEO BLOCK -->
+        <div class="video-block reveal">
+          <!-- When a videoUrl is available, replace the placeholder with:
+               <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+          -->
+          <div class="video-placeholder">
+            <i class="bi bi-play-circle"></i>
+            <p>Video coming soon</p>
           </div>
-          <div class="article-card-tag"><span class="tag-pill">Technique</span></div>
-          <h3 class="article-card-title">Eight-way hand-tied: what it is and why it costs what it costs</h3>
-          <p class="article-card-desc">The seat construction every upholsterer says they offer and few actually do. We break down the steps that make the price.</p>
-          <div class="article-card-footer">
-            <div>
-              <div class="article-card-byline">Dave Reinhart · 20 Feb 2025</div>
-            </div>
-            <span class="article-card-read">9 min <i class="bi bi-arrow-right"></i></span>
+        </div>
+
+        <!-- SHARE BAR -->
+        <div class="share-bar reveal">
+          <span class="share-label">Share</span>
+          <a href="#" class="share-btn"><i class="bi bi-twitter-x"></i> Twitter</a>
+          <a href="#" class="share-btn"><i class="bi bi-linkedin"></i> LinkedIn</a>
+          <a href="#" class="share-btn"><i class="bi bi-link-45deg"></i> Copy link</a>
+        </div>
+
+        <!-- AUTHOR CARD -->
+        <div class="author-card reveal">
+          <div class="author-avatar">LP</div>
+          <div>
+            <div class="author-name">Lena Park</div>
+            <div class="author-role">Lead Designer</div>
+            <p class="author-bio">Lena leads custom furniture design at Red Eight Workshop. She specialises in seating that works as hard as it looks — ergonomics, joinery and finish treated as one problem, not three.</p>
           </div>
-        </article>
+        </div>
+
       </div>
-
-      <!-- 03 When to restore -->
-      <div class="col-md-6 col-lg-4 reveal d1">
-        <article class="article-card">
-          <div class="article-card-img">
-            <img src="/images/blog/blog-restoration.png" alt="When to restore, when to walk away" loading="lazy">
-          </div>
-          <div class="article-card-tag"><span class="tag-pill">Restoration</span></div>
-          <h3 class="article-card-title">When to restore, when to walk away: a frame-by-frame guide</h3>
-          <p class="article-card-desc">Not every old chair is worth saving. Here's what we look at first when a piece arrives for an assessment.</p>
-          <div class="article-card-footer">
-            <div>
-              <div class="article-card-byline">Jamie Costa · 15 Jan 2025</div>
-            </div>
-            <span class="article-card-read">6 min <i class="bi bi-arrow-right"></i></span>
-          </div>
-        </article>
-      </div>
-
-      <!-- 04 Oak, ash, walnut -->
-      <div class="col-md-6 col-lg-4 reveal d2">
-        <article class="article-card">
-          <div class="article-card-img">
-            <img src="/images/blog/blog-hardwood.png" alt="Oak, ash, walnut" loading="lazy">
-          </div>
-          <div class="article-card-tag"><span class="tag-pill">Materials</span></div>
-          <h3 class="article-card-title">Oak, ash, walnut: choosing the right hardwood for a custom build</h3>
-          <p class="article-card-desc">The three woods we use ninety percent of the time, and what each one does that the others don't.</p>
-          <div class="article-card-footer">
-            <div>
-              <div class="article-card-byline">Mark Lockhart · 10 Dec 2024</div>
-            </div>
-            <span class="article-card-read">11 min <i class="bi bi-arrow-right"></i></span>
-          </div>
-        </article>
-      </div>
-
-      <!-- 05 Tour of the bench -->
-      <div class="col-md-6 col-lg-4 reveal">
-        <article class="article-card">
-          <div class="article-card-img">
-            <img src="/images/about/workshop-team.png" alt="A tour of the bench" loading="lazy">
-          </div>
-          <div class="article-card-tag"><span class="tag-pill">Studio</span></div>
-          <h3 class="article-card-title">A tour of the bench: what each station does</h3>
-          <p class="article-card-desc">Eight people, five rooms, one rule — every piece touches every station. Here's how it flows.</p>
-          <div class="article-card-footer">
-            <div>
-              <div class="article-card-byline">Dave Reinhart · 5 Dec 2024</div>
-            </div>
-            <span class="article-card-read">5 min <i class="bi bi-arrow-right"></i></span>
-          </div>
-        </article>
-      </div>
-
-      <!-- 06 From sketch to seat -->
-      <div class="col-md-6 col-lg-4 reveal d1">
-        <a href="/article-reading-room-chair.html" style="display:contents">
-        <article class="article-card">
-          <div class="article-card-img">
-            <img src="/images/blog/blog-hardwood.png" alt="From sketch to seat" loading="lazy">
-          </div>
-          <div class="article-card-tag"><span class="tag-pill">Design</span></div>
-          <h3 class="article-card-title">From sketch to seat: how the Reading-room chair came together</h3>
-          <p class="article-card-desc">Six rounds of drawings, two prototypes, one chair the library couldn't stop ordering. The process behind a quiet piece.</p>
-          <div class="article-card-footer">
-            <div>
-              <div class="article-card-byline">Lena Park · 22 Oct 2024</div>
-            </div>
-            <span class="article-card-read">10 min <i class="bi bi-arrow-right"></i></span>
-          </div>
-        </article>
-        </a>
-      </div>
-
     </div>
   </div>
-</section>
+</div>
 
 <!-- ── CTA BAND ───────────────────────────────────────────────────── -->
 <div class="cta-band">
   <div class="container">
     <div class="text-center" style="max-width:580px;margin:0 auto;position:relative">
       <p class="eyebrow" style="justify-content:center">Start a project</p>
-      <h2 class="mt-3">Read enough.<br><em>Let's talk.</em></h2>
-      <p class="mt-3 mb-4">Send us photos and a brief. We'll come back with an honest assessment — what can be made, what it'll cost.</p>
+      <h2 class="mt-3">Want something<br>built like this? <em>Let's talk.</em></h2>
+      <p class="mt-3 mb-4">Send us a brief — drawings, reference photos, or a note on what you need. We'll come back with an honest assessment.</p>
       <div class="d-flex flex-wrap justify-content-center gap-3">
         <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
-        <a href="/services.html" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">Our services</a>
+        <a href="/journal.html" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)"><i class="bi bi-arrow-left" style="font-size:.75rem"></i> Back to journal</a>
       </div>
     </div>
   </div>
@@ -437,6 +356,20 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Copy link button
+  document.querySelectorAll('.share-btn').forEach(btn => {
+    if (btn.textContent.includes('Copy link')) {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        navigator.clipboard.writeText(location.href).then(() => {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '<i class="bi bi-check2"></i> Copied';
+          setTimeout(() => btn.innerHTML = orig, 2000);
+        });
+      });
+    }
+  });
 </script>
 </body>
 </html>
