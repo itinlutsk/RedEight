@@ -111,9 +111,21 @@
     /* ── VIDEO BLOCK ── */
     .video-block { position: relative; aspect-ratio: 16/9; background: var(--c-bg2); border: 1px solid var(--c-line); overflow: hidden; margin: 2.5rem 0; }
     .video-block iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-    .video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: var(--c-mid); }
-    .video-placeholder i { font-size: 3rem; color: var(--c-line); }
-    .video-placeholder p { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
+
+    /* ── PHOTO GALLERY ── */
+    .photo-gallery { margin: 2.8rem 0; }
+    .photo-gallery-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: 1rem; }
+    .gallery-grid { display: grid; gap: .75rem; }
+    .gallery-grid.count-1 { grid-template-columns: 1fr; }
+    .gallery-grid.count-2 { grid-template-columns: 1fr 1fr; }
+    .gallery-grid.count-3 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
+    .gallery-grid.count-3 .gallery-item:first-child { grid-row: span 2; }
+    .gallery-grid.count-4, .gallery-grid.count-many { grid-template-columns: 1fr 1fr; }
+    .gallery-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }
+    .gallery-grid.count-1 .gallery-item { aspect-ratio: 16/9; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.25,.46,.45,.94); }
+    .gallery-item:hover img { transform: scale(1.04); }
+    @media (max-width: 575px) { .gallery-grid { grid-template-columns: 1fr !important; } .gallery-grid .gallery-item:first-child { grid-row: auto; } }
 
     /* ── SHARE BAR ── */
     .share-bar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.8rem 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); margin: 3rem 0; }
@@ -237,22 +249,34 @@
     <div class="row">
       <div class="col-lg-8 col-xl-7">
 
+        <!-- description — лід -->
         <p class="article-lede reveal">Six rounds of drawings, two prototypes, one chair the library couldn't stop ordering. The process behind a quiet piece.</p>
 
         <div class="article-divider reveal"></div>
 
+        <!-- textSecondary — основний текст -->
         <p class="article-text reveal">Designing a chair that invites people to stay for three hours requires more than ergonomics. Here's the design process behind one of our best-selling pieces.</p>
 
-        <!-- VIDEO BLOCK -->
-        <div class="video-block reveal">
-          <!-- When a videoUrl is available, replace the placeholder with:
-               <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-          -->
-          <div class="video-placeholder">
-            <i class="bi bi-play-circle"></i>
-            <p>Video coming soon</p>
+        <!-- PHOTO GALLERY — imageFiles[] -->
+        <!-- count-1 / count-2 / count-3 / count-many залежно від кількості фото -->
+        <div class="photo-gallery reveal">
+          <p class="photo-gallery-label">Photos</p>
+          <div class="gallery-grid count-1">
+            <div class="gallery-item">
+              <img src="/images/blog/blog-hardwood.png" alt="From sketch to seat — workshop-designer">
+            </div>
+            <!-- Додаткові фото з imageFiles додаються сюди:
+            <div class="gallery-item">
+              <img src="/images/..." alt="...">
+            </div>
+            -->
           </div>
         </div>
+
+        <!-- VIDEO BLOCK — показується тільки коли videoUrl не порожній -->
+        <!-- <div class="video-block reveal">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+        </div> -->
 
         <!-- SHARE BAR -->
         <div class="share-bar reveal">
