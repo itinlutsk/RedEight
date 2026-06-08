@@ -131,10 +131,12 @@
     .product-sku-line { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .6rem; }
     .product-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; margin-bottom: .8rem; }
 
-    .product-price-line { display: flex; align-items: baseline; gap: .8rem; margin-bottom: 1.2rem; }
-    .price-label { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); }
-    .price-value { font-size: 1rem; font-weight: 700; color: var(--c-ink); }
-    .price-value--amount { font-size: 1.2rem; font-weight: 800; color: var(--c-red); }
+    .product-price-block { margin-bottom: 1.4rem; }
+    .price-from { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); display: block; margin-bottom: .2rem; }
+    .price-amount { font-size: 2rem; font-weight: 900; letter-spacing: -.04em; color: var(--c-ink); line-height: 1; }
+    .price-amount .price-currency { font-size: 1rem; font-weight: 700; vertical-align: super; margin-right: .1rem; color: var(--c-mid); }
+    .price-amount .price-unit { font-size: .65rem; font-weight: 600; letter-spacing: .08em; color: var(--c-mid); margin-left: .35rem; vertical-align: middle; text-transform: uppercase; }
+    .price-note { font-size: .72rem; color: var(--c-mid); margin-top: .4rem; }
 
     .product-desc { font-size: 1rem; color: var(--c-mid); line-height: 1.85; margin-bottom: 1.8rem; }
     .product-desc p { margin: 0 0 .8rem; }
@@ -352,9 +354,12 @@
       <p class="product-sku-line">No. R8-101 · Armchair</p>
       <h1 class="product-title">The Geary</h1>
 
-      <div class="product-price-line">
-        <span class="price-label">Price</span>
-        <span class="price-value">Quote on request</span>
+      <div class="product-price-block">
+        <span class="price-from">Starting from</span>
+        <div class="price-amount">
+          <span class="price-currency">CA$</span>4,200<span class="price-unit">/ piece</span>
+        </div>
+        <p class="price-note">Final price depends on finish and dimensions. Includes delivery within Canada.</p>
       </div>
 
       <div class="product-desc"><p>A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise &amp; tenon joinery, hand-finished.</p></div>
