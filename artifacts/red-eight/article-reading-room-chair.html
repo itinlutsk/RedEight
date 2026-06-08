@@ -120,12 +120,20 @@
     .gallery-grid.count-2 { grid-template-columns: 1fr 1fr; }
     .gallery-grid.count-3 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
     .gallery-grid.count-3 .gallery-item:first-child { grid-row: span 2; }
-    .gallery-grid.count-4, .gallery-grid.count-many { grid-template-columns: 1fr 1fr; }
+    .gallery-grid.count-4 { grid-template-columns: 1fr 1fr; }
+    .gallery-grid.count-5 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto; }
+    .gallery-grid.count-5 .gallery-item:first-child { grid-column: span 2; }
+    .gallery-grid.count-6 { grid-template-columns: repeat(3, 1fr); }
+    .gallery-grid.count-many { grid-template-columns: 1fr 1fr; }
     .gallery-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }
     .gallery-grid.count-1 .gallery-item { aspect-ratio: 16/9; }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.25,.46,.45,.94); }
     .gallery-item:hover img { transform: scale(1.04); }
-    @media (max-width: 575px) { .gallery-grid { grid-template-columns: 1fr !important; } .gallery-grid .gallery-item:first-child { grid-row: auto; } }
+    @media (max-width: 575px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr !important; }
+      .gallery-grid .gallery-item:first-child { grid-column: auto; grid-row: auto; }
+      .gallery-grid.count-1 { grid-template-columns: 1fr !important; }
+    }
 
     /* ── SHARE BAR ── */
     .share-bar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.8rem 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); margin: 3rem 0; }
@@ -260,16 +268,31 @@
         <!-- PHOTO GALLERY — imageFiles[] -->
         <div class="photo-gallery reveal">
           <p class="photo-gallery-label">Photos</p>
-          <div class="gallery-grid count-1">
+          <div class="gallery-grid count-6">
             <div class="gallery-item">
-              <img src="/images/blog/blog-hardwood.png" alt="From sketch to seat — workshop-designer">
+              <img src="/images/blog/blog-hardwood.png" alt="Workshop — hardwood selection">
+            </div>
+            <div class="gallery-item">
+              <img src="/images/blog/blog-leather.png" alt="Workshop — leather work">
+            </div>
+            <div class="gallery-item">
+              <img src="/images/blog/blog-springs.png" alt="Workshop — spring tying">
+            </div>
+            <div class="gallery-item">
+              <img src="/images/blog/blog-restoration.png" alt="Workshop — restoration">
+            </div>
+            <div class="gallery-item">
+              <img src="/images/services/custom-builds.png" alt="Workshop — custom build">
+            </div>
+            <div class="gallery-item">
+              <img src="/images/about/workshop-team.png" alt="Workshop — team">
             </div>
           </div>
         </div>
 
         <!-- VIDEO BLOCK — videoUrl -->
         <div class="video-block reveal">
-          <iframe src="" allowfullscreen title="From sketch to seat"></iframe>
+          <iframe src="about:blank" allowfullscreen title="From sketch to seat"></iframe>
         </div>
 
         <!-- SHARE BAR -->
