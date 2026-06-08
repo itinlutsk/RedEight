@@ -50,7 +50,8 @@
     .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
     .nav-logo { display: flex; align-items: center; gap: .85rem; }
     .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
-    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); }
+    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); white-space: nowrap; }
+    @media (max-width: 420px) { .nav-logo img { width: 34px; height: 34px; } .nav-logo-text { font-size: .7rem; letter-spacing: .1em; } }
     .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
     .nav-links a { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
     .nav-links a:hover { color: var(--c-ink); }
@@ -156,7 +157,7 @@
         <li><a href="/products.html">Products</a></li>
         <li><a href="/services.html" class="active">Services</a></li>
         <li><a href="/#journal">Journal</a></li>
-        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/contact.html">Contact</a></li>
       </ul>
       <div class="d-flex align-items-center gap-3">
         <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
@@ -180,7 +181,7 @@
     <a href="/products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
     <a href="/services.html" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
     <a href="/#journal"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
-    <a href="/#contact"  onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+    <a href="/contact.html"  onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
   </nav>
   <div class="drawer-contact">
     <p class="drawer-contact-label">Contact us</p>
@@ -235,7 +236,7 @@
         <div class="svc-divider"></div>
         <p class="svc-desc">Chairs, dining tables, banquettes and casegoods, designed and built to spec. Solid hardwood frames, joinery done by hand. We work from your drawings, your reference photos, or a brief on the back of a napkin.</p>
         <div class="svc-actions">
-          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
           <a href="/products.html" class="btn-outline">See the work</a>
         </div>
       </div>
@@ -253,7 +254,7 @@
         <div class="svc-divider"></div>
         <p class="svc-desc">If the bones are good, we'll save it. Joint repair, re-gluing, re-doweling, new springs and webbing on traditional pieces. We work on chairs, sofas, antiques and the occasional unicorn. Honest assessment first.</p>
         <div class="svc-actions">
-          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
           <a href="/products.html" class="btn-outline">See the work</a>
         </div>
       </div>
@@ -281,7 +282,7 @@
         <div class="svc-divider"></div>
         <p class="svc-desc">Strip-to-frame reupholstery on chairs, sofas, dining seats and headboards. Hand-cut fabric, hidden tacking, hand-stitched detail where it matters. The job takes as long as it takes — usually three to five weeks.</p>
         <div class="svc-actions">
-          <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+          <a href="/contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
           <a href="/products.html" class="btn-outline">See the work</a>
         </div>
       </div>
@@ -297,7 +298,7 @@
       <h2 class="mt-3">Got a piece worth keeping?<br><em>Bring it in.</em></h2>
       <p class="mt-3 mb-4">Send us photos and we'll come back with an honest assessment — what can be saved, what it'll cost.</p>
       <div class="d-flex flex-wrap justify-content-center gap-3">
-        <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
         <a href="tel:+14165550178" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">+1 (416) 555-0178</a>
       </div>
     </div>
@@ -318,7 +319,7 @@
           <li><a href="/products.html">Products</a></li>
           <li><a href="/services.html">Services</a></li>
           <li><a href="/#journal">Journal</a></li>
-          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </div>
       <div class="col-6 col-lg-3">

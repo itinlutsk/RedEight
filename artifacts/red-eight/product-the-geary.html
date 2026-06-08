@@ -47,7 +47,8 @@
     .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
     .nav-logo { display: flex; align-items: center; gap: .85rem; }
     .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
-    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); }
+    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); white-space: nowrap; }
+    @media (max-width: 420px) { .nav-logo img { width: 34px; height: 34px; } .nav-logo-text { font-size: .7rem; letter-spacing: .1em; } }
     .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
     .nav-links a { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--c-ink); }
@@ -262,7 +263,7 @@
         <li><a href="/products.html" class="active">Products</a></li>
         <li><a href="/services.html">Services</a></li>
         <li><a href="/journal.html">Journal</a></li>
-        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/contact.html">Contact</a></li>
       </ul>
       <div class="d-flex align-items-center gap-3">
         <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
@@ -297,7 +298,7 @@
     <a href="/products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
     <a href="/services.html" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
     <a href="/journal.html"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
-    <a href="/#contact"      onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+    <a href="/contact.html"      onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
   </nav>
 </aside>
 
@@ -389,8 +390,8 @@
 
       <!-- CTA -->
       <div class="cta-stack">
-        <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
-        <a href="/#contact" class="btn-outline">Request samples</a>
+        <a href="/contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/contact.html" class="btn-outline">Request samples</a>
       </div>
 
       <hr class="info-divider">
@@ -472,7 +473,7 @@
       <h2 class="mt-3">Custom dimensions,<br>custom finishes. <em>Just ask.</em></h2>
       <p class="mt-4">Every piece can be adapted — size, fabric, finish, joinery detail. Send us a brief and we'll respond within 48 hours.</p>
       <div class="d-flex align-items-center justify-content-center gap-3 mt-5">
-        <a href="/#contact" class="btn-r8" style="width:auto">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/contact.html" class="btn-r8" style="width:auto">Request a quote <i class="bi bi-arrow-right"></i></a>
         <a href="/services.html" class="btn-outline" style="width:auto;color:var(--c-bg);border-color:rgba(240,236,227,.2)">Our services</a>
       </div>
     </div>
@@ -493,7 +494,7 @@
           <li><a href="/products.html">Products</a></li>
           <li><a href="/services.html">Services</a></li>
           <li><a href="/journal.html">Journal</a></li>
-          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </div>
       <div class="col-6 col-lg-3">
