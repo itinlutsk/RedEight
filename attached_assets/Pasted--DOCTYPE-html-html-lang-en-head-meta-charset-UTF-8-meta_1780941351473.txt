@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Red Eight Workshop catalogue — chairs, tables, casegoods and built-ins. All made to order in Toronto.">
+  <title>Catalogue — Red Eight Workshop</title>
+  <link rel="icon" type="image/jpeg" href="../assets/logo.jpg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .catalogue-layout { display: grid; grid-template-columns: 1fr; gap: var(--s-5); align-items: start; }
+    @media (min-width: 1024px) { .catalogue-layout { grid-template-columns: 240px 1fr; gap: var(--s-6); } }
+
+    .side { position: sticky; top: calc(var(--nav-h) + var(--s-3)); }
+    .side__title { font-family: var(--f-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-mid); margin-bottom: var(--s-3); }
+    .side__nav { display: flex; flex-direction: column; }
+    .side__nav a { padding: 0.8rem 0; font-family: var(--f-sans); font-size: 0.92rem; color: var(--c-graphite); border-bottom: 1px solid var(--c-line-soft); display: flex; align-items: center; justify-content: space-between; transition: color 0.2s; }
+    .side__nav a:hover, .side__nav a.active { color: var(--c-red); }
+    .side__nav a.active { font-weight: 500; }
+    .side__count { font-family: var(--f-mono); font-size: 0.7rem; color: var(--c-mid); padding: 2px 8px; background: var(--c-cream); }
+    .side__filter { margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--c-line); }
+    .side__filter .filter-bar { flex-direction: column; align-items: stretch; gap: 0.2rem; margin-bottom: 0; }
+    .side__filter .filter-btn { text-align: left; }
+
+    .cat-section { margin-bottom: var(--s-8); }
+    .cat-section__head { padding-bottom: var(--s-4); margin-bottom: var(--s-5); border-bottom: 1px solid var(--c-line); display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--s-2); }
+    .cat-section__head h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+
+    .product-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-4); }
+    @media (min-width: 640px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1280px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .product { background: var(--c-paper); border: 1px solid var(--c-line-soft); transition: border-color 0.25s, transform 0.25s; display: flex; flex-direction: column; }
+    .product:hover { border-color: var(--c-red); transform: translateY(-3px); }
+    .product__media { aspect-ratio: 4/5; overflow: hidden; position: relative; background: var(--c-stone); }
+    .product__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+    .product:hover .product__media img { transform: scale(1.05); }
+    .product__badge { position: absolute; top: var(--s-2); left: var(--s-2); padding: 0.35rem 0.7rem; background: var(--c-ink); color: var(--c-paper); font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .product__badge--red { background: var(--c-red); }
+    .product__body { padding: var(--s-3); flex: 1; display: flex; flex-direction: column; }
+    .product__sku { font-family: var(--f-mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--c-mid); margin-bottom: 0.4rem; }
+    .product__name { font-family: var(--f-display); font-size: 1.3rem; font-weight: 400; font-variation-settings: "opsz" 72, "SOFT" 30; line-height: 1.15; margin-bottom: 0.3rem; }
+    .product__desc { font-size: 0.82rem; color: var(--c-mid); line-height: 1.65; margin-bottom: var(--s-3); }
+    .product__swatches { display: flex; gap: 6px; margin-bottom: var(--s-3); }
+    .swatch { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
+    .swatch:hover { transform: scale(1.3); }
+    .product__footer { padding-top: var(--s-3); margin-top: auto; border-top: 1px solid var(--c-line-soft); display: flex; align-items: center; justify-content: space-between; }
+    .product__price { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-red); }
+    .product__more { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-mid); transition: color 0.2s; }
+    .product__more:hover { color: var(--c-red); }
+
+    .inline-cta { padding: var(--s-5) var(--s-4); background: var(--c-ink); color: var(--c-paper); display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; margin-bottom: var(--s-8); }
+    .inline-cta__title { font-family: var(--f-display); font-size: 1.6rem; font-weight: 400; color: var(--c-paper); font-variation-settings: "opsz" 72, "SOFT" 30; }
+    .inline-cta__title em { color: var(--c-red); font-style: italic; }
+
+    .skeleton { background: var(--c-stone); animation: pulse-sk 1.4s ease-in-out infinite; }
+    .skeleton-product { aspect-ratio: 4/5; }
+    @keyframes pulse-sk { 0%,100%{opacity:1} 50%{opacity:.45} }
+  </style>
+</head>
+<body data-page="products">
+<div id="nav-slot"></div>
+<main id="main">
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__grid">
+        <div>
+          <p class="eyebrow reveal">Our catalogue</p>
+          <h1 class="reveal reveal-d1">The <em>catalogue</em></h1>
+        </div>
+        <div class="reveal reveal-d2">
+          <p class="page-hero__desc">A selection of pieces we've designed and built. All made to order. Lead times from 30 days. Most are available in custom dimensions and finishes — ask.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="catalogue-layout">
+
+        <aside class="side reveal">
+          <p class="side__title">Categories</p>
+          <nav class="side__nav" id="cat-nav">
+            <a href="#all-products" class="active">All <span class="side__count" id="total-count">—</span></a>
+          </nav>
+          <div class="side__filter" id="type-filter-wrap" style="display:none">
+            <p class="side__title">Made for</p>
+            <div class="filter-bar" id="type-filter">
+              <button class="filter-btn active" data-type-filter="all">All</button>
+            </div>
+          </div>
+        </aside>
+
+        <div id="all-products">
+          <div class="product-grid" id="product-grid">
+            <div class="skeleton skeleton-product"></div>
+            <div class="skeleton skeleton-product"></div>
+            <div class="skeleton skeleton-product"></div>
+          </div>
+          <div id="product-error" style="display:none; padding:2rem 0; color:var(--c-mid)">Could not load products.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="footer-slot"></div>
+<script src="../js/layout.js"></script>
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  const FALLBACK = ['../assets/workshop-frame.jpg','../assets/workshop-wingback.jpg','../assets/workshop-upholstery.jpg','../assets/workshop-restoration.jpg','../assets/workshop-team.jpg','../assets/workshop-leather.jpg','../assets/workshop-designer.jpg'];
+  function getImg(p, idx) {
+    if (p.imageFiles && p.imageFiles.length) { const f = p.imageFiles[0]; return f.startsWith('http') ? f : '../' + f; }
+    return FALLBACK[idx % FALLBACK.length];
+  }
+
+  function renderProduct(p, idx) {
+    const swatches = (p.color || []).map(c => `<div class="swatch" style="background:${c}"></div>`).join('');
+    const badge = p.badge ? `<span class="product__badge${p.badgeType === 'red' ? ' product__badge--red' : ''}">${p.badge}</span>` : '';
+    const sku = p.sku || '';
+    return `<article class="product reveal" data-cat="${p.categoryId || ''}" data-type="${p.typeId || ''}">
+      <div class="product__media">
+        <img src="${getImg(p, idx)}" alt="${p.name}" loading="lazy">
+        ${badge}
+      </div>
+      <div class="product__body">
+        ${sku ? `<p class="product__sku">${sku}</p>` : ''}
+        <h3 class="product__name">${p.name}</h3>
+        <p class="product__desc">${p.description}</p>
+        ${swatches ? `<div class="product__swatches">${swatches}</div>` : ''}
+        <div class="product__footer">
+          <span class="product__price">Quote on request</span>
+          <a href="#" class="product__more">Details →</a>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function groupByCategory(products, categories) {
+    const catMap = {};
+    categories.forEach(c => { catMap[c.id] = { ...c, items: [] }; });
+    const uncategorised = { id: null, name: 'Other', items: [] };
+    products.forEach(p => {
+      if (p.categoryId && catMap[p.categoryId]) catMap[p.categoryId].items.push(p);
+      else uncategorised.items.push(p);
+    });
+    const result = categories.map(c => catMap[c.id]).filter(c => c.items.length > 0);
+    if (uncategorised.items.length) result.push(uncategorised);
+    return result;
+  }
+
+  function buildCategoryNav(groups) {
+    const nav = document.getElementById('cat-nav');
+    nav.innerHTML = `<a href="#all-products" class="active">All <span class="side__count">${groups.reduce((s,g)=>s+g.items.length,0)}</span></a>`;
+    groups.forEach(g => {
+      const a = document.createElement('a');
+      a.href = `#cat-${g.id || 'other'}`;
+      a.textContent = g.name;
+      const cnt = document.createElement('span');
+      cnt.className = 'side__count';
+      cnt.textContent = g.items.length;
+      a.appendChild(cnt);
+      nav.appendChild(a);
+    });
+  }
+
+  function buildTypeFilter(types) {
+    if (!types || !types.length) return;
+    const wrap = document.getElementById('type-filter-wrap');
+    const bar = document.getElementById('type-filter');
+    types.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.typeFilter = t.id;
+      btn.textContent = t.name;
+      bar.appendChild(btn);
+    });
+    wrap.style.display = '';
+
+    bar.addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.typeFilter;
+      document.querySelectorAll('#all-products .product').forEach(card => {
+        const show = filter === 'all' || card.dataset.type === filter;
+        card.style.opacity = show ? '1' : '0.18';
+        card.style.pointerEvents = show ? '' : 'none';
+        card.style.transition = 'opacity 0.35s ease';
+      });
+    });
+  }
+
+  function renderGroups(groups) {
+    const container = document.getElementById('all-products');
+    container.innerHTML = '';
+    groups.forEach((g, gi) => {
+      const sec = document.createElement('div');
+      sec.className = 'cat-section';
+      sec.id = `cat-${g.id || 'other'}`;
+      sec.innerHTML = `<div class="cat-section__head"><h2>${g.name}</h2><span class="label">${g.items.length} piece${g.items.length!==1?'s':''}</span></div>`;
+      const grid = document.createElement('div');
+      grid.className = 'product-grid';
+      grid.innerHTML = g.items.map((p, i) => renderProduct(p, gi * 10 + i)).join('');
+      sec.appendChild(grid);
+
+      if (gi === 0 && groups.length > 1) {
+        const cta = document.createElement('div');
+        cta.className = 'inline-cta reveal';
+        cta.innerHTML = `<div><p class="label" style="color:var(--c-red)">Don't see it?</p><p class="inline-cta__title mt-1">Custom briefs are <em>welcome.</em></p></div><a href="request.html" class="btn btn--primary">Send a brief</a>`;
+        sec.appendChild(cta);
+      }
+
+      container.appendChild(sec);
+    });
+
+    document.querySelectorAll('#all-products .reveal').forEach(el => {
+      const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold: 0.08 });
+      io.observe(el);
+    });
+  }
+
+  async function load() {
+    try {
+      const [products, categories, types] = await Promise.all([
+        fetch('/api/product').then(r => r.json()),
+        fetch('/api/category').then(r => r.json()),
+        fetch('/api/type').then(r => r.json()),
+      ]);
+      const groups = groupByCategory(products, categories);
+      buildCategoryNav(groups);
+      buildTypeFilter(types);
+      renderGroups(groups);
+    } catch {
+      document.getElementById('product-grid').style.display = 'none';
+      document.getElementById('product-error').style.display = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', load);
+})();
+</script>
+</body>
+</html>

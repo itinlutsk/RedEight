@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Red Eight Workshop catalogue — chairs, tables and storage. All made to order in Toronto.">
+  <title>Catalogue — Red Eight Workshop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root, [data-theme="dark"] {
+      --c-bg:    #111111; --c-bg2:   #181818; --c-ink:   #f0ece3;
+      --c-mid:   #888888; --c-line:  #262626; --c-red:   #E8231A;
+      --c-red-d: #b51b14; --c-nav:   rgba(17,17,17,.92);
+    }
+    [data-theme="light"] {
+      --c-bg:    #f5f0eb; --c-bg2:   #ede8e1; --c-ink:   #1a1a1a;
+      --c-mid:   #666666; --c-line:  #d5d0c8; --c-red:   #E8231A;
+      --c-red-d: #b51b14; --c-nav:   rgba(245,240,235,.95);
+    }
+    html { transition: background-color .3s, color .3s; scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--c-bg); color: var(--c-ink); -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: -0.025em; color: var(--c-ink); margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── UTILITIES ── */
+    .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); }
+    .eyebrow::before { content: ''; display: block; width: 1.4rem; height: 1.5px; background: var(--c-red); }
+
+    /* ── BUTTONS ── */
+    .btn-r8 { display: inline-flex; align-items: center; gap: .45rem; padding: .85rem 1.7rem; background: var(--c-red); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; }
+    .btn-r8:hover { background: var(--c-red-d); color: #fff; }
+    .btn-outline { display: inline-flex; align-items: center; gap: .45rem; padding: .85rem 1.7rem; background: transparent; color: var(--c-ink); font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: 1px solid var(--c-line); transition: border-color .2s, color .2s; }
+    .btn-outline:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* ── NAVBAR ── */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--c-nav); backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s; padding: 1.3rem 0; }
+    .site-nav.scrolled { border-bottom-color: var(--c-line); padding: .9rem 0; }
+    .theme-btn { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; background: transparent; border: 1px solid var(--c-line); color: var(--c-mid); font-size: 1.05rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; }
+    .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
+    .nav-logo { display: flex; align-items: center; gap: .85rem; }
+    .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
+    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--c-ink); }
+    @media (max-width: 767px) { .nav-links { display: none; } }
+    .nav-toggle { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.4rem; height: 2.4rem; display: none; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
+    @media (max-width: 767px) { .nav-toggle { display: flex; } }
+
+    /* ── SIDE DRAWER ── */
+    .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 1090; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .side-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px,90vw); background: var(--c-bg2); border-left: 1px solid var(--c-line); z-index: 1100; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+    .side-drawer.open { transform: none; }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--c-line); }
+    .drawer-close { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
+    .drawer-nav { padding: 1.5rem; display: flex; flex-direction: column; gap: 0; flex: 1; }
+    .drawer-nav a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .drawer-nav a:hover { color: var(--c-red); }
+    .drawer-contact { padding: 1.5rem; border-top: 1px solid var(--c-line); }
+    .drawer-contact-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .8rem; }
+    .drawer-contact-item { display: flex; align-items: flex-start; gap: .7rem; font-size: .82rem; color: var(--c-mid); margin-bottom: .6rem; }
+    .drawer-contact-item i { font-size: 1rem; margin-top: .1rem; flex-shrink: 0; }
+    .drawer-socials { padding: 1rem 1.5rem 1.5rem; }
+    .drawer-socials-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .8rem; }
+    .drawer-social-links { display: flex; flex-direction: column; gap: .5rem; }
+    .drawer-social-links a { font-size: .78rem; color: var(--c-mid); display: flex; align-items: center; gap: .5rem; transition: color .2s; }
+    .drawer-social-links a:hover { color: var(--c-red); }
+
+    /* ── PAGE HERO ── */
+    .page-hero { padding: 9rem 0 5rem; border-bottom: 1px solid var(--c-line); }
+    .page-hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+    .page-hero h1 em { color: var(--c-red); font-style: normal; }
+    .page-hero-desc { font-size: 1.1rem; color: var(--c-mid); line-height: 1.85; max-width: 42ch; }
+
+    /* ── CATALOGUE LAYOUT ── */
+    .catalogue-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+    @media (min-width: 1024px) { .catalogue-layout { grid-template-columns: 220px 1fr; gap: 3.5rem; } }
+
+    /* ── SIDEBAR ── */
+    .cat-sidebar { position: sticky; top: 6rem; }
+    .sidebar-title { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .8rem; }
+    .cat-nav { display: flex; flex-direction: column; }
+    .cat-nav a { display: flex; align-items: center; justify-content: space-between; padding: .75rem 0; font-size: .88rem; font-weight: 500; color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .cat-nav a:hover, .cat-nav a.active { color: var(--c-ink); }
+    .cat-nav a.active { font-weight: 700; }
+    .cat-count { font-size: .6rem; font-weight: 700; letter-spacing: .1em; padding: 2px 7px; background: var(--c-bg2); color: var(--c-mid); border: 1px solid var(--c-line); }
+
+    .type-filter { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--c-line); }
+    .filter-btns { display: flex; flex-direction: column; gap: .2rem; margin-top: .8rem; }
+    .filter-btn { background: none; border: none; text-align: left; padding: .6rem 0; font-size: .78rem; font-weight: 500; color: var(--c-mid); cursor: pointer; border-bottom: 1px solid var(--c-line); transition: color .2s; font-family: 'Inter', sans-serif; }
+    .filter-btn:hover, .filter-btn.active { color: var(--c-red); }
+    .filter-btn.active { font-weight: 700; }
+
+    /* ── SECTION HEADER ── */
+    .cat-section { margin-bottom: 5rem; }
+    .cat-section-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-bottom: 1.2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--c-line); }
+    .cat-section-head h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    .cat-section-count { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media (min-width: 640px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1280px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ── PRODUCT CARD ── */
+    .product-card { background: var(--c-bg2); border: 1px solid var(--c-line); display: flex; flex-direction: column; transition: border-color .25s, transform .3s cubic-bezier(.25,.46,.45,.94); }
+    .product-card:hover { border-color: var(--c-red); transform: translateY(-4px); }
+    .product-card-media { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--c-line); }
+    .product-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.25,.46,.45,.94); }
+    .product-card:hover .product-card-media img { transform: scale(1.06); }
+    .product-badge { position: absolute; top: .75rem; left: .75rem; padding: .3rem .65rem; font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .product-badge--dark { background: var(--c-ink); color: var(--c-bg); }
+    .product-badge--red  { background: var(--c-red);  color: #fff; }
+    .product-card-body { padding: 1.2rem 1.3rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
+    .product-sku { font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .3rem; }
+    .product-name { font-size: 1.15rem; font-weight: 800; line-height: 1.2; margin-bottom: .4rem; }
+    .product-desc { font-size: .82rem; color: var(--c-mid); line-height: 1.7; margin-bottom: 1rem; flex: 1; }
+    .product-swatches { display: flex; gap: 5px; margin-bottom: 1rem; }
+    .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(128,128,128,.25); cursor: pointer; transition: transform .2s; }
+    .swatch:hover { transform: scale(1.35); }
+    .product-card-footer { padding-top: .9rem; border-top: 1px solid var(--c-line); display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .product-price { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c-red); }
+    .product-more { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-mid); display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+    .product-more:hover { color: var(--c-red); }
+
+    /* ── INLINE CTA ── */
+    .inline-cta { background: var(--c-ink); color: var(--c-bg); padding: 2.8rem 2.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin: 2.5rem 0 3.5rem; }
+    .inline-cta-title { font-size: 1.5rem; font-weight: 900; letter-spacing: -.02em; color: var(--c-bg); }
+    .inline-cta-title em { color: var(--c-red); font-style: normal; }
+    .inline-cta-sub { font-size: .8rem; color: rgba(240,236,227,.45); margin-top: .3rem; }
+
+    /* ── CTA BAND ── */
+    .cta-band { background: var(--c-ink); color: var(--c-bg); padding: 5.5rem 0; position: relative; overflow: hidden; }
+    .cta-band::before { content: ''; position: absolute; top: -50%; left: -8%; width: 55%; height: 200%; background: radial-gradient(ellipse, rgba(232,35,26,.18) 0%, transparent 60%); pointer-events: none; }
+    .cta-band h2 { color: var(--c-bg); font-size: clamp(1.9rem, 4.5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; }
+    .cta-band h2 em { color: var(--c-red); font-style: normal; }
+    .cta-band p { color: rgba(240,236,227,.5); max-width: 44ch; margin: 0 auto; font-size: 1.05rem; line-height: 1.8; }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--c-bg2); border-top: 1px solid var(--c-line); padding: 3.5rem 0 1.8rem; }
+    .footer-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .9rem; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li + li { margin-top: .45rem; }
+    .footer-links a { font-size: 1rem; color: var(--c-mid); transition: color .2s; }
+    .footer-links a:hover { color: var(--c-ink); }
+    .footer-copy { font-size: .62rem; font-weight: 600; letter-spacing: .1em; color: var(--c-mid); margin: 0; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/" class="nav-logo">
+        <img src="/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Red Eight Workshop</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/products.html" class="active">Products</a></li>
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/journal.html">Journal</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDE DRAWER ─────────────────────────────────────────────────── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="side-drawer" id="sideDrawer" aria-label="Navigation menu">
+  <div class="drawer-header">
+    <a href="/" class="nav-logo" onclick="closeMob()">
+      <img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Red Eight Workshop</span>
+    </a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="/products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+    <a href="/services.html" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+    <a href="/journal.html"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+    <a href="/#contact"      onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+  </nav>
+  <div class="drawer-contact">
+    <p class="drawer-contact-label">Contact us</p>
+    <div class="drawer-contact-item"><i class="bi bi-telephone"></i><div><a href="tel:+14165550178">+1 (416) 555-0178</a><br><span style="font-size:.78rem;color:var(--c-mid)">Mon – Fri, 9 am – 5 pm ET</span></div></div>
+    <div class="drawer-contact-item"><i class="bi bi-envelope"></i><a href="mailto:hello@redeightworkshop.ca">hello@redeightworkshop.ca</a></div>
+    <div class="drawer-contact-item"><i class="bi bi-geo-alt"></i><span>Toronto, Ontario, Canada</span></div>
+  </div>
+  <div class="drawer-socials">
+    <p class="drawer-socials-label">Follow us</p>
+    <div class="drawer-social-links">
+      <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+      <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+      <a href="#"><i class="bi bi-pinterest"></i> Pinterest</a>
+    </div>
+  </div>
+</aside>
+
+<!-- ── PAGE HERO ───────────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="row align-items-end g-5">
+      <div class="col-lg-6">
+        <p class="eyebrow reveal">Our catalogue</p>
+        <h1 class="mt-3 reveal reveal-d1">The <em>catalogue</em></h1>
+      </div>
+      <div class="col-lg-5 offset-lg-1">
+        <p class="page-hero-desc reveal reveal-d2">A selection of pieces we've designed and built. All made to order. Lead times from 30 days. Most are available in custom dimensions and finishes — ask.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CATALOGUE ──────────────────────────────────────────────────── -->
+<section style="padding: 4rem 0 6rem">
+  <div class="container">
+    <div class="catalogue-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="cat-sidebar reveal">
+        <p class="sidebar-title">Categories</p>
+        <nav class="cat-nav" id="catNav">
+          <a href="#cat-chairs" class="active">Chairs <span class="cat-count" id="cnt-chairs">4</span></a>
+          <a href="#cat-tables">Tables <span class="cat-count" id="cnt-tables">2</span></a>
+          <a href="#cat-storage">Storage <span class="cat-count" id="cnt-storage">1</span></a>
+          <a href="#cat-projects">Projects <span class="cat-count" id="cnt-projects">1</span></a>
+        </nav>
+
+        <div class="type-filter">
+          <p class="sidebar-title">Made for</p>
+          <div class="filter-btns" id="typeFilter">
+            <button class="filter-btn active" data-filter="all">All spaces</button>
+            <button class="filter-btn" data-filter="residential">Residential</button>
+            <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+            <button class="filter-btn" data-filter="commercial">Commercial</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <div>
+
+        <!-- CHAIRS ───────────────────────────── -->
+        <div class="cat-section" id="cat-chairs">
+          <div class="cat-section-head">
+            <h2>Chairs</h2>
+            <span class="cat-section-count">4 pieces</span>
+          </div>
+          <div class="product-grid">
+
+            <article class="product-card reveal" data-type="residential">
+              <div class="product-card-media">
+                <img src="/images/products/chair-annex.png" alt="Annex Lounge Chair" loading="lazy">
+                <span class="product-badge product-badge--red">New</span>
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-CH-001</p>
+                <h3 class="product-name">Annex Lounge Chair</h3>
+                <p class="product-desc">Deep-seated reading chair with solid white oak frame, eight-way hand-tied seat, and full arm upholstery. Available in natural or ebonised oak.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#c8b89a" title="Natural linen"></div>
+                  <div class="swatch" style="background:#6b5c4c" title="Tobacco boucle"></div>
+                  <div class="swatch" style="background:#2c2520" title="Charcoal mohair"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card reveal" data-type="residential">
+              <div class="product-card-media">
+                <img src="/images/products/chair-geary.png" alt="Geary Dining Chair" loading="lazy">
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-CH-002</p>
+                <h3 class="product-name">Geary Dining Chair</h3>
+                <p class="product-desc">Slender ash dining chair with a gently curved back rail and drop-in upholstered seat pad. Stackable. Sold individually or as a set of six.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#d4c5a9" title="Oat linen"></div>
+                  <div class="swatch" style="background:#8b7355" title="Caramel leather"></div>
+                  <div class="swatch" style="background:#1a1a1a" title="Black leather"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card reveal" data-type="residential">
+              <div class="product-card-media">
+                <img src="/images/products/chair-bellwoods.png" alt="Bellwoods Armchair" loading="lazy">
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-CH-003</p>
+                <h3 class="product-name">Bellwoods Armchair</h3>
+                <p class="product-desc">Mid-century influenced armchair with solid walnut arms and tapered legs. Tight-back construction. Cushion sold separately in any of our standard fabrics.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#c4a882" title="Warm cream"></div>
+                  <div class="swatch" style="background:#7a8c6e" title="Sage velvet"></div>
+                  <div class="swatch" style="background:#4a3728" title="Espresso boucle"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card reveal" data-type="hospitality">
+              <div class="product-card-media">
+                <img src="/images/products/chair-holloway.png" alt="Holloway Side Chair" loading="lazy">
+                <span class="product-badge product-badge--dark">Bestseller</span>
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-CH-004</p>
+                <h3 class="product-name">Holloway Side Chair</h3>
+                <p class="product-desc">Contract-grade side chair in solid beech. Certified for hospitality use. Full COM available. Minimum order 12 units — lead time 45 days.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#e8e0d4" title="Ivory muslin"></div>
+                  <div class="swatch" style="background:#a89070" title="Sand canvas"></div>
+                  <div class="swatch" style="background:#3d3530" title="Dark mocha"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- inline CTA -->
+          <div class="inline-cta reveal">
+            <div>
+              <p class="eyebrow" style="margin-bottom:.5rem">Don't see it?</p>
+              <p class="inline-cta-title">Custom briefs are <em>welcome.</em></p>
+              <p class="inline-cta-sub">We design from scratch — just send us a reference or a brief.</p>
+            </div>
+            <a href="/#contact" class="btn-r8">Send a brief <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- TABLES ───────────────────────────── -->
+        <div class="cat-section" id="cat-tables">
+          <div class="cat-section-head">
+            <h2>Tables</h2>
+            <span class="cat-section-count">2 pieces</span>
+          </div>
+          <div class="product-grid">
+
+            <article class="product-card reveal" data-type="residential">
+              <div class="product-card-media">
+                <img src="/images/products/table-geary.png" alt="Geary Dining Table" loading="lazy">
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-TB-001</p>
+                <h3 class="product-name">Geary Dining Table</h3>
+                <p class="product-desc">Solid white oak dining table with a book-matched top and hand-finished edges. Standard sizes 72 × 36 and 84 × 40. Custom widths available.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#d9c9a8" title="Natural white oak"></div>
+                  <div class="swatch" style="background:#8c7a5e" title="Smoke-stained oak"></div>
+                  <div class="swatch" style="background:#3b3028" title="Ebonised oak"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card reveal" data-type="hospitality">
+              <div class="product-card-media">
+                <img src="/images/products/table-bistro.png" alt="Bistro Table" loading="lazy">
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-TB-002</p>
+                <h3 class="product-name">Bistro Table</h3>
+                <p class="product-desc">Compact two-top in turned ash legs and a solid walnut top. Contract-rated. Suitable for indoor or covered-patio use. Pairs with the Holloway Side Chair.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#a0856a" title="Walnut top"></div>
+                  <div class="swatch" style="background:#c8b89a" title="Ash legs — natural"></div>
+                  <div class="swatch" style="background:#1c1c1c" title="Ash legs — ebonised"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- STORAGE ──────────────────────────── -->
+        <div class="cat-section" id="cat-storage">
+          <div class="cat-section-head">
+            <h2>Storage</h2>
+            <span class="cat-section-count">1 piece</span>
+          </div>
+          <div class="product-grid">
+
+            <article class="product-card reveal" data-type="residential">
+              <div class="product-card-media">
+                <img src="/images/products/sideboard-geary.png" alt="Geary Sideboard" loading="lazy">
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-ST-001</p>
+                <h3 class="product-name">Geary Sideboard</h3>
+                <p class="product-desc">Six-door sideboard in solid white oak with push-to-open hardware and adjustable interior shelving. 84 × 16 × 32 in. Custom widths from 60 to 120 in.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#d9c9a8" title="Natural white oak"></div>
+                  <div class="swatch" style="background:#b09070" title="Honey-stained oak"></div>
+                  <div class="swatch" style="background:#2a2420" title="Ebonised oak"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Quote on request</span>
+                  <a href="/#contact" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- PROJECTS ─────────────────────────── -->
+        <div class="cat-section" id="cat-projects">
+          <div class="cat-section-head">
+            <h2>Projects</h2>
+            <span class="cat-section-count">1 piece</span>
+          </div>
+          <div class="product-grid">
+
+            <article class="product-card reveal" data-type="hospitality">
+              <div class="product-card-media">
+                <img src="/images/products/project-hotel.png" alt="Hotel Lobby Suite" loading="lazy">
+                <span class="product-badge product-badge--dark">Commission</span>
+              </div>
+              <div class="product-card-body">
+                <p class="product-sku">R8-PR-001</p>
+                <h3 class="product-name">Hotel Lobby Suite</h3>
+                <p class="product-desc">Full lobby seating commission for a 120-room boutique hotel in Toronto. Includes four custom lounge chairs, two settees, and a reception sideboard in white oak and brass.</p>
+                <div class="product-swatches">
+                  <div class="swatch" style="background:#c8b89a" title="Natural white oak"></div>
+                  <div class="swatch" style="background:#b5965a" title="Brass hardware"></div>
+                  <div class="swatch" style="background:#8c7a6a" title="Stone bouclé"></div>
+                </div>
+                <div class="product-card-footer">
+                  <span class="product-price">Commission</span>
+                  <a href="/#contact" class="product-more">Enquire <i class="bi bi-arrow-right"></i></a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ───────────────────────────────────────────────────── -->
+<div class="cta-band">
+  <div class="container">
+    <div class="text-center" style="max-width:580px;margin:0 auto;position:relative">
+      <p class="eyebrow" style="justify-content:center;color:var(--c-red)">Start a project</p>
+      <h2 class="mt-3">Want something<br>built like this? <em>Let's talk.</em></h2>
+      <p class="mt-4">Every piece starts with a conversation. Tell us what you need and we'll send you a quote within 48 hours.</p>
+      <div class="d-flex align-items-center justify-content-center gap-3 mt-5">
+        <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/services.html" class="btn-outline" style="color:var(--c-bg);border-color:rgba(240,236,227,.2)">Our services</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
+      <div class="col-lg-4">
+        <a href="/" class="nav-logo mb-3"><img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"><span class="nav-logo-text">Red Eight Workshop</span></a>
+        <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-2">
+        <p class="footer-label">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="/products.html">Products</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/journal.html">Journal</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-3">
+        <p class="footer-label">Contact</p>
+        <address style="font-style:normal;font-size:.78rem;color:var(--c-mid);line-height:1.95">
+          Red Eight Workshop Inc.<br>Toronto, Ontario, Canada<br>
+          <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+        </address>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
+      <p class="footer-copy">&copy; <span id="yr"></span> Red Eight Workshop Inc. All rights reserved.</p>
+      <div class="d-flex align-items-center gap-2"><div style="width:1.4rem;height:2px;background:var(--c-red)"></div><span style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid)">Toronto, Canada</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const themeBtn = document.getElementById('themeBtn');
+  const html     = document.documentElement;
+  function applyTheme(t) {
+    html.dataset.theme = t;
+    localStorage.setItem('r8-theme', t);
+    themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+  }
+  applyTheme(localStorage.getItem('r8-theme') || 'light');
+  themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  const nav = document.getElementById('siteNav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  const toggle   = document.getElementById('navToggle');
+  const drawer   = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const dClose   = document.getElementById('drawerClose');
+  function openMob()  { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; toggle.querySelector('i').className='bi bi-x-lg'; }
+  function closeMob() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; toggle.querySelector('i').className='bi bi-list'; }
+  toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+  dClose.addEventListener('click', closeMob);
+  backdrop.addEventListener('click', closeMob);
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMob(); });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Category nav highlight on scroll
+  const sections = ['cat-chairs','cat-tables','cat-storage','cat-projects'];
+  const navLinks = document.querySelectorAll('#catNav a');
+  const sectionIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = document.querySelector(`#catNav a[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(id => { const el = document.getElementById(id); if (el) sectionIO.observe(el); });
+
+  // Type filter
+  document.getElementById('typeFilter').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.product-card').forEach(card => {
+      const show = f === 'all' || card.dataset.type === f;
+      card.style.opacity = show ? '1' : '0.2';
+      card.style.pointerEvents = show ? '' : 'none';
+      card.style.transition = 'opacity .35s ease';
+    });
+  });
+</script>
+</body>
+</html>
