@@ -1,90 +1,131 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const STATS = [
-  { value: "2009", label: "Founded in Toronto" },
-  { value: "100%", label: "Solid hardwood" },
-  { value: "8", label: "People on the bench" },
-  { value: "3–5 wks", label: "Typical lead time" },
+  { value: 420, suffix: "+", label: "Pieces built" },
+  { value: 11, suffix: "", label: "Years in the trade" },
+  { value: 8, suffix: "", label: "Craftspeople" },
 ];
+
+function CountUp({ target, suffix, active }: { target: number; suffix: string; active: boolean }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!active) return;
+    let start = 0;
+    const duration = 1400;
+    const step = Math.ceil(target / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [active, target]);
+
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
+}
 
 export default function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 border-t border-border overflow-hidden">
+    <section ref={ref} className="py-24 border-t border-border overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left — text */}
+          {/* LEFT — image */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
+            className="relative"
           >
-            <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">
-              The workshop
-            </p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground leading-tight mb-8">
-              Built by hand.<br />
-              Built to last.
-            </h2>
-            <div className="space-y-5 text-muted-foreground leading-relaxed">
-              <p>
-                Red Eight Workshop is a Toronto-based furniture studio. We
-                design and build bespoke hardwood furniture for residential
-                interiors, hospitality projects, and commercial spaces across
-                Canada.
-              </p>
-              <p>
-                Every piece that leaves this shop is built the same way —
-                mortise and tenon joints, hand-tied springs, full-grain
-                materials, hand-finished surfaces. We don't cut corners and we
-                don't use shortcuts that save time today and fail in three
-                years.
-              </p>
-              <p>
-                If you're looking for cheap and fast, we're not your shop. If
-                you're building something worth keeping, we'd like to talk.
-              </p>
+            <div className="aspect-[5/6] overflow-hidden">
+              <img
+                src="/images/about/workshop-team.png"
+                alt="Two craftsmen at work in the Red Eight workshop"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </div>
-            <a
-              href="#contact"
-              className="inline-block mt-10 text-sm font-bold tracking-widest uppercase text-primary border-b border-primary pb-1 hover:pb-0 transition-all"
-              data-testid="link-about-contact"
-            >
-              Get in touch
-            </a>
+            {/* Red frame accent */}
+            <div
+              className="absolute pointer-events-none border border-primary"
+              style={{
+                bottom: "-18px",
+                right: "-18px",
+                width: "60%",
+                height: "60%",
+                zIndex: -1,
+              }}
+            />
           </motion.div>
 
-          {/* Right — stats + accent */}
+          {/* RIGHT — text */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
           >
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary opacity-10" />
-              <div className="grid grid-cols-2 gap-px bg-border">
-                {STATS.map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                    className="bg-card p-8"
-                  >
-                    <div className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-16 h-1 bg-primary" />
+            <p className="text-xs font-mono tracking-widest text-primary mb-4">
+              03 · The workshop
+            </p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground leading-tight mb-6">
+              A small shop.{" "}
+              <em className="text-primary italic font-light">By design.</em>
+            </h2>
+
+            <div className="w-12 h-px bg-primary mb-6" />
+
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              Red Eight was started in 2014 by two upholsterers who'd spent
+              fifteen years working other people's brands. We wanted a shop
+              where every piece was touched by the same hands from the day the
+              lumber arrived to the day it was loaded on the truck.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8">
+              That's still how we work. Eight craftspeople. One floor. No
+              middlemen, no sub-contracted production, no shortcuts we
+              wouldn't put our names on.
+            </p>
+
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-7 py-4 border border-border text-sm font-bold tracking-widest uppercase text-foreground hover:border-primary hover:text-primary transition-colors"
+              data-testid="link-about-story"
+            >
+              The full story
+            </a>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-border">
+              {STATS.map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-1">
+                    <CountUp
+                      target={stat.value}
+                      suffix={stat.suffix}
+                      active={isInView}
+                    />
+                  </div>
+                  <p className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>

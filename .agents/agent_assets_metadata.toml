@@ -84,3 +84,27 @@ id = "iYpRf-PyFMy21E-k7toPz"
 uri = "file://artifacts/red-eight/public/images/blog/blog-hardwood.png"
 type = "image"
 title = "hardwood selection workshop"
+
+[[generated]]
+id = "WIHpD4Dg9hw0hEOWXHHbD"
+uri = "file://artifacts/red-eight/public/images/about/workshop-team.png"
+type = "image"
+title = "two craftsmen workshop team"
+
+[[generated]]
+id = "aVHoX20fFE2Y_igRKvnvT"
+uri = "file://artifacts/red-eight/public/images/services/custom-builds.png"
+type = "image"
+title = "custom furniture build workshop"
+
+[[generated]]
+id = "MUrbSnAG0Q3s4aBG_0FV6"
+uri = "file://artifacts/red-eight/public/images/services/restoration.png"
+type = "image"
+title = "frame restoration wingback"
+
+[[generated]]
+id = "gJb55pGxHaTPfgrt-cHqR"
+uri = "file://artifacts/red-eight/public/images/services/reupholstery.png"
+type = "image"
+title = "leather reupholstery craft"
