@@ -108,3 +108,27 @@ id = "gJb55pGxHaTPfgrt-cHqR"
 uri = "file://artifacts/red-eight/public/images/services/reupholstery.png"
 type = "image"
 title = "leather reupholstery craft"
+
+[[generated]]
+id = "oikdAcQFUcj0X-RSRx3gQ"
+uri = "file://artifacts/red-eight/public/images/slider/slide-1.png"
+type = "image"
+title = "workshop craftsman bench cinematic"
+
+[[generated]]
+id = "ByC9dhuuAHSG7YQNq2tmp"
+uri = "file://artifacts/red-eight/public/images/slider/slide-2.png"
+type = "image"
+title = "luxury estate dining room"
+
+[[generated]]
+id = "Z0vU3mukAi8nlvadMr73V"
+uri = "file://artifacts/red-eight/public/images/slider/slide-3.png"
+type = "image"
+title = "upscale restaurant custom furniture"
+
+[[generated]]
+id = "dCNRnoUrq91fws36mT-cd"
+uri = "file://artifacts/red-eight/public/images/slider/slide-4.png"
+type = "image"
+title = "hand planing hardwood dramatic"
