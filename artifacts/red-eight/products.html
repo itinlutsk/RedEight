@@ -87,8 +87,9 @@
     .catalogue-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
     @media (min-width: 1024px) { .catalogue-layout { grid-template-columns: 220px 1fr; gap: 3.5rem; } }
 
-    /* ── SIDEBAR ── */
+    /* ── SIDEBAR (desktop only) ── */
     .cat-sidebar { position: sticky; top: 6rem; }
+    @media (max-width: 1023px) { .cat-sidebar { display: none; } }
     .sidebar-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .8rem; }
 
     .filter-group { margin-bottom: 2rem; }
@@ -106,6 +107,36 @@
     .filter-btn.active { color: var(--c-ink); font-weight: 700; }
     .filter-btn.active::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--c-red); flex-shrink: 0; }
     .filter-count { font-size: .62rem; font-weight: 700; letter-spacing: .1em; padding: 2px 6px; background: var(--c-bg2); border: 1px solid var(--c-line); color: var(--c-mid); }
+
+    /* ── MOBILE FILTER BAR ── */
+    .mobile-filter-bar {
+      display: none;
+      position: sticky; top: 4.3rem; z-index: 90;
+      background: var(--c-bg); border-bottom: 1px solid var(--c-line);
+      padding: .6rem 0;
+    }
+    @media (max-width: 1023px) { .mobile-filter-bar { display: block; } }
+    .mfb-row { display: flex; gap: .5rem; overflow-x: auto; padding: .3rem 1rem; scrollbar-width: none; }
+    .mfb-row::-webkit-scrollbar { display: none; }
+    .mfb-row + .mfb-row { border-top: 1px solid var(--c-line); }
+    .mfb-label {
+      flex-shrink: 0; font-size: .55rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--c-mid); align-self: center;
+      padding-right: .4rem; border-right: 1px solid var(--c-line); margin-right: .2rem;
+      white-space: nowrap;
+    }
+    .mfb-chip {
+      flex-shrink: 0; background: none; border: 1px solid var(--c-line);
+      color: var(--c-mid); font-family: 'Inter', sans-serif;
+      font-size: .65rem; font-weight: 600; letter-spacing: .08em;
+      padding: .35rem .85rem; cursor: pointer; white-space: nowrap;
+      transition: border-color .18s, color .18s, background .18s;
+    }
+    .mfb-chip:hover { border-color: var(--c-ink); color: var(--c-ink); }
+    .mfb-chip.active { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+    .mfb-chip.active[data-cat]:not([data-cat="all"]),
+    .mfb-chip.active[data-type]:not([data-type="all"]) { background: var(--c-red); border-color: var(--c-red); color: #fff; }
+    .mfb-count { font-size: .58rem; opacity: .65; margin-left: .25rem; }
 
     /* ── PRODUCT GRID ── */
     .product-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
@@ -251,6 +282,25 @@
         <p class="page-hero-desc reveal reveal-d2">A selection of pieces we've designed and built. All made to order. Lead times from 30 days. Most are available in custom dimensions and finishes — ask.</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ── MOBILE FILTER BAR ──────────────────────────────────────────── -->
+<div class="mobile-filter-bar" id="mobileFilterBar">
+  <div class="mfb-row" id="mfbCatRow">
+    <span class="mfb-label">Category</span>
+    <button class="mfb-chip active" data-cat="all">All <span class="mfb-count" id="mfc-all">12</span></button>
+    <button class="mfb-chip" data-cat="chairs">Chairs <span class="mfb-count" id="mfc-chairs">6</span></button>
+    <button class="mfb-chip" data-cat="tables">Tables <span class="mfb-count" id="mfc-tables">3</span></button>
+    <button class="mfb-chip" data-cat="storage">Storage <span class="mfb-count" id="mfc-storage">2</span></button>
+    <button class="mfb-chip" data-cat="projects">Projects <span class="mfb-count" id="mfc-projects">1</span></button>
+  </div>
+  <div class="mfb-row" id="mfbTypeRow">
+    <span class="mfb-label">Made for</span>
+    <button class="mfb-chip active" data-type="all">All spaces</button>
+    <button class="mfb-chip" data-type="residential">Residential</button>
+    <button class="mfb-chip" data-type="hospitality">Hospitality</button>
+    <button class="mfb-chip" data-type="commercial">Commercial</button>
   </div>
 </div>
 
@@ -717,31 +767,59 @@
       return [1, '…', cur-1, cur, cur+1, '…', total];
     }
 
-    // Category filter
+    // ── SYNC helper: keep sidebar + mobile chips in sync ──────────────
+    function syncCat(val) {
+      document.querySelectorAll('#catFilter .filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.cat === val));
+      document.querySelectorAll('#mfbCatRow .mfb-chip').forEach(b =>
+        b.classList.toggle('active', b.dataset.cat === val));
+    }
+    function syncType(val) {
+      document.querySelectorAll('#typeFilter .filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.type === val));
+      document.querySelectorAll('#mfbTypeRow .mfb-chip').forEach(b =>
+        b.classList.toggle('active', b.dataset.type === val));
+    }
+
+    // Category filter — sidebar
     document.getElementById('catFilter').addEventListener('click', e => {
       const btn = e.target.closest('.filter-btn');
       if (!btn) return;
-      document.querySelectorAll('#catFilter .filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       activeCat = btn.dataset.cat;
+      syncCat(activeCat);
       render(1);
     });
 
-    // Type filter
+    // Type filter — sidebar
     document.getElementById('typeFilter').addEventListener('click', e => {
       const btn = e.target.closest('.filter-btn');
       if (!btn) return;
-      document.querySelectorAll('#typeFilter .filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       activeType = btn.dataset.type;
+      syncType(activeType);
+      render(1);
+    });
+
+    // Category filter — mobile chips
+    document.getElementById('mfbCatRow').addEventListener('click', e => {
+      const chip = e.target.closest('.mfb-chip');
+      if (!chip) return;
+      activeCat = chip.dataset.cat;
+      syncCat(activeCat);
+      render(1);
+    });
+
+    // Type filter — mobile chips
+    document.getElementById('mfbTypeRow').addEventListener('click', e => {
+      const chip = e.target.closest('.mfb-chip');
+      if (!chip) return;
+      activeType = chip.dataset.type;
+      syncType(activeType);
       render(1);
     });
 
     window.resetFilters = function () {
       activeCat = 'all'; activeType = 'all';
-      document.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.cat === 'all' || b.dataset.type === 'all');
-      });
+      syncCat('all'); syncType('all');
       render(1);
     };
 
