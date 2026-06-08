@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Geary — a solid-oak lounge chair with a curved arm-rail and webbed seat platform. Made to order in Toronto by Red Eight Workshop.">
+  <title>The Geary — Red Eight Workshop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root, [data-theme="dark"] {
+      --c-bg: #111111; --c-bg2: #181818; --c-ink: #f0ece3;
+      --c-mid: #888888; --c-line: #262626; --c-red: #E8231A;
+      --c-red-d: #b51b14; --c-nav: rgba(17,17,17,.92);
+    }
+    [data-theme="light"] {
+      --c-bg: #f5f0eb; --c-bg2: #ede8e1; --c-ink: #1a1a1a;
+      --c-mid: #666666; --c-line: #d5d0c8; --c-red: #E8231A;
+      --c-red-d: #b51b14; --c-nav: rgba(245,240,235,.95);
+    }
+    html { transition: background-color .3s, color .3s; scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--c-bg); color: var(--c-ink); -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: -0.025em; color: var(--c-ink); margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── UTILITIES ── */
+    .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-red); }
+    .eyebrow::before { content: ''; display: block; width: 1.4rem; height: 1.5px; background: var(--c-red); }
+
+    /* ── BUTTONS ── */
+    .btn-r8 { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .95rem 2rem; background: var(--c-red); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; width: 100%; }
+    .btn-r8:hover { background: var(--c-red-d); color: #fff; }
+    .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .95rem 2rem; background: transparent; color: var(--c-ink); font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; border: 1px solid var(--c-line); transition: border-color .2s, color .2s; width: 100%; }
+    .btn-outline:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* ── NAVBAR ── */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--c-nav); backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s; padding: 1.3rem 0; }
+    .site-nav.scrolled { border-bottom-color: var(--c-line); padding: .9rem 0; }
+    .theme-btn { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; background: transparent; border: 1px solid var(--c-line); color: var(--c-mid); font-size: 1.05rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; }
+    .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
+    .nav-logo { display: flex; align-items: center; gap: .85rem; }
+    .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
+    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--c-ink); }
+    @media (max-width: 767px) { .nav-links { display: none; } }
+    .nav-toggle { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.4rem; height: 2.4rem; display: none; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
+    @media (max-width: 767px) { .nav-toggle { display: flex; } }
+
+    /* ── SIDE DRAWER ── */
+    .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 1090; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .side-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px,90vw); background: var(--c-bg2); border-left: 1px solid var(--c-line); z-index: 1100; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+    .side-drawer.open { transform: none; }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--c-line); }
+    .drawer-close { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
+    .drawer-nav { padding: 1.5rem; display: flex; flex-direction: column; }
+    .drawer-nav a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .drawer-nav a:hover { color: var(--c-red); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb-bar { padding: 6rem 0 0; }
+    .breadcrumb-list { display: flex; align-items: center; gap: .5rem; list-style: none; padding: 0; margin: 0; }
+    .breadcrumb-list li { display: flex; align-items: center; gap: .5rem; font-size: .62rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--c-mid); }
+    .breadcrumb-list a { color: var(--c-mid); transition: color .2s; }
+    .breadcrumb-list a:hover { color: var(--c-red); }
+    .breadcrumb-list .bc-sep { font-size: .55rem; color: var(--c-line); }
+    .breadcrumb-list .bc-current { color: var(--c-ink); }
+
+    /* ── PRODUCT LAYOUT ── */
+    .product-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; padding: 2rem 0 6rem; align-items: start; }
+    @media (min-width: 992px) { .product-layout { grid-template-columns: 1fr 420px; gap: 4rem; } }
+
+    /* ── GALLERY ── */
+    .gallery-col { position: sticky; top: 6rem; }
+    .gallery-main {
+      position: relative; overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--c-bg2);
+      cursor: zoom-in;
+    }
+    .gallery-main-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: opacity .35s ease, transform .5s cubic-bezier(.25,.46,.45,.94);
+    }
+    .gallery-main-img.switching { opacity: 0; transform: scale(1.03); }
+    .gallery-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--c-red); color: #fff;
+      padding: .32rem .7rem; font-size: .58rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+      z-index: 2;
+    }
+    .gallery-counter {
+      position: absolute; bottom: 1rem; right: 1rem;
+      background: rgba(0,0,0,.55); color: #fff;
+      padding: .3rem .65rem; font-size: .6rem; font-weight: 700; letter-spacing: .1em;
+      backdrop-filter: blur(4px); z-index: 2;
+    }
+
+    .gallery-thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .gallery-thumb {
+      aspect-ratio: 1/1; overflow: hidden; cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color .2s;
+      background: var(--c-bg2);
+    }
+    .gallery-thumb.active { border-color: var(--c-red); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .gallery-thumb:hover img { transform: scale(1.08); }
+
+    /* ── PRODUCT INFO ── */
+    .info-col { display: flex; flex-direction: column; gap: 0; }
+    @media (min-width: 992px) { .info-col { position: sticky; top: 6rem; } }
+
+    .product-sku-line { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .6rem; }
+    .product-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.2rem; }
+    .product-desc { font-size: 1rem; color: var(--c-mid); line-height: 1.85; margin-bottom: 1.8rem; }
+
+    /* divider */
+    .info-divider { border: none; border-top: 1px solid var(--c-line); margin: 1.5rem 0; }
+
+    /* ── FINISH / COLOR ── */
+    .finish-label { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .9rem; }
+    .finish-name { display: inline; color: var(--c-ink); }
+    .finish-swatches { display: flex; gap: .6rem; margin-bottom: 1.5rem; }
+    .finish-swatch {
+      width: 2.2rem; height: 2.2rem; border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform .2s, border-color .2s;
+      outline: 2px solid transparent;
+      outline-offset: 3px;
+    }
+    .finish-swatch:hover { transform: scale(1.12); }
+    .finish-swatch.active { border-color: var(--c-bg); outline-color: var(--c-ink); }
+
+    /* ── LEAD TIME ── */
+    .lead-time { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: var(--c-bg2); border: 1px solid var(--c-line); margin-bottom: 1.5rem; }
+    .lead-time i { font-size: 1rem; color: var(--c-red); flex-shrink: 0; }
+    .lead-time-text { font-size: .78rem; color: var(--c-mid); line-height: 1.5; }
+    .lead-time-text strong { color: var(--c-ink); }
+
+    /* ── CTA BUTTONS ── */
+    .cta-stack { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.5rem; }
+
+    /* ── SHARE ── */
+    .share-row { display: flex; align-items: center; gap: .8rem; }
+    .share-label { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); }
+    .share-icon { width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border: 1px solid var(--c-line); color: var(--c-mid); font-size: .9rem; transition: border-color .2s, color .2s; cursor: pointer; }
+    .share-icon:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* ── SPECS SECTION ── */
+    .specs-section { padding: 5rem 0; border-top: 1px solid var(--c-line); }
+    .specs-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    @media (min-width: 768px) { .specs-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .specs-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .spec-group-title { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--c-line); }
+    .spec-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid var(--c-line); }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-size: .78rem; color: var(--c-mid); }
+    .spec-val { font-size: .78rem; font-weight: 600; color: var(--c-ink); text-align: right; }
+
+    /* ── RELATED ── */
+    .related-section { padding: 5rem 0; border-top: 1px solid var(--c-line); }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2.5rem; }
+    .section-head h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+    .section-head a { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+    .section-head a:hover { color: var(--c-red); }
+
+    .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(4, 1fr); } }
+    .related-card { background: var(--c-bg2); border: 1px solid var(--c-line); display: flex; flex-direction: column; transition: border-color .25s, transform .3s; }
+    .related-card:hover { border-color: var(--c-red); transform: translateY(-3px); }
+    .related-card-img { aspect-ratio: 4/5; overflow: hidden; }
+    .related-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .related-card:hover .related-card-img img { transform: scale(1.05); }
+    .related-card-body { padding: .9rem 1rem; }
+    .related-card-sku { font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .2rem; }
+    .related-card-name { font-size: .9rem; font-weight: 800; line-height: 1.2; margin-bottom: .5rem; }
+    .related-card-link { font-size: .6rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--c-mid); display: flex; align-items: center; gap: .25rem; transition: color .2s; }
+    .related-card:hover .related-card-link { color: var(--c-red); }
+
+    /* ── CTA BAND ── */
+    .cta-band { background: var(--c-ink); color: var(--c-bg); padding: 5.5rem 0; position: relative; overflow: hidden; }
+    .cta-band::before { content: ''; position: absolute; top: -50%; left: -8%; width: 55%; height: 200%; background: radial-gradient(ellipse, rgba(232,35,26,.18) 0%, transparent 60%); pointer-events: none; }
+    .cta-band h2 { color: var(--c-bg); font-size: clamp(1.9rem, 4.5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; }
+    .cta-band h2 em { color: var(--c-red); font-style: normal; }
+    .cta-band p { color: rgba(240,236,227,.5); max-width: 44ch; margin: 0 auto; font-size: 1.05rem; line-height: 1.8; }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--c-bg2); border-top: 1px solid var(--c-line); padding: 3.5rem 0 1.8rem; }
+    .footer-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .9rem; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li + li { margin-top: .45rem; }
+    .footer-links a { font-size: 1rem; color: var(--c-mid); transition: color .2s; }
+    .footer-links a:hover { color: var(--c-ink); }
+    .footer-copy { font-size: .62rem; font-weight: 600; letter-spacing: .1em; color: var(--c-mid); margin: 0; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── LIGHTBOX ── */
+    .lb-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,10,.96); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .lb-overlay.lb-open { opacity: 1; pointer-events: all; }
+    .lb-stage { position: relative; max-width: min(90vw, 1100px); max-height: 90vh; display: flex; align-items: center; justify-content: center; }
+    .lb-img { max-width: 100%; max-height: 90vh; object-fit: contain; display: block; transform: scale(.94); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .lb-overlay.lb-open .lb-img { transform: scale(1); }
+    .lb-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: #fff; width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: background .2s; backdrop-filter: blur(6px); z-index: 2; }
+    .lb-btn:hover { background: rgba(255,255,255,.18); }
+    .lb-prev { left: -4.5rem; }
+    .lb-next { right: -4.5rem; }
+    .lb-close { position: fixed; top: 1.5rem; right: 1.8rem; background: none; border: none; color: rgba(255,255,255,.6); font-size: 1.5rem; cursor: pointer; z-index: 10000; transition: color .2s; }
+    .lb-close:hover { color: #fff; }
+    .lb-dots { position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%); display: flex; gap: .5rem; }
+    .lb-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: background .2s, transform .2s; border: none; }
+    .lb-dot.active { background: #fff; transform: scale(1.4); }
+    @media (max-width: 767px) { .lb-prev { left: .5rem; } .lb-next { right: .5rem; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/" class="nav-logo">
+        <img src="/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Red Eight Workshop</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/products.html" class="active">Products</a></li>
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/journal.html">Journal</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── LIGHTBOX ───────────────────────────────────────────────────── -->
+<div class="lb-overlay" id="lbOverlay">
+  <button class="lb-close" id="lbClose"><i class="bi bi-x-lg"></i></button>
+  <div class="lb-stage">
+    <button class="lb-btn lb-prev" id="lbPrev"><i class="bi bi-chevron-left"></i></button>
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <button class="lb-btn lb-next" id="lbNext"><i class="bi bi-chevron-right"></i></button>
+  </div>
+  <div class="lb-dots" id="lbDots"></div>
+</div>
+
+<!-- ── SIDE DRAWER ─────────────────────────────────────────────────── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="side-drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <a href="/" class="nav-logo" onclick="closeMob()">
+      <img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Red Eight Workshop</span>
+    </a>
+    <button class="drawer-close" id="drawerClose"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="/products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+    <a href="/services.html" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+    <a href="/journal.html"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+    <a href="/#contact"      onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+  </nav>
+</aside>
+
+<!-- ── BREADCRUMB ─────────────────────────────────────────────────── -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb-list">
+      <li><a href="/">Home</a></li>
+      <li><span class="bc-sep"><i class="bi bi-chevron-right"></i></span></li>
+      <li><a href="/products.html">Products</a></li>
+      <li><span class="bc-sep"><i class="bi bi-chevron-right"></i></span></li>
+      <li><span class="bc-current">The Geary</span></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── PRODUCT ────────────────────────────────────────────────────── -->
+<div class="container">
+  <div class="product-layout">
+
+    <!-- GALLERY COLUMN -->
+    <div class="gallery-col">
+      <div class="gallery-main reveal" id="galleryMain">
+        <img class="gallery-main-img" id="mainImg"
+          src="/images/products/chair-annex.png"
+          alt="The Geary — main view">
+        <span class="gallery-badge">Bestseller</span>
+        <span class="gallery-counter" id="galleryCounter">1 / 4</span>
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs">
+        <div class="gallery-thumb active" data-index="0">
+          <img src="/images/products/chair-annex.png"    alt="The Geary view 1">
+        </div>
+        <div class="gallery-thumb" data-index="1">
+          <img src="/images/products/chair-geary.png"    alt="The Geary view 2">
+        </div>
+        <div class="gallery-thumb" data-index="2">
+          <img src="/images/products/chair-bellwoods.png" alt="The Geary view 3">
+        </div>
+        <div class="gallery-thumb" data-index="3">
+          <img src="/images/products/chair-holloway.png"  alt="The Geary view 4">
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO COLUMN -->
+    <div class="info-col reveal">
+
+      <p class="product-sku-line">No. R8-101 · Armchair</p>
+      <h1 class="product-title">The Geary</h1>
+      <p class="product-desc">A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise &amp; tenon joinery, hand-finished.</p>
+
+      <hr class="info-divider">
+
+      <!-- FINISH -->
+      <p class="finish-label">Finish — <span class="finish-name" id="finishName">Linen Sand</span></p>
+      <div class="finish-swatches" id="finishSwatches">
+        <button class="finish-swatch active" data-color="#C4A882" data-name="Linen Sand"
+          style="background:#C4A882" aria-label="Linen Sand"></button>
+        <button class="finish-swatch" data-color="#2C2520" data-name="Ebonised Oak"
+          style="background:#2C2520" aria-label="Ebonised Oak"></button>
+        <button class="finish-swatch" data-color="#8B6F47" data-name="Smoked Walnut"
+          style="background:#8B6F47" aria-label="Smoked Walnut"></button>
+        <button class="finish-swatch" data-color="#1F1D1B" data-name="Blackened Ash"
+          style="background:#1F1D1B" aria-label="Blackened Ash"></button>
+      </div>
+
+      <hr class="info-divider">
+
+      <!-- LEAD TIME -->
+      <div class="lead-time">
+        <i class="bi bi-clock"></i>
+        <p class="lead-time-text">Lead time <strong>30–45 days</strong> from confirmed order. Shipping within Canada included. International shipping available on request.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-stack">
+        <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/#contact" class="btn-outline">Request samples</a>
+      </div>
+
+      <hr class="info-divider">
+
+      <!-- SHARE -->
+      <div class="share-row">
+        <span class="share-label">Share</span>
+        <a href="#" class="share-icon" title="Pinterest"><i class="bi bi-pinterest"></i></a>
+        <a href="#" class="share-icon" title="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+        <button class="share-icon" id="copyLinkBtn" title="Copy link"><i class="bi bi-link-45deg"></i></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── SPECS ──────────────────────────────────────────────────────── -->
+<div class="specs-section">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-5">
+      <p class="eyebrow">Specifications</p>
+    </div>
+    <div class="specs-grid reveal">
+      <div>
+        <p class="spec-group-title">Dimensions</p>
+        <div class="spec-row"><span class="spec-key">Width</span><span class="spec-val">29 in (74 cm)</span></div>
+        <div class="spec-row"><span class="spec-key">Depth</span><span class="spec-val">32 in (81 cm)</span></div>
+        <div class="spec-row"><span class="spec-key">Height</span><span class="spec-val">31 in (79 cm)</span></div>
+        <div class="spec-row"><span class="spec-key">Seat height</span><span class="spec-val">17 in (43 cm)</span></div>
+        <div class="spec-row"><span class="spec-key">Arm height</span><span class="spec-val">24 in (61 cm)</span></div>
+      </div>
+      <div>
+        <p class="spec-group-title">Materials</p>
+        <div class="spec-row"><span class="spec-key">Frame</span><span class="spec-val">Solid white oak</span></div>
+        <div class="spec-row"><span class="spec-key">Joinery</span><span class="spec-val">Mortise &amp; tenon</span></div>
+        <div class="spec-row"><span class="spec-key">Seat platform</span><span class="spec-val">Webbed solid oak</span></div>
+        <div class="spec-row"><span class="spec-key">Cushion fill</span><span class="spec-val">HR foam + down wrap</span></div>
+        <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">28 lb (13 kg)</span></div>
+      </div>
+      <div>
+        <p class="spec-group-title">Details</p>
+        <div class="spec-row"><span class="spec-key">Finish options</span><span class="spec-val">8 standard</span></div>
+        <div class="spec-row"><span class="spec-key">COM accepted</span><span class="spec-val">Yes</span></div>
+        <div class="spec-row"><span class="spec-key">Custom dimensions</span><span class="spec-val">Available</span></div>
+        <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">30–45 days</span></div>
+        <div class="spec-row"><span class="spec-key">Country of origin</span><span class="spec-val">Canada</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RELATED PRODUCTS ───────────────────────────────────────────── -->
+<div class="related-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Related pieces</h2>
+      <a href="/products.html">View all <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="related-grid">
+
+      <a href="/product-the-geary.html" class="related-card reveal">
+        <div class="related-card-img">
+          <img src="/images/products/chair-bellwoods.png" alt="Bellwoods Armchair" loading="lazy">
+        </div>
+        <div class="related-card-body">
+          <p class="related-card-sku">R8-CH-003</p>
+          <h3 class="related-card-name">Bellwoods Armchair</h3>
+          <span class="related-card-link">Details <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <a href="/product-the-geary.html" class="related-card reveal">
+        <div class="related-card-img">
+          <img src="/images/products/chair-holloway.png" alt="Holloway Side Chair" loading="lazy">
+        </div>
+        <div class="related-card-body">
+          <p class="related-card-sku">R8-CH-004</p>
+          <h3 class="related-card-name">Holloway Side Chair</h3>
+          <span class="related-card-link">Details <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <a href="/product-the-geary.html" class="related-card reveal">
+        <div class="related-card-img">
+          <img src="/images/products/table-geary.png" alt="Geary Dining Table" loading="lazy">
+        </div>
+        <div class="related-card-body">
+          <p class="related-card-sku">R8-TB-001</p>
+          <h3 class="related-card-name">Geary Dining Table</h3>
+          <span class="related-card-link">Details <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <a href="/product-the-geary.html" class="related-card reveal">
+        <div class="related-card-img">
+          <img src="/images/products/sideboard-geary.png" alt="Geary Sideboard" loading="lazy">
+        </div>
+        <div class="related-card-body">
+          <p class="related-card-sku">R8-ST-001</p>
+          <h3 class="related-card-name">Geary Sideboard</h3>
+          <span class="related-card-link">Details <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA BAND ───────────────────────────────────────────────────── -->
+<div class="cta-band">
+  <div class="container">
+    <div class="text-center" style="max-width:580px;margin:0 auto;position:relative">
+      <p class="eyebrow" style="justify-content:center;color:var(--c-red)">Made to order</p>
+      <h2 class="mt-3">Custom dimensions,<br>custom finishes. <em>Just ask.</em></h2>
+      <p class="mt-4">Every piece can be adapted — size, fabric, finish, joinery detail. Send us a brief and we'll respond within 48 hours.</p>
+      <div class="d-flex align-items-center justify-content-center gap-3 mt-5">
+        <a href="/#contact" class="btn-r8" style="width:auto">Request a quote <i class="bi bi-arrow-right"></i></a>
+        <a href="/services.html" class="btn-outline" style="width:auto;color:var(--c-bg);border-color:rgba(240,236,227,.2)">Our services</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
+      <div class="col-lg-4">
+        <a href="/" class="nav-logo mb-3"><img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"><span class="nav-logo-text">Red Eight Workshop</span></a>
+        <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-2">
+        <p class="footer-label">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="/products.html">Products</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/journal.html">Journal</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-3">
+        <p class="footer-label">Contact</p>
+        <address style="font-style:normal;font-size:.78rem;color:var(--c-mid);line-height:1.95">
+          Red Eight Workshop Inc.<br>Toronto, Ontario, Canada<br>
+          <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+        </address>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
+      <p class="footer-copy">&copy; <span id="yr"></span> Red Eight Workshop Inc. All rights reserved.</p>
+      <div class="d-flex align-items-center gap-2"><div style="width:1.4rem;height:2px;background:var(--c-red)"></div><span style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid)">Toronto, Canada</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  const html     = document.documentElement;
+  function applyTheme(t) {
+    html.dataset.theme = t;
+    localStorage.setItem('r8-theme', t);
+    themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+  }
+  applyTheme(localStorage.getItem('r8-theme') || 'light');
+  themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  // Nav scroll
+  const nav = document.getElementById('siteNav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // Drawer
+  const toggle   = document.getElementById('navToggle');
+  const drawer   = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const dClose   = document.getElementById('drawerClose');
+  function openMob()  { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMob() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+  dClose.addEventListener('click', closeMob);
+  backdrop.addEventListener('click', closeMob);
+
+  // Reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── GALLERY ───────────────────────────────────────────────────────
+  const thumbs  = Array.from(document.querySelectorAll('.gallery-thumb'));
+  const mainImg = document.getElementById('mainImg');
+  const counter = document.getElementById('galleryCounter');
+  let currentIdx = 0;
+
+  function setImage(idx) {
+    const thumb = thumbs[idx];
+    currentIdx = idx;
+
+    mainImg.classList.add('switching');
+    setTimeout(() => {
+      mainImg.src = thumb.querySelector('img').src;
+      mainImg.alt = thumb.querySelector('img').alt;
+      mainImg.classList.remove('switching');
+    }, 300);
+
+    thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${thumbs.length}`;
+    lbUpdate();
+  }
+
+  thumbs.forEach((t, i) => t.addEventListener('click', () => setImage(i)));
+
+  // Main image click → lightbox
+  document.getElementById('galleryMain').addEventListener('click', () => lbOpen(currentIdx));
+
+  // ── LIGHTBOX ──────────────────────────────────────────────────────
+  const lbOverlay = document.getElementById('lbOverlay');
+  const lbImgEl   = document.getElementById('lbImg');
+  const lbDotsEl  = document.getElementById('lbDots');
+  let lbIdx = 0;
+
+  // build dots
+  thumbs.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'lb-dot'; d.addEventListener('click', () => lbShow(i));
+    lbDotsEl.appendChild(d);
+  });
+
+  function lbShow(idx) {
+    lbIdx = (idx + thumbs.length) % thumbs.length;
+    lbImgEl.src = thumbs[lbIdx].querySelector('img').src;
+    lbImgEl.alt = thumbs[lbIdx].querySelector('img').alt;
+    lbDotsEl.querySelectorAll('.lb-dot').forEach((d, i) => d.classList.toggle('active', i === lbIdx));
+  }
+  function lbOpen(idx) {
+    lbShow(idx);
+    lbOverlay.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function lbClose() {
+    lbOverlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  }
+  function lbUpdate() {
+    lbDotsEl.querySelectorAll('.lb-dot').forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+  }
+
+  document.getElementById('lbClose').addEventListener('click', lbClose);
+  document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
+  document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
+  lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) lbClose(); });
+  document.addEventListener('keydown', e => {
+    if (!lbOverlay.classList.contains('lb-open')) return;
+    if (e.key === 'ArrowLeft')  lbShow(lbIdx - 1);
+    if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+    if (e.key === 'Escape')     lbClose();
+  });
+  let lbTouchX = 0;
+  lbOverlay.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lbOverlay.addEventListener('touchend',   e => { const dx = e.changedTouches[0].clientX - lbTouchX; if (Math.abs(dx) > 50) dx < 0 ? lbShow(lbIdx+1) : lbShow(lbIdx-1); });
+
+  // ── FINISH SWATCHES ───────────────────────────────────────────────
+  const finishSwatches = document.querySelectorAll('.finish-swatch');
+  const finishName     = document.getElementById('finishName');
+  finishSwatches.forEach(sw => {
+    sw.addEventListener('click', () => {
+      finishSwatches.forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      finishName.textContent = sw.dataset.name;
+    });
+  });
+
+  // ── COPY LINK ─────────────────────────────────────────────────────
+  document.getElementById('copyLinkBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const btn = document.getElementById('copyLinkBtn');
+      btn.innerHTML = '<i class="bi bi-check2"></i>';
+      setTimeout(() => { btn.innerHTML = '<i class="bi bi-link-45deg"></i>'; }, 2000);
+    });
+  });
+</script>
+</body>
+</html>
