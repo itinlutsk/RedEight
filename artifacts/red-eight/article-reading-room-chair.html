@@ -115,24 +115,117 @@
     /* ── PHOTO GALLERY ── */
     .photo-gallery { margin: 2.8rem 0; }
     .photo-gallery-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: 1rem; }
-    .gallery-grid { display: grid; gap: .75rem; }
-    .gallery-grid.count-1 { grid-template-columns: 1fr; }
-    .gallery-grid.count-2 { grid-template-columns: 1fr 1fr; }
-    .gallery-grid.count-3 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
-    .gallery-grid.count-3 .gallery-item:first-child { grid-row: span 2; }
-    .gallery-grid.count-4 { grid-template-columns: 1fr 1fr; }
-    .gallery-grid.count-5 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto; }
-    .gallery-grid.count-5 .gallery-item:first-child { grid-column: span 2; }
-    .gallery-grid.count-6 { grid-template-columns: repeat(3, 1fr); }
-    .gallery-grid.count-many { grid-template-columns: 1fr 1fr; }
-    .gallery-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }
-    .gallery-grid.count-1 .gallery-item { aspect-ratio: 16/9; }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.25,.46,.45,.94); }
-    .gallery-item:hover img { transform: scale(1.04); }
-    @media (max-width: 575px) {
-      .gallery-grid { grid-template-columns: 1fr 1fr !important; }
-      .gallery-grid .gallery-item:first-child { grid-column: auto; grid-row: auto; }
-      .gallery-grid.count-1 { grid-template-columns: 1fr !important; }
+
+    /* Editorial grid: big + 4 small + wide */
+    .gallery-grid {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: 260px 220px;
+    }
+    .gallery-item { position: relative; overflow: hidden; cursor: zoom-in; }
+    .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 1; }
+    .gallery-item:nth-child(2) { grid-column: span 3; grid-row: span 1; }
+    .gallery-item:nth-child(3) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(6) { grid-column: span 2; grid-row: span 1; }
+
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.25,.46,.45,.94); display: block; }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* hover overlay */
+    .gallery-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background .3s;
+      pointer-events: none;
+    }
+    .gallery-item:hover::after { background: rgba(0,0,0,.25); }
+    .gallery-zoom-icon {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(.6);
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      color: #fff;
+      font-size: 1.6rem;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .gallery-item:hover .gallery-zoom-icon { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+
+    @media (max-width: 767px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item { aspect-ratio: 4/3; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(2),
+      .gallery-item:nth-child(3), .gallery-item:nth-child(4),
+      .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
+        grid-column: span 1; grid-row: span 1;
+      }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+    }
+
+    /* ── LIGHTBOX ── */
+    .lb-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,10,10,.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s cubic-bezier(.4,0,.2,1);
+    }
+    .lb-overlay.lb-open { opacity: 1; pointer-events: all; }
+    .lb-stage {
+      position: relative; max-width: min(90vw, 1200px); max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lb-img {
+      max-width: 100%; max-height: 88vh;
+      object-fit: contain;
+      border: none; display: block;
+      transform: scale(.94);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    .lb-overlay.lb-open .lb-img { transform: scale(1); }
+    .lb-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff; width: 3rem; height: 3rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer;
+      transition: background .2s;
+      backdrop-filter: blur(6px); z-index: 2;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,.18); }
+    .lb-prev { left: -4.5rem; }
+    .lb-next { right: -4.5rem; }
+    .lb-close {
+      position: fixed; top: 1.5rem; right: 1.8rem;
+      background: none; border: none;
+      color: rgba(255,255,255,.6); font-size: 1.5rem;
+      cursor: pointer; z-index: 10000;
+      transition: color .2s;
+    }
+    .lb-close:hover { color: #fff; }
+    .lb-counter {
+      position: fixed; bottom: 1.6rem; left: 50%; transform: translateX(-50%);
+      font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+    }
+    .lb-dots {
+      position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: .5rem; align-items: center;
+    }
+    .lb-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,.25); transition: background .2s, transform .2s;
+      cursor: pointer;
+    }
+    .lb-dot.active { background: #fff; transform: scale(1.4); }
+    @media (max-width: 767px) {
+      .lb-prev { left: .5rem; }
+      .lb-next { right: .5rem; }
     }
 
     /* ── SHARE BAR ── */
@@ -194,6 +287,17 @@
 </nav>
 
 <!-- ── SIDE DRAWER ────────────────────────────────────────────────── -->
+<!-- ── LIGHTBOX ─────────────────────────────────────────────────── -->
+<div class="lb-overlay" id="lbOverlay" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+  <div class="lb-stage">
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous"><i class="bi bi-chevron-left"></i></button>
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Next"><i class="bi bi-chevron-right"></i></button>
+  </div>
+  <div class="lb-dots" id="lbDots"></div>
+</div>
+
 <div class="drawer-backdrop" id="drawerBackdrop"></div>
 <aside class="side-drawer" id="sideDrawer" aria-label="Navigation menu">
   <div class="drawer-header">
@@ -268,24 +372,30 @@
         <!-- PHOTO GALLERY — imageFiles[] -->
         <div class="photo-gallery reveal">
           <p class="photo-gallery-label">Photos</p>
-          <div class="gallery-grid count-6">
-            <div class="gallery-item">
+          <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item" data-index="0">
               <img src="/images/blog/blog-hardwood.png" alt="Workshop — hardwood selection">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-index="1">
               <img src="/images/blog/blog-leather.png" alt="Workshop — leather work">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-index="2">
               <img src="/images/blog/blog-springs.png" alt="Workshop — spring tying">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-index="3">
               <img src="/images/blog/blog-restoration.png" alt="Workshop — restoration">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-index="4">
               <img src="/images/services/custom-builds.png" alt="Workshop — custom build">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-index="5">
               <img src="/images/about/workshop-team.png" alt="Workshop — team">
+              <span class="gallery-zoom-icon"><i class="bi bi-zoom-in"></i></span>
             </div>
           </div>
         </div>
@@ -411,6 +521,78 @@
       });
     }
   });
+
+  // ── LIGHTBOX ──────────────────────────────────────────────────────
+  (function () {
+    const items   = Array.from(document.querySelectorAll('#galleryGrid .gallery-item'));
+    const overlay = document.getElementById('lbOverlay');
+    const lbImg   = document.getElementById('lbImg');
+    const lbPrev  = document.getElementById('lbPrev');
+    const lbNext  = document.getElementById('lbNext');
+    const lbClose = document.getElementById('lbClose');
+    const lbDots  = document.getElementById('lbDots');
+    let current   = 0;
+
+    // Build dot indicators
+    items.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'lb-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+      d.addEventListener('click', () => show(i));
+      lbDots.appendChild(d);
+    });
+
+    function updateDots(idx) {
+      lbDots.querySelectorAll('.lb-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    function show(idx) {
+      current = (idx + items.length) % items.length;
+      const img = items[current].querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      updateDots(current);
+      // re-trigger scale animation
+      lbImg.style.transition = 'none';
+      lbImg.style.transform  = 'scale(.93)';
+      requestAnimationFrame(() => {
+        lbImg.style.transition = '';
+        lbImg.style.transform  = '';
+      });
+    }
+
+    function open(idx) {
+      show(idx);
+      overlay.classList.add('lb-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.classList.remove('lb-open');
+      document.body.style.overflow = '';
+    }
+
+    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    lbClose.addEventListener('click', close);
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    lbPrev.addEventListener('click', e => { e.stopPropagation(); show(current - 1); });
+    lbNext.addEventListener('click', e => { e.stopPropagation(); show(current + 1); });
+
+    document.addEventListener('keydown', e => {
+      if (!overlay.classList.contains('lb-open')) return;
+      if (e.key === 'ArrowLeft')  show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+      if (e.key === 'Escape')     close();
+    });
+
+    // Touch swipe
+    let touchX = 0;
+    overlay.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    overlay.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) dx < 0 ? show(current + 1) : show(current - 1);
+    });
+  })();
 </script>
 </body>
 </html>
