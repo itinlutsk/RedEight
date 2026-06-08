@@ -1,0 +1,22 @@
+[
+  {
+    "id": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
+    "name": "Residential"
+  },
+  {
+    "id": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
+    "name": "Restaurant"
+  },
+  {
+    "id": "d7a4b9c1-8f2e-4d5a-9b7c-1e2f3a4b5c6d",
+    "name": "Hotel"
+  },
+  {
+    "id": "e9b2c3d4-1f5a-4c7b-8d9e-2a3b4c5d6e7f",
+    "name": "Commercial"
+  },
+  {
+    "id": "95fc979c-ba07-4187-a7fd-f9ba0d7a1da7",
+    "name": "eeeeeeeee"
+  }
+]

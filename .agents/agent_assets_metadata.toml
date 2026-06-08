@@ -1,0 +1,86 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "TEEJgR3krsSf8Yu_6kUmg"
+uri = "file://artifacts/red-eight/public/images/products/chair-geary.png"
+type = "image"
+title = "geary lounge chair"
+
+[[generated]]
+id = "cE0DGZ1weTn2nXVJ3nXCn"
+uri = "file://artifacts/red-eight/public/images/products/chair-holloway.png"
+type = "image"
+title = "holloway wingback chair"
+
+[[generated]]
+id = "VpnNP71E12YBZKJTHE3gG"
+uri = "file://artifacts/red-eight/public/images/products/chair-bellwoods.png"
+type = "image"
+title = "bellwoods dining chair"
+
+[[generated]]
+id = "hmp4BtVhc4bpxwzvz6VjN"
+uri = "file://artifacts/red-eight/public/images/products/chair-annex.png"
+type = "image"
+title = "annex club chair"
+
+[[generated]]
+id = "k0TLORj7fovz2UN38V0QE"
+uri = "file://artifacts/red-eight/public/images/products/table-geary.png"
+type = "image"
+title = "geary walnut table"
+
+[[generated]]
+id = "SSQvp-IX2YlesaqfxRGt7"
+uri = "file://artifacts/red-eight/public/images/products/table-bistro.png"
+type = "image"
+title = "bistro round table"
+
+[[generated]]
+id = "SNTAeK5RfZwyMlFkCe8_F"
+uri = "file://artifacts/red-eight/public/images/products/sideboard-geary.png"
+type = "image"
+title = "geary sideboard"
+
+[[generated]]
+id = "bz4Ov4YxPqmiKv9KiT4fy"
+uri = "file://artifacts/red-eight/public/images/hero/hero-1.png"
+type = "image"
+title = "workshop hero scene"
+
+[[generated]]
+id = "dzfsSQw2XPBMNvV4EB-e4"
+uri = "file://artifacts/red-eight/public/images/hero/hero-2.png"
+type = "image"
+title = "luxury dining room estate"
+
+[[generated]]
+id = "tWhx2yv6sCZJvDoB04TF6"
+uri = "file://artifacts/red-eight/public/images/hero/hero-3.png"
+type = "image"
+title = "restaurant interior custom furniture"
+
+[[generated]]
+id = "GkQk01h8eQq-lkFdW9dW2"
+uri = "file://artifacts/red-eight/public/images/blog/blog-leather.png"
+type = "image"
+title = "leather upholstery craftsman"
+
+[[generated]]
+id = "L49DSqQLVVWl77ip5cIXN"
+uri = "file://artifacts/red-eight/public/images/blog/blog-springs.png"
+type = "image"
+title = "hand tied springs workshop"
+
+[[generated]]
+id = "eP0dtyhamczhicTJIKbXy"
+uri = "file://artifacts/red-eight/public/images/blog/blog-restoration.png"
+type = "image"
+title = "chair restoration workshop"
+
+[[generated]]
+id = "iYpRf-PyFMy21E-k7toPz"
+uri = "file://artifacts/red-eight/public/images/blog/blog-hardwood.png"
+type = "image"
+title = "hardwood selection workshop"
