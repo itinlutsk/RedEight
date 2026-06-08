@@ -159,21 +159,104 @@
     }
     .nav-links a:hover { color: var(--c-ink); }
 
-    .nav-toggle { display: none; background: none; border: none; color: var(--c-ink); font-size: 1.35rem; cursor: pointer; padding: .15rem; }
-
-    .mobile-nav { display: none; border-top: 1px solid var(--c-line); }
-    .mobile-nav.open { display: block; }
-    .mobile-nav a {
-      display: block; padding: .8rem 1.5rem;
-      font-size: .65rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s;
-    }
-    .mobile-nav a:hover { color: var(--c-ink); }
+    .nav-toggle { display: none; background: none; border: none; color: var(--c-ink); font-size: 1.5rem; cursor: pointer; padding: .15rem; line-height: 1; }
 
     @media (max-width: 767px) {
       .nav-links { display: none; }
       .nav-toggle { display: block; }
     }
+
+    /* ── SIDE DRAWER ── */
+    .drawer-backdrop {
+      position: fixed; inset: 0; z-index: 1100;
+      background: rgba(0,0,0,.55);
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .side-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 1200;
+      width: min(340px, 88vw);
+      background: var(--c-bg);
+      border-left: 1px solid var(--c-line);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto;
+    }
+    .side-drawer.open { transform: translateX(0); }
+
+    /* drawer header */
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--c-line);
+      flex-shrink: 0;
+    }
+    .drawer-close {
+      background: none; border: 1px solid var(--c-line);
+      color: var(--c-mid); font-size: 1.1rem;
+      width: 2.2rem; height: 2.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: border-color .2s, color .2s;
+    }
+    .drawer-close:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* drawer nav links */
+    .drawer-nav { padding: 1.6rem 1.4rem; border-bottom: 1px solid var(--c-line); }
+    .drawer-nav a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .95rem 0;
+      font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em;
+      color: var(--c-ink); border-bottom: 1px solid var(--c-line);
+      transition: color .2s;
+    }
+    .drawer-nav a:last-child { border-bottom: none; }
+    .drawer-nav a:hover { color: var(--c-red); }
+    .drawer-nav a i { font-size: .7rem; opacity: .4; transition: opacity .2s, transform .2s; }
+    .drawer-nav a:hover i { opacity: 1; transform: translateX(3px); }
+
+    /* drawer contact block */
+    .drawer-contact { padding: 1.6rem 1.4rem; border-bottom: 1px solid var(--c-line); }
+    .drawer-contact-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--c-mid); margin-bottom: .9rem;
+    }
+    .drawer-contact-item {
+      display: flex; align-items: flex-start; gap: .65rem;
+      margin-bottom: .85rem; font-size: .9rem; color: var(--c-ink); line-height: 1.5;
+    }
+    .drawer-contact-item:last-child { margin-bottom: 0; }
+    .drawer-contact-item i { color: var(--c-red); margin-top: .15rem; font-size: .85rem; flex-shrink: 0; }
+    .drawer-contact-item a { color: var(--c-ink); transition: color .2s; }
+    .drawer-contact-item a:hover { color: var(--c-red); }
+
+    /* drawer socials */
+    .drawer-socials { padding: 1.6rem 1.4rem; }
+    .drawer-socials-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--c-mid); margin-bottom: 1rem;
+    }
+    .drawer-social-links { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .drawer-social-links a {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .55rem .9rem;
+      font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      border: 1px solid var(--c-line); color: var(--c-mid);
+      transition: border-color .2s, color .2s;
+    }
+    .drawer-social-links a:hover { border-color: var(--c-red); color: var(--c-red); }
+
+    /* drawer footer strip */
+    .drawer-footer {
+      margin-top: auto; padding: 1.2rem 1.4rem;
+      border-top: 1px solid var(--c-line);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .drawer-footer-copy { font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--c-mid); }
+    .drawer-red-bar { width: 1.8rem; height: 2px; background: var(--c-red); }
 
     /* ── HERO CAROUSEL ── */
     #heroCarousel { height: 100vh; min-height: 580px; }
@@ -413,14 +496,69 @@
         </button>
       </div>
     </div>
-    <div class="mobile-nav" id="mobileNav">
-      <a href="#products" onclick="closeMob()">Products</a>
-      <a href="#services" onclick="closeMob()">Services</a>
-      <a href="#journal"  onclick="closeMob()">Journal</a>
-      <a href="#contact"  onclick="closeMob()">Contact</a>
-    </div>
   </div>
 </nav>
+
+<!-- ── SIDE DRAWER ────────────────────────────────────────────────── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="side-drawer" id="sideDrawer" aria-label="Navigation menu">
+
+  <!-- header -->
+  <div class="drawer-header">
+    <a href="#" class="nav-logo" onclick="closeMob()">
+      <img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Red Eight Workshop</span>
+    </a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- nav links -->
+  <nav class="drawer-nav">
+    <a href="#products" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+    <a href="#services" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+    <a href="#journal"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+    <a href="#contact"  onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+  </nav>
+
+  <!-- contact info -->
+  <div class="drawer-contact">
+    <p class="drawer-contact-label">Contact us</p>
+    <div class="drawer-contact-item">
+      <i class="bi bi-telephone"></i>
+      <div><a href="tel:+14165550178">+1 (416) 555-0178</a><br>
+      <span style="font-size:.78rem;color:var(--c-mid)">Mon – Fri, 9 am – 5 pm ET</span></div>
+    </div>
+    <div class="drawer-contact-item">
+      <i class="bi bi-envelope"></i>
+      <a href="mailto:hello@redeightworkshop.ca">hello@redeightworkshop.ca</a>
+    </div>
+    <div class="drawer-contact-item">
+      <i class="bi bi-geo-alt"></i>
+      <span>Toronto, Ontario, Canada</span>
+    </div>
+  </div>
+
+  <!-- socials -->
+  <div class="drawer-socials">
+    <p class="drawer-socials-label">Follow us</p>
+    <div class="drawer-social-links">
+      <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+      <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+      <a href="#"><i class="bi bi-pinterest"></i> Pinterest</a>
+      <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- footer strip -->
+  <div class="drawer-footer">
+    <span class="drawer-footer-copy">&copy; 2025 Red Eight Workshop</span>
+    <div class="drawer-red-bar"></div>
+  </div>
+
+</aside>
 
 <!-- ── HERO SLIDER ────────────────────────────────────────────────── -->
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
@@ -840,17 +978,29 @@
   const nav = document.getElementById('siteNav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
 
-  /* ── Mobile nav ── */
-  const toggle = document.getElementById('navToggle');
-  const mob    = document.getElementById('mobileNav');
-  toggle.addEventListener('click', () => {
-    mob.classList.toggle('open');
-    toggle.querySelector('i').className = mob.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
-  });
+  /* ── Side drawer ── */
+  const toggle   = document.getElementById('navToggle');
+  const drawer   = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const dClose   = document.getElementById('drawerClose');
+
+  function openMob() {
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    toggle.querySelector('i').className = 'bi bi-x-lg';
+  }
   function closeMob() {
-    mob.classList.remove('open');
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
     toggle.querySelector('i').className = 'bi bi-list';
   }
+
+  toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+  dClose.addEventListener('click', closeMob);
+  backdrop.addEventListener('click', closeMob);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
 
   /* Carousel dots + counter */
   const car   = document.getElementById('heroCarousel');
