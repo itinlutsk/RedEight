@@ -141,6 +141,42 @@
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
     .d1 { transition-delay: .12s; } .d2 { transition-delay: .24s; }
+
+    /* ── NAV 3-COL ── */
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    @media (min-width: 768px) { .nav-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; } }
+    .nav-actions { display: flex; align-items: center; gap: .75rem; justify-content: flex-end; }
+    @media (max-width: 767px) { .lang-switcher { display: none !important; } }
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher { position: relative; }
+    .lang-btn { background: none; border: 1px solid var(--c-line); color: var(--c-mid); height: 2.4rem; padding: 0 .75rem; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: .3rem; transition: border-color .2s, color .2s; white-space: nowrap; }
+    .lang-btn:hover { border-color: var(--c-red); color: var(--c-red); }
+    .lang-btn i { font-size: .65rem; transition: transform .2s; }
+    .lang-switcher.open .lang-btn i { transform: rotate(180deg); }
+    .lang-menu { position: absolute; top: calc(100% + .4rem); right: 0; background: var(--c-bg2); border: 1px solid var(--c-line); min-width: 140px; z-index: 300; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+    .lang-switcher.open .lang-menu { display: block; }
+    .lang-opt { display: flex; align-items: center; justify-content: space-between; padding: .7rem 1rem; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-mid); transition: color .2s, background .2s; }
+    .lang-opt:hover { color: var(--c-ink); background: var(--c-bg); }
+    .lang-opt.active { color: var(--c-ink); }
+    .lang-opt.active::after { content: '\2713'; font-size: .7rem; }
+    /* ── PHONE BUTTON ── */
+    .phone-btn { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; background: var(--c-red); color: #fff !important; font-size: 1rem; transition: background .2s; flex-shrink: 0; }
+    .phone-btn:hover { background: var(--c-red-d); }
+    /* ── COOKIE BANNER ── */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000; background: var(--c-bg2); border-top: 1px solid var(--c-line); padding: 1.1rem 0; transform: translateY(100%); transition: transform .4s cubic-bezier(.4,0,.2,1); }
+    .cookie-banner.visible { transform: none; }
+    .cookie-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .cookie-text { display: flex; align-items: flex-start; gap: .75rem; flex: 1; min-width: 0; }
+    .cookie-icon { color: var(--c-red); font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
+    .cookie-text p { font-size: .78rem; color: var(--c-mid); line-height: 1.65; margin: 0; }
+    .cookie-text a { color: var(--c-ink); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .cookie-text a:hover { color: var(--c-red); }
+    .cookie-actions { display: flex; gap: .6rem; flex-shrink: 0; }
+    .cookie-btn { padding: .55rem 1.2rem; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-family: 'Inter', sans-serif; cursor: pointer; border: 1px solid var(--c-line); transition: background .2s, color .2s, border-color .2s; }
+    .cookie-decline { background: none; color: var(--c-mid); }
+    .cookie-decline:hover { border-color: var(--c-ink); color: var(--c-ink); }
+    .cookie-accept { background: var(--c-red); color: #fff; border-color: var(--c-red); }
+    .cookie-accept:hover { background: var(--c-red-d); border-color: var(--c-red-d); }
   </style>
 </head>
 <body>
@@ -148,10 +184,10 @@
 <!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
 <nav class="site-nav" id="siteNav">
   <div class="container-fluid px-4">
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="nav-inner">
       <a href="/" class="nav-logo">
         <img src="/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
-        <span class="nav-logo-text">Red Eight Workshop</span>
+        
       </a>
       <ul class="nav-links">
         <li><a href="/products.html">Products</a></li>
@@ -159,7 +195,15 @@
         <li><a href="/#journal">Journal</a></li>
         <li><a href="/contact.html">Contact</a></li>
       </ul>
-      <div class="d-flex align-items-center gap-3">
+            <div class="nav-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-btn" id="langBtn" aria-label="Language">EN <i class="bi bi-chevron-down"></i></button>
+          <div class="lang-menu">
+            <a href="#" class="lang-opt active" data-lang="en">English</a>
+            <a href="#" class="lang-opt" data-lang="fr">Français</a>
+          </div>
+        </div>
+        <a href="tel:+14165550178" class="phone-btn" aria-label="Call us"><i class="bi bi-telephone-fill"></i></a>
         <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
         <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
       </div>
@@ -173,7 +217,7 @@
   <div class="drawer-header">
     <a href="/" class="nav-logo" onclick="closeMob()">
       <img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
-      <span class="nav-logo-text">Red Eight Workshop</span>
+      
     </a>
     <button class="drawer-close" id="drawerClose" aria-label="Close menu"><i class="bi bi-x-lg"></i></button>
   </div>
@@ -310,7 +354,7 @@
   <div class="container">
     <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
       <div class="col-lg-4">
-        <a href="/" class="nav-logo mb-3"><img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"><span class="nav-logo-text">Red Eight Workshop</span></a>
+        <a href="/" class="nav-logo mb-3"><img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"></a>
         <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
       </div>
       <div class="col-6 col-lg-2 offset-lg-2">
@@ -337,6 +381,7 @@
     </div>
   </div>
 </footer>
+<!-- COOKIE --><div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent"><div class="cookie-inner"><div class="cookie-text"><i class="bi bi-shield-check cookie-icon"></i><p>We use cookies to improve your experience. By continuing to browse you agree to our <a href="#">Privacy policy</a>.</p></div><div class="cookie-actions"><button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button><button class="cookie-btn cookie-accept" id="cookieAccept">Accept all</button></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -370,6 +415,9 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  (function(){var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('r8-cookie-consent')){setTimeout(function(){b.classList.add('visible');},1000);}document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','accepted');b.classList.remove('visible');});document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','declined');b.classList.remove('visible');});})();
+  (function(){var s=document.getElementById('langSwitcher'),btn=document.getElementById('langBtn');if(!s||!btn)return;btn.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(){s.classList.remove('open');});document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.lang-opt').forEach(function(x){x.classList.remove('active');});o.classList.add('active');var l=o.dataset.lang||'en';btn.innerHTML=l.toUpperCase()+' <i class="bi bi-chevron-down"></i>';localStorage.setItem('r8-lang',l);s.classList.remove('open');});});var sv=localStorage.getItem('r8-lang');if(sv){var el=document.querySelector('.lang-opt[data-lang="'+sv+'"]');if(el)el.click();}})();
 </script>
 </body>
 </html>
