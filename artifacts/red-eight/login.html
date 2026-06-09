@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to your Red Eight Workshop account.">
+  <title>Sign In — Red Eight Workshop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root, [data-theme="dark"] {
+      --c-bg: #111111; --c-bg2: #181818; --c-ink: #f0ece3;
+      --c-mid: #888888; --c-line: #262626; --c-red: #E8231A;
+      --c-red-d: #b51b14; --c-nav: rgba(17,17,17,.92);
+    }
+    [data-theme="light"] {
+      --c-bg: #f5f0eb; --c-bg2: #ede8e1; --c-ink: #1a1a1a;
+      --c-mid: #666666; --c-line: #d5d0c8; --c-red: #E8231A;
+      --c-red-d: #b51b14; --c-nav: rgba(245,240,235,.95);
+    }
+    html { transition: background-color .3s, color .3s; scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--c-bg); color: var(--c-ink); -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.65; overflow-x: hidden; min-height: 100dvh; display: flex; flex-direction: column; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: -0.025em; color: var(--c-ink); margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAVBAR ── */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--c-nav); backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s; padding: 1.3rem 0; }
+    .site-nav.scrolled { border-bottom-color: var(--c-line); padding: .9rem 0; }
+    .theme-btn { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; background: transparent; border: 1px solid var(--c-line); color: var(--c-mid); font-size: 1.05rem; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; }
+    .theme-btn:hover { border-color: var(--c-red); color: var(--c-red); }
+    .nav-logo { display: flex; align-items: center; gap: .85rem; }
+    .nav-logo img { width: 46px; height: 46px; object-fit: cover; }
+    .nav-logo-text { font-size: .82rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); white-space: nowrap; }
+    @media (max-width: 420px) { .nav-logo img { width: 34px; height: 34px; } .nav-logo-text { font-size: .7rem; letter-spacing: .1em; } }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); transition: color .2s; }
+    .nav-links a:hover { color: var(--c-ink); }
+    @media (max-width: 767px) { .nav-links { display: none; } }
+    .nav-toggle { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.4rem; height: 2.4rem; display: none; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
+    @media (max-width: 767px) { .nav-toggle { display: flex; } }
+
+    /* ── DRAWER ── */
+    .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 1090; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .side-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px,90vw); background: var(--c-bg2); border-left: 1px solid var(--c-line); z-index: 1100; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+    .side-drawer.open { transform: none; }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--c-line); }
+    .drawer-close { background: none; border: 1px solid var(--c-line); color: var(--c-ink); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
+    .drawer-nav { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+    .drawer-nav a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .drawer-nav a:hover { color: var(--c-red); }
+
+    /* ── LOGIN LAYOUT ── */
+    .login-wrap {
+      flex: 1; display: flex; align-items: stretch;
+      padding-top: 4.5rem;
+    }
+    .login-visual {
+      display: none;
+      flex: 1; background: var(--c-bg2); border-right: 1px solid var(--c-line);
+      position: relative; overflow: hidden;
+    }
+    @media (min-width: 900px) { .login-visual { display: flex; flex-direction: column; justify-content: flex-end; } }
+    .login-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+    .login-visual-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(17,17,17,.85) 0%, rgba(17,17,17,.1) 60%); }
+    .login-visual-copy { position: relative; z-index: 1; padding: 3rem; }
+    .login-visual-copy h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; color: #f0ece3; line-height: 1.15; max-width: 18ch; }
+    .login-visual-copy p { font-size: .88rem; color: rgba(240,236,227,.6); margin-top: .8rem; max-width: 30ch; line-height: 1.75; }
+
+    .login-form-col {
+      width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+    @media (min-width: 900px) { .login-form-col { max-width: 520px; padding: 3rem 4rem; } }
+
+    .login-card { width: 100%; max-width: 400px; }
+    .login-logo { display: flex; align-items: center; gap: .75rem; margin-bottom: 2.5rem; }
+    .login-logo img { width: 40px; height: 40px; object-fit: cover; }
+    .login-logo span { font-size: .75rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-ink); white-space: nowrap; }
+
+    .login-title { font-size: 1.75rem; font-weight: 900; letter-spacing: -.03em; margin-bottom: .35rem; }
+    .login-sub { font-size: .88rem; color: var(--c-mid); margin-bottom: 2.2rem; }
+
+    /* ── DIVIDER TABS ── */
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--c-line); margin-bottom: 2rem; }
+    .auth-tab { flex: 1; background: none; border: none; border-bottom: 2px solid transparent; padding: .7rem 0; font-size: .65rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-mid); cursor: pointer; font-family: 'Inter', sans-serif; transition: color .2s, border-color .2s; margin-bottom: -1px; }
+    .auth-tab.active { color: var(--c-ink); border-bottom-color: var(--c-red); }
+
+    /* ── FORM FIELDS ── */
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .form-label { font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--c-mid); }
+    .form-control {
+      background: var(--c-bg2); border: 1px solid var(--c-line);
+      color: var(--c-ink); font-family: 'Inter', sans-serif;
+      font-size: .92rem; padding: .82rem 1rem;
+      transition: border-color .2s; outline: none; border-radius: 0; width: 100%;
+    }
+    .form-control:focus { border-color: var(--c-ink); }
+    .form-control.error { border-color: var(--c-red); }
+    .form-control::placeholder { color: var(--c-mid); opacity: 1; }
+    .field-error { font-size: .62rem; color: var(--c-red); font-weight: 600; display: none; }
+    .field-error.visible { display: block; }
+
+    .password-wrap { position: relative; }
+    .password-wrap .form-control { padding-right: 3rem; }
+    .pw-toggle { position: absolute; right: .9rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--c-mid); cursor: pointer; font-size: 1rem; padding: 0; line-height: 1; }
+    .pw-toggle:hover { color: var(--c-ink); }
+
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .forgot-link { display: block; text-align: right; font-size: .65rem; font-weight: 600; letter-spacing: .08em; color: var(--c-mid); margin-top: -.4rem; margin-bottom: 1.5rem; transition: color .2s; }
+    .forgot-link:hover { color: var(--c-red); }
+
+    /* ── SUBMIT BUTTON ── */
+    .btn-submit {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: 1rem; background: var(--c-red); color: #fff;
+      font-size: .65rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
+      border: none; cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: background .2s, opacity .2s; margin-top: .5rem;
+    }
+    .btn-submit:hover { background: var(--c-red-d); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-submit .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── OR DIVIDER ── */
+    .or-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
+    .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--c-line); }
+    .or-divider span { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c-mid); }
+
+    /* ── SOCIAL BUTTONS ── */
+    .social-btns { display: flex; gap: .75rem; }
+    .btn-social {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .75rem; background: none; border: 1px solid var(--c-line); color: var(--c-mid);
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-social:hover { border-color: var(--c-ink); color: var(--c-ink); }
+    .btn-social i { font-size: 1rem; }
+
+    /* ── SWITCH PANEL ── */
+    .switch-hint { text-align: center; margin-top: 2rem; font-size: .78rem; color: var(--c-mid); }
+    .switch-hint a { color: var(--c-red); font-weight: 600; transition: opacity .2s; }
+    .switch-hint a:hover { opacity: .7; }
+
+    /* ── TERMS ── */
+    .terms-note { text-align: center; font-size: .62rem; color: var(--c-mid); margin-top: 1.5rem; line-height: 1.7; }
+    .terms-note a { color: var(--c-mid); border-bottom: 1px solid var(--c-line); transition: color .2s; }
+    .terms-note a:hover { color: var(--c-ink); }
+
+    /* ── PANELS ── */
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--c-bg2); border-top: 1px solid var(--c-line); padding: 3.5rem 0 1.8rem; }
+    .footer-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .9rem; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li + li { margin-top: .45rem; }
+    .footer-links a { font-size: 1rem; color: var(--c-mid); transition: color .2s; }
+    .footer-links a:hover { color: var(--c-ink); }
+    .footer-copy { font-size: .62rem; font-weight: 600; letter-spacing: .1em; color: var(--c-mid); margin: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/" class="nav-logo">
+        <img src="/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Red Eight Workshop</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/products.html">Products</a></li>
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/journal.html">Journal</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDE DRAWER ─────────────────────────────────────────────────── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="side-drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <a href="/" class="nav-logo" onclick="closeMob()">
+      <img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Red Eight Workshop</span>
+    </a>
+    <button class="drawer-close" id="drawerClose"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="/products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+    <a href="/services.html" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+    <a href="/journal.html"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+    <a href="/contact.html"  onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+    <a href="/login.html"    onclick="closeMob()">Sign in  <i class="bi bi-arrow-right"></i></a>
+  </nav>
+</aside>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────── -->
+<main class="login-wrap">
+
+  <!-- VISUAL (desktop) -->
+  <div class="login-visual">
+    <img src="/images/products/chair-bellwoods.png" alt="Red Eight Workshop" onerror="this.style.background='var(--c-bg2)'">
+    <div class="login-visual-overlay"></div>
+    <div class="login-visual-copy">
+      <h2>Bespoke furniture, built to order.</h2>
+      <p>Access your account to manage orders, request quotes, and track custom builds.</p>
+    </div>
+  </div>
+
+  <!-- FORM COLUMN -->
+  <div class="login-form-col">
+    <div class="login-card">
+
+      <!-- LOGO -->
+      <a href="/" class="login-logo">
+        <img src="/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        <span>Red Eight Workshop</span>
+      </a>
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignIn" onclick="showTab('signin')">Sign in</button>
+        <button class="auth-tab" id="tabRegister" onclick="showTab('register')">Create account</button>
+      </div>
+
+      <!-- ── SIGN IN PANEL ── -->
+      <div class="auth-panel active" id="panelSignin">
+
+        <form id="signinForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="siEmail">Email address</label>
+            <input class="form-control" type="email" id="siEmail" placeholder="jane@example.com" autocomplete="email">
+            <span class="field-error" id="err-siEmail">Please enter a valid email.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="siPassword">Password</label>
+            <div class="password-wrap">
+              <input class="form-control" type="password" id="siPassword" placeholder="••••••••" autocomplete="current-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('siPassword', this)" aria-label="Show password"><i class="bi bi-eye"></i></button>
+            </div>
+            <span class="field-error" id="err-siPassword">Please enter your password.</span>
+          </div>
+
+          <a href="#" class="forgot-link">Forgot password?</a>
+
+          <button type="submit" class="btn-submit" id="signinBtn">
+            <span class="btn-text">Sign in <i class="bi bi-arrow-right"></i></span>
+            <span class="spinner"></span>
+          </button>
+        </form>
+
+        <div class="or-divider"><span>or continue with</span></div>
+
+        <div class="social-btns">
+          <button class="btn-social"><i class="bi bi-google"></i> Google</button>
+          <button class="btn-social"><i class="bi bi-apple"></i> Apple</button>
+        </div>
+
+        <p class="switch-hint">No account? <a href="#" onclick="showTab('register');return false">Create one</a></p>
+
+      </div>
+
+      <!-- ── REGISTER PANEL ── -->
+      <div class="auth-panel" id="panelRegister">
+
+        <form id="registerForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="regFirst">First name</label>
+              <input class="form-control" type="text" id="regFirst" placeholder="Jane" autocomplete="given-name">
+              <span class="field-error" id="err-regFirst">Required.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regLast">Last name</label>
+              <input class="form-control" type="text" id="regLast" placeholder="Smith" autocomplete="family-name">
+              <span class="field-error" id="err-regLast">Required.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email address</label>
+            <input class="form-control" type="email" id="regEmail" placeholder="jane@example.com" autocomplete="email">
+            <span class="field-error" id="err-regEmail">Please enter a valid email.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password</label>
+            <div class="password-wrap">
+              <input class="form-control" type="password" id="regPassword" placeholder="At least 8 characters" autocomplete="new-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('regPassword', this)" aria-label="Show password"><i class="bi bi-eye"></i></button>
+            </div>
+            <span class="field-error" id="err-regPassword">Minimum 8 characters.</span>
+          </div>
+
+          <button type="submit" class="btn-submit" id="registerBtn">
+            <span class="btn-text">Create account <i class="bi bi-arrow-right"></i></span>
+            <span class="spinner"></span>
+          </button>
+        </form>
+
+        <p class="terms-note">By creating an account you agree to our <a href="#">Terms of service</a> and <a href="#">Privacy policy</a>.</p>
+
+        <p class="switch-hint">Already have an account? <a href="#" onclick="showTab('signin');return false">Sign in</a></p>
+
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
+      <div class="col-lg-4">
+        <a href="/" class="nav-logo mb-3"><img src="/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"><span class="nav-logo-text">Red Eight Workshop</span></a>
+        <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-2">
+        <p class="footer-label">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="/products.html">Products</a></li>
+          <li><a href="/services.html">Services</a></li>
+          <li><a href="/journal.html">Journal</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/login.html">Sign in</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-3">
+        <p class="footer-label">Contact</p>
+        <address style="font-style:normal;font-size:.78rem;color:var(--c-mid);line-height:1.95">
+          Red Eight Workshop Inc.<br>Toronto, Ontario, Canada<br>
+          <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+        </address>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
+      <p class="footer-copy">&copy; <span id="yr"></span> Red Eight Workshop Inc. All rights reserved.</p>
+      <div class="d-flex align-items-center gap-2"><div style="width:1.4rem;height:2px;background:var(--c-red)"></div><span style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid)">Toronto, Canada</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  const html = document.documentElement;
+  function applyTheme(t) {
+    html.dataset.theme = t;
+    localStorage.setItem('r8-theme', t);
+    themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+  }
+  applyTheme(localStorage.getItem('r8-theme') || 'light');
+  themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  // Nav scroll
+  const nav = document.getElementById('siteNav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // Drawer
+  const toggle   = document.getElementById('navToggle');
+  const drawer   = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const dClose   = document.getElementById('drawerClose');
+  function openMob()  { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMob() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+  dClose.addEventListener('click', closeMob);
+  backdrop.addEventListener('click', closeMob);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── TABS ──────────────────────────────────────────────────────────
+  function showTab(tab) {
+    document.getElementById('tabSignIn').classList.toggle('active', tab === 'signin');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+    document.getElementById('panelSignin').classList.toggle('active', tab === 'signin');
+    document.getElementById('panelRegister').classList.toggle('active', tab === 'register');
+  }
+
+  // ── PASSWORD TOGGLE ───────────────────────────────────────────────
+  function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+  }
+
+  // ── VALIDATION HELPERS ────────────────────────────────────────────
+  function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function setFieldState(id, ok, errId) {
+    const el  = document.getElementById(id);
+    const err = document.getElementById(errId);
+    el.classList.toggle('error', !ok);
+    if (err) err.classList.toggle('visible', !ok);
+    return ok;
+  }
+
+  function clearOnInput(id, errId) {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById(id).classList.remove('error');
+      const err = document.getElementById(errId);
+      if (err) err.classList.remove('visible');
+    });
+  }
+  ['siEmail','siPassword','regFirst','regLast','regEmail','regPassword'].forEach(id =>
+    clearOnInput(id, 'err-' + id)
+  );
+
+  function fakeSubmit(btnId, delay, onDone) {
+    const btn = document.getElementById(btnId);
+    btn.classList.add('loading'); btn.disabled = true;
+    setTimeout(() => { btn.classList.remove('loading'); btn.disabled = false; onDone(); }, delay);
+  }
+
+  // ── SIGN IN FORM ──────────────────────────────────────────────────
+  document.getElementById('signinForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v1 = setFieldState('siEmail',    isEmail(document.getElementById('siEmail').value.trim()),    'err-siEmail');
+    const v2 = setFieldState('siPassword', document.getElementById('siPassword').value.length > 0, 'err-siPassword');
+    if (!v1 || !v2) return;
+    fakeSubmit('signinBtn', 1200, () => {
+      window.location.href = '/';
+    });
+  });
+
+  // ── REGISTER FORM ─────────────────────────────────────────────────
+  document.getElementById('registerForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v1 = setFieldState('regFirst',    document.getElementById('regFirst').value.trim().length > 0, 'err-regFirst');
+    const v2 = setFieldState('regLast',     document.getElementById('regLast').value.trim().length > 0,  'err-regLast');
+    const v3 = setFieldState('regEmail',    isEmail(document.getElementById('regEmail').value.trim()),   'err-regEmail');
+    const v4 = setFieldState('regPassword', document.getElementById('regPassword').value.length >= 8,    'err-regPassword');
+    if (!v1 || !v2 || !v3 || !v4) return;
+    fakeSubmit('registerBtn', 1400, () => {
+      window.location.href = '/';
+    });
+  });
+</script>
+</body>
+</html>
