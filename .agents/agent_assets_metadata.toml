@@ -149,3 +149,9 @@ id = "6lAfl8x4mPMdY6nW_svPs"
 uri = "file://red-eight-workshop.zip"
 type = "unspecified"
 title = "Red Eight Workshop — offline site (.zip)"
+
+[[outputs]]
+id = "7IdHG7IzakqDp-Ih_tW64"
+uri = "file://admin-categories.zip"
+type = "unspecified"
+title = "admin-categories.zip — admin-categories.html + admin.css"
