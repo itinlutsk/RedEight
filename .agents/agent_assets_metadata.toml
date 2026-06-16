@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "TEEJgR3krsSf8Yu_6kUmg"
@@ -138,3 +137,9 @@ id = "oK2-aX9_jmGleXntD32hZ"
 uri = "file://artifacts/red-eight/public/images/products/project-hotel.png"
 type = "image"
 title = "hotel lobby bespoke furniture"
+
+[[outputs]]
+id = "oSddoZ9BcA0m-bmpOfRyE"
+uri = "file://red-eight-workshop.tar.gz"
+type = "unspecified"
+title = "Red Eight Workshop — Static Site"
