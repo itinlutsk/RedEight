@@ -6,11 +6,13 @@
 .page-hero-desc { font-size: 1.05rem; color: var(--c-mid); line-height: 1.85; max-width: 42ch; }
 
 /* ── CONTACT LAYOUT ── */
-.contact-layout { display: grid; grid-template-columns: 1fr; gap: 4rem; padding: 5rem 0 6rem; }
-@media (min-width: 992px) { .contact-layout { grid-template-columns: 340px 1fr; gap: 5rem; } }
+.contact-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0 6rem; }
+@media (min-width: 992px) { .contact-layout { grid-template-columns: 1fr 340px; gap: 5rem; } }
 
 /* ── INFO COLUMN ── */
-.info-sticky { position: sticky; top: 6rem; }
+.info-sticky { position: static; }
+@media (min-width: 992px) { .info-sticky { position: sticky; top: 6rem; order: 2; } }
+@media (min-width: 992px) { .contact-form-col { order: 1; } }
 .info-block { margin-bottom: 2.5rem; }
 .info-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-mid); margin-bottom: .9rem; padding-bottom: .5rem; border-bottom: 1px solid var(--c-line); }
 .info-item { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .8rem; color: var(--c-mid); font-size: .9rem; line-height: 1.5; }
@@ -64,6 +66,7 @@ textarea.form-control { resize: vertical; min-height: 140px; line-height: 1.65; 
 .form-card.success-shown .form-inner { display: none; }
 .success-icon { width: 4rem; height: 4rem; background: var(--c-red); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #fff; margin-bottom: 1.5rem; border-radius: 50%; animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both; }
 @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
 .success-title { font-size: 1.4rem; font-weight: 800; margin-bottom: .6rem; }
 .success-msg { font-size: .9rem; color: var(--c-mid); max-width: 34ch; line-height: 1.75; }
 .btn-reset { margin-top: 1.5rem; background: none; border: 1px solid var(--c-line); padding: .7rem 1.5rem; font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--c-mid); cursor: pointer; font-family: 'Inter', sans-serif; transition: border-color .2s, color .2s; }
