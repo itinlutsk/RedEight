@@ -135,21 +135,6 @@
 </div>
 
 <script>
-  // Safe DOM helpers (layout may provide some elements, guard when absent)
-  const themeBtn = document.getElementById('themeBtn');
-  const html = document.documentElement;
-  function applyTheme(t) {
-    if (!html) return;
-    html.dataset.theme = t;
-    try { localStorage.setItem('r8-theme', t); } catch(e) {}
-    if (themeBtn) {
-      const icon = themeBtn.querySelector('i');
-      if (icon) icon.className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
-    }
-  }
-  try { applyTheme(localStorage.getItem('r8-theme') || 'light'); } catch(e) { applyTheme('light'); }
-  if (themeBtn) themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
-
   // Modal helpers
   function openModal(id)  { const el = document.getElementById(id); if (el) { el.classList.add('open'); document.body.style.overflow='hidden'; } }
   function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.remove('open'); document.body.style.overflow=''; } }
