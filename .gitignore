@@ -1,49 +1,46 @@
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# .NET build output
+[Oo]bj/
+[Bb]in/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
 
-# compiled output
-dist
-tmp
-out-tsc
-*.tsbuildinfo
-.expo
-.expo-shared
+# NuGet
+*.nupkg
+*.snupkg
+*.nuget.targets
+packages/
+*.lock.json
 
-# dependencies
-node_modules
+# .NET user secrets and local config
+secrets.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# Publish output
+publish/
+*.publish.xml
 
-# IDE - VSCode
+# IDE
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
+.idea/
+*.swp
+*.swo
 
 # System Files
 .DS_Store
 Thumbs.db
 
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
-
 # Replit
 .cache/
 .local/
+
+# GitHub source reference (imported from itinlutsk/RedEight - original .NET MVC)
+github-source/
