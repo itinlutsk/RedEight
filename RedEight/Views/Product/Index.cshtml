@@ -78,7 +78,11 @@
                         data-desc="@p.Description"
                         data-price="@p.Price"
                         data-catid="@p.CategoryId"
-                        data-typeid="@p.TypeId">
+                        data-typeid="@p.TypeId"
+                        data-sku="@p.Sku"
+                        data-badge="@p.Badge"
+                        data-badgetype="@p.BadgeType"
+                        data-colors="@string.Join(",", p.Color ?? new())">
                   <i class="bi bi-pencil"></i> Edit
                 </button>
                 <button class="btn-tbl-upload me-1"
@@ -150,6 +154,32 @@
         <label class="r8-label" for="createPrice">Price (CAD, 0 = on request)</label>
         <input class="r8-input" type="number" id="createPrice" min="0" step="1" value="0">
       </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="createSku">SKU / Reference</label>
+        <input class="r8-input" type="text" id="createSku" placeholder="e.g. No. R8-101 · Armchair">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="createBadge">Badge label</label>
+          <input class="r8-input" type="text" id="createBadge" placeholder="e.g. Bestseller">
+        </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="createBadgeType">Badge style</label>
+          <select class="r8-select r8-input" id="createBadgeType">
+            <option value="">— none —</option>
+            <option value="red">Red</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label">Colours</label>
+        <div class="swatch-editor" id="createSwatchEditor"></div>
+        <div style="display:flex;gap:.6rem;align-items:center;margin-top:.5rem">
+          <input type="color" id="createColorPicker" value="#8B6F47" style="width:2.1rem;height:2.1rem;border:1px solid var(--c-line);cursor:pointer;padding:2px;background:none;border-radius:2px;">
+          <button class="btn-cancel" style="padding:.28rem .75rem;font-size:.62rem" onclick="addColor('create')">+ Add colour</button>
+        </div>
+      </div>
     </div>
     <div class="r8-modal-footer">
       <button class="btn-cancel" onclick="closeModal('createModal')">Cancel</button>
@@ -201,6 +231,32 @@
       <div class="r8-form-group">
         <label class="r8-label" for="editPrice">Price (CAD, 0 = on request)</label>
         <input class="r8-input" type="number" id="editPrice" min="0" step="1">
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="editSku">SKU / Reference</label>
+        <input class="r8-input" type="text" id="editSku" placeholder="e.g. No. R8-101 · Armchair">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="editBadge">Badge label</label>
+          <input class="r8-input" type="text" id="editBadge" placeholder="e.g. Bestseller">
+        </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="editBadgeType">Badge style</label>
+          <select class="r8-select r8-input" id="editBadgeType">
+            <option value="">— none —</option>
+            <option value="red">Red</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label">Colours</label>
+        <div class="swatch-editor" id="editSwatchEditor"></div>
+        <div style="display:flex;gap:.6rem;align-items:center;margin-top:.5rem">
+          <input type="color" id="editColorPicker" value="#8B6F47" style="width:2.1rem;height:2.1rem;border:1px solid var(--c-line);cursor:pointer;padding:2px;background:none;border-radius:2px;">
+          <button class="btn-cancel" style="padding:.28rem .75rem;font-size:.62rem" onclick="addColor('edit')">+ Add colour</button>
+        </div>
       </div>
     </div>
     <div class="r8-modal-footer">
@@ -281,6 +337,29 @@
   function filterTable(){ const q=document.getElementById('prodSearch').value.toLowerCase(); const rows=document.querySelectorAll('#prodBody tr'); let v=0; rows.forEach(r=>{ const m=(r.dataset.name||'').includes(q); r.style.display=m?'':'none'; if(m)v++; }); document.getElementById('emptyState').classList.toggle('d-none',v>0); updateCount(); }
   function updateCount(){ const v=[...document.querySelectorAll('#prodBody tr')].filter(r=>r.style.display!=='none').length; const el=document.getElementById('prodCount'); if(el) el.textContent=v+(v===1?' product':' products'); }
 
+  /* ── COLOUR EDITOR ───────────────────────────────────────────────── */
+  const clr = { create: [], edit: [] };
+
+  function renderSwatches(ns){
+    const el = document.getElementById(ns+'SwatchEditor');
+    if(!el) return;
+    if(!clr[ns].length){
+      el.innerHTML='<span style="font-size:.7rem;color:var(--c-mid);line-height:2">No colours added</span>';
+      return;
+    }
+    el.innerHTML = clr[ns].map((c,i)=>`
+      <span class="clr-tag" style="background:${c}" title="${c}">
+        <button class="clr-tag-del" onclick="removeColor('${ns}',${i})" title="Remove">×</button>
+      </span>`).join('');
+  }
+
+  function addColor(ns){
+    const v = document.getElementById(ns+'ColorPicker').value;
+    if(!clr[ns].includes(v)){ clr[ns].push(v); renderSwatches(ns); }
+  }
+
+  function removeColor(ns,i){ clr[ns].splice(i,1); renderSwatches(ns); }
+
   /* ── CREATE ──────────────────────────────────────────────────────── */
   function openCreateModal(){
     document.getElementById('createName').value='';
@@ -288,6 +367,10 @@
     document.getElementById('createPrice').value='0';
     document.getElementById('createCategory').value='';
     document.getElementById('createType').value='';
+    document.getElementById('createSku').value='';
+    document.getElementById('createBadge').value='';
+    document.getElementById('createBadgeType').value='';
+    clr.create=[]; renderSwatches('create');
     clearErr('createName');
     openModal('createModal');
     setTimeout(()=>document.getElementById('createName').focus(),200);
@@ -299,10 +382,14 @@
     const body={
       name,
       description: document.getElementById('createDesc').value.trim(),
-      price: parseFloat(document.getElementById('createPrice').value)||0,
-      categoryId: document.getElementById('createCategory').value||'00000000-0000-0000-0000-000000000000',
-      typeId:     document.getElementById('createType').value    ||'00000000-0000-0000-0000-000000000000',
-      color: [], imageFiles: []
+      price:       parseFloat(document.getElementById('createPrice').value)||0,
+      categoryId:  document.getElementById('createCategory').value||'00000000-0000-0000-0000-000000000000',
+      typeId:      document.getElementById('createType').value    ||'00000000-0000-0000-0000-000000000000',
+      sku:         document.getElementById('createSku').value.trim(),
+      badge:       document.getElementById('createBadge').value.trim(),
+      badgeType:   document.getElementById('createBadgeType').value,
+      color:       [...clr.create],
+      imageFiles:  []
     };
     try{
       const resp=await fetch('/api/product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -316,12 +403,18 @@
 
   /* ── EDIT ────────────────────────────────────────────────────────── */
   function openEditModal(btn){
-    document.getElementById('editId').value       = btn.dataset.id;
-    document.getElementById('editName').value     = btn.dataset.name;
-    document.getElementById('editDesc').value     = btn.dataset.desc    ||'';
-    document.getElementById('editPrice').value    = btn.dataset.price   ||'0';
-    document.getElementById('editCategory').value = btn.dataset.catid   ||'';
-    document.getElementById('editType').value     = btn.dataset.typeid  ||'';
+    document.getElementById('editId').value        = btn.dataset.id;
+    document.getElementById('editName').value      = btn.dataset.name;
+    document.getElementById('editDesc').value      = btn.dataset.desc      ||'';
+    document.getElementById('editPrice').value     = btn.dataset.price     ||'0';
+    document.getElementById('editCategory').value  = btn.dataset.catid     ||'';
+    document.getElementById('editType').value      = btn.dataset.typeid    ||'';
+    document.getElementById('editSku').value       = btn.dataset.sku       ||'';
+    document.getElementById('editBadge').value     = btn.dataset.badge     ||'';
+    document.getElementById('editBadgeType').value = btn.dataset.badgetype ||'';
+    const raw = (btn.dataset.colors||'').trim();
+    clr.edit = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    renderSwatches('edit');
     clearErr('editName');
     openModal('editModal');
     setTimeout(()=>document.getElementById('editName').focus(),200);
@@ -338,7 +431,11 @@
       price:       parseFloat(document.getElementById('editPrice').value)||0,
       categoryId:  document.getElementById('editCategory').value||'00000000-0000-0000-0000-000000000000',
       typeId:      document.getElementById('editType').value    ||'00000000-0000-0000-0000-000000000000',
-      color: [], imageFiles: []
+      sku:         document.getElementById('editSku').value.trim(),
+      badge:       document.getElementById('editBadge').value.trim(),
+      badgeType:   document.getElementById('editBadgeType').value,
+      color:       [...clr.edit],
+      imageFiles:  []
     };
     try{
       const resp=await fetch(`/api/product/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});

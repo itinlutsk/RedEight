@@ -524,3 +524,40 @@ body { padding-top: 0; }
   font-family: 'Inter', sans-serif;
 }
 .btn-tbl-upload:hover { border-color: var(--c-ink); color: var(--c-ink); }
+
+/* ── COLOUR TAG EDITOR ── */
+.swatch-editor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  min-height: 2rem;
+  align-items: center;
+}
+.clr-tag {
+  position: relative;
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.25);
+  cursor: default;
+  flex-shrink: 0;
+}
+.clr-tag-del {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(232,35,26,.9);
+  color: #fff;
+  border: none;
+  font-size: .55rem;
+  line-height: 1;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.clr-tag:hover .clr-tag-del { display: flex; }
+
+/* make modal body scrollable when content is tall */
+.r8-modal-body { max-height: 68vh; overflow-y: auto; }

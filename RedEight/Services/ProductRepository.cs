@@ -84,6 +84,9 @@ namespace RedEight.Services
                 existing.TypeId = item.TypeId;
                 existing.Price = item.Price;
                 existing.ImageFiles = item.ImageFiles;
+                existing.Sku = item.Sku;
+                existing.Badge = item.Badge;
+                existing.BadgeType = item.BadgeType;
                 await WriteAllAsync(list);
                 return true;
             }
