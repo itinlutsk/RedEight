@@ -159,16 +159,19 @@
         const html     = document.documentElement;
 
         function applyTheme(t) {
-        html.dataset.theme = t;
-        localStorage.setItem('r8-theme', t);
-        themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+            html.dataset.theme = t;
+            try { localStorage.setItem('r8-theme', t); } catch(e) {}
+            if (themeBtn) {
+                const icon = themeBtn.querySelector('i');
+                if (icon) icon.className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+            }
         }
-        applyTheme(localStorage.getItem('r8-theme') || 'light');
-        themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+        try { applyTheme(localStorage.getItem('r8-theme') || 'light'); } catch(e) { applyTheme('light'); }
+        if (themeBtn) themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
 
         /* ── NAV scroll ── */
         const nav = document.getElementById('siteNav');
-        addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+        if (nav) addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
 
         /* ── Side drawer ── */
         const toggle   = document.getElementById('navToggle');
@@ -177,57 +180,64 @@
         const dClose   = document.getElementById('drawerClose');
 
         function openMob() {
-        drawer.classList.add('open');
-        backdrop.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        toggle.querySelector('i').className = 'bi bi-x-lg';
+            if (!drawer || !backdrop || !toggle) return;
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            const ti = toggle.querySelector('i');
+            if (ti) ti.className = 'bi bi-x-lg';
         }
         function closeMob() {
-        drawer.classList.remove('open');
-        backdrop.classList.remove('open');
-        document.body.style.overflow = '';
-        toggle.querySelector('i').className = 'bi bi-list';
+            if (!drawer || !backdrop || !toggle) return;
+            drawer.classList.remove('open');
+            backdrop.classList.remove('open');
+            document.body.style.overflow = '';
+            const ti = toggle.querySelector('i');
+            if (ti) ti.className = 'bi bi-list';
         }
 
-        toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
-        dClose.addEventListener('click', closeMob);
-        backdrop.addEventListener('click', closeMob);
+        if (toggle)   toggle.addEventListener('click', () => drawer && drawer.classList.contains('open') ? closeMob() : openMob());
+        if (dClose)   dClose.addEventListener('click', closeMob);
+        if (backdrop) backdrop.addEventListener('click', closeMob);
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
 
-        /* Carousel dots + counter */
-        const car   = document.getElementById('heroCarousel');
-        const bsCar = bootstrap.Carousel.getOrCreateInstance(car);
-        const dots  = document.querySelectorAll('.hero-dot');
-        const ctr   = document.getElementById('slideCounter');
-        dots.forEach(d => d.addEventListener('click', () => bsCar.to(+d.dataset.idx)));
-        car.addEventListener('slid.bs.carousel', e => {
-        dots.forEach((d, i) => d.classList.toggle('active', i === e.to));
-        ctr.textContent = String(e.to + 1).padStart(2,'0') + ' / 04';
-        });
+        /* Carousel dots + counter — home page only */
+        const car = document.getElementById('heroCarousel');
+        if (car) {
+            const bsCar = bootstrap.Carousel.getOrCreateInstance(car);
+            const dots  = document.querySelectorAll('.hero-dot');
+            const ctr   = document.getElementById('slideCounter');
+            dots.forEach(d => d.addEventListener('click', () => bsCar.to(+d.dataset.idx)));
+            car.addEventListener('slid.bs.carousel', e => {
+                dots.forEach((d, i) => d.classList.toggle('active', i === e.to));
+                if (ctr) ctr.textContent = String(e.to + 1).padStart(2,'0') + ' / 04';
+            });
+        }
 
         /* Reveal on scroll */
         const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
         /* CountUp */
         const statsIo = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
-        let v = 0;
-        const step = Math.ceil(target / 88);
-        const t = setInterval(() => { v = Math.min(v + step, target); el.textContent = v + suffix; if (v >= target) clearInterval(t); }, 16);
-        statsIo.unobserve(el);
-        });
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+                let v = 0;
+                const step = Math.ceil(target / 88);
+                const t = setInterval(() => { v = Math.min(v + step, target); el.textContent = v + suffix; if (v >= target) clearInterval(t); }, 16);
+                statsIo.unobserve(el);
+            });
         }, { threshold: 0.5 });
         document.querySelectorAll('[data-count]').forEach(el => statsIo.observe(el));
 
         /* Footer year */
-        document.getElementById('yr').textContent = new Date().getFullYear();
+        const yr = document.getElementById('yr');
+        if (yr) yr.textContent = new Date().getFullYear();
 
-        (function(){var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('r8-cookie-consent')){setTimeout(function(){b.classList.add('visible');},1000);}document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','accepted');b.classList.remove('visible');});document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','declined');b.classList.remove('visible');});})();
+        (function(){var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('r8-cookie-consent')){setTimeout(function(){b.classList.add('visible');},1000);}var acc=document.getElementById('cookieAccept'),dec=document.getElementById('cookieDecline');if(acc)acc.addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','accepted');b.classList.remove('visible');});if(dec)dec.addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','declined');b.classList.remove('visible');});})();
         (function(){var s=document.getElementById('langSwitcher'),btn=document.getElementById('langBtn');if(!s||!btn)return;btn.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(){s.classList.remove('open');});document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.lang-opt').forEach(function(x){x.classList.remove('active');});o.classList.add('active');var l=o.dataset.lang||'en';btn.innerHTML=l.toUpperCase()+' <i class="bi bi-chevron-down"></i>';localStorage.setItem('r8-lang',l);s.classList.remove('open');});});var sv=localStorage.getItem('r8-lang');if(sv){var el=document.querySelector('.lang-opt[data-lang="'+sv+'"]');if(el)el.click();}})();
     </script>
 </body>
