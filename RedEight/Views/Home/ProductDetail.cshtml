@@ -1,0 +1,287 @@
+@model RedEight.Models.Product
+@{
+    var images      = ViewBag.Images  as List<string> ?? new List<string>();
+    var related     = ViewBag.Related as List<RedEight.Models.Product> ?? new();
+    var catName     = (string)(ViewBag.CategoryName ?? "");
+    var typeName    = (string)(ViewBag.TypeName ?? "");
+    var priceLabel  = Model.Price > 0 ? $"{Model.Price:0.##}" : "";
+}
+@section Styles {
+    <link rel="stylesheet" href="/site/css/product-detail.css">
+}
+
+<!-- ── BREADCRUMB ─────────────────────────────────────────────────── -->
+<div class="breadcrumb-bar">
+    <div class="container">
+        <ol class="breadcrumb-list">
+            <li><a href="/">Home</a></li>
+            <li><span class="bc-sep"><i class="bi bi-chevron-right"></i></span></li>
+            <li><a href="/Products">Catalogue</a></li>
+            <li><span class="bc-sep"><i class="bi bi-chevron-right"></i></span></li>
+            <li><span class="bc-current">@Model.Name</span></li>
+        </ol>
+    </div>
+</div>
+
+<!-- ── PRODUCT LAYOUT ─────────────────────────────────────────────── -->
+<div class="container">
+    <div class="product-layout">
+
+        <!-- ── GALLERY ── -->
+        <div class="gallery-col">
+            <div class="gallery-main" id="galleryMain" onclick="lbOpen(currentIdx)">
+                @if (!string.IsNullOrEmpty(Model.Badge))
+                {
+                    <span class="gallery-badge">@Model.Badge</span>
+                }
+                <img class="gallery-main-img" id="mainImg"
+                     src="@(images.FirstOrDefault() ?? "")"
+                     alt="@Model.Name">
+                @if (images.Count > 1)
+                {
+                    <div class="gallery-counter" id="galleryCounter">1 / @images.Count</div>
+                }
+            </div>
+            @if (images.Count > 1)
+            {
+                <div class="gallery-thumbs">
+                    @for (int i = 0; i < images.Count; i++)
+                    {
+                        <div class="gallery-thumb @(i == 0 ? "active" : "")" onclick="setImg(@i)">
+                            <img src="@images[i]" alt="@Model.Name view @(i+1)" loading="lazy">
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- ── INFO ── -->
+        <div class="info-col">
+            <div class="product-meta-tags">
+                @if (!string.IsNullOrEmpty(catName))
+                {
+                    <span class="meta-tag">@catName</span>
+                }
+                @if (!string.IsNullOrEmpty(typeName))
+                {
+                    <span class="meta-tag">@typeName</span>
+                }
+                @if (!string.IsNullOrEmpty(Model.BadgeType))
+                {
+                    <span class="meta-tag">@Model.BadgeType</span>
+                }
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Sku))
+            {
+                <p class="product-sku-line">SKU · @Model.Sku</p>
+            }
+
+            <h1 class="product-title">@Model.Name</h1>
+
+            @if (Model.Price > 0)
+            {
+                <div class="product-price-block">
+                    <span class="price-from">Starting from</span>
+                    <div class="price-amount">
+                        <span class="price-currency">$</span>@priceLabel<span class="price-unit">CAD</span>
+                    </div>
+                    <p class="price-note">Made to order · Lead time 6–10 weeks · Custom dimensions available</p>
+                </div>
+            }
+            else
+            {
+                <div class="product-price-block">
+                    <div class="price-amount" style="font-size:1.5rem">On request</div>
+                    <p class="price-note">Contact us for pricing and availability</p>
+                </div>
+            }
+
+            <div class="product-desc">
+                @foreach (var para in (Model.Description ?? "").Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <p>@para</p>
+                }
+            </div>
+
+            @if (Model.Color != null && Model.Color.Any())
+            {
+                <hr class="info-divider">
+                <p class="finish-label">Finish options — <span class="finish-name" id="finishName">@Model.Color[0]</span></p>
+                <div class="finish-swatches">
+                    @for (int i = 0; i < Model.Color.Count; i++)
+                    {
+                        <button class="finish-swatch @(i == 0 ? "active" : "")"
+                                style="background:@Model.Color[i]"
+                                title="@Model.Color[i]"
+                                onclick="selectFinish(this,'@Model.Color[i]')"></button>
+                    }
+                </div>
+            }
+
+            <hr class="info-divider">
+
+            <div class="lead-time">
+                <i class="bi bi-clock"></i>
+                <div class="lead-time-text"><strong>6–10 week lead time.</strong> All pieces are made to order in our Toronto workshop. Rush options available — ask.</div>
+            </div>
+
+            <div class="cta-stack">
+                <a href="/#contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                <a href="/Products" class="btn-outline">Back to catalogue</a>
+            </div>
+
+            <hr class="info-divider">
+
+            <div class="share-row">
+                <span class="share-label">Share</span>
+                <a class="share-icon" href="https://twitter.com/intent/tweet?text=@Uri.EscapeDataString(Model.Name)&url=@Uri.EscapeDataString(Context.Request.Scheme+"://"+Context.Request.Host+Context.Request.Path)" target="_blank" rel="noopener"><i class="bi bi-twitter-x"></i></a>
+                <a class="share-icon" href="https://www.facebook.com/sharer/sharer.php?u=@Uri.EscapeDataString(Context.Request.Scheme+"://"+Context.Request.Host+Context.Request.Path)" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
+                <a class="share-icon" href="https://www.pinterest.com/pin/create/button/?url=@Uri.EscapeDataString(Context.Request.Scheme+"://"+Context.Request.Host+Context.Request.Path)&media=@Uri.EscapeDataString(images.FirstOrDefault()??"")&description=@Uri.EscapeDataString(Model.Name)" target="_blank" rel="noopener"><i class="bi bi-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── SPECS ─────────────────────────────────────────────────────── -->
+<div class="container">
+    <section class="specs-section">
+        <div class="specs-grid">
+            <div>
+                <p class="spec-group-title">Construction</p>
+                <div class="spec-row"><span class="spec-key">Joinery</span><span class="spec-val">Mortise &amp; tenon</span></div>
+                <div class="spec-row"><span class="spec-key">Frame</span><span class="spec-val">Kiln-dried hardwood</span></div>
+                <div class="spec-row"><span class="spec-key">Spring system</span><span class="spec-val">Eight-way hand-tied</span></div>
+                <div class="spec-row"><span class="spec-key">Upholstery</span><span class="spec-val">Full-grain leather / fabric</span></div>
+            </div>
+            <div>
+                <p class="spec-group-title">Options</p>
+                <div class="spec-row"><span class="spec-key">Custom dimensions</span><span class="spec-val">Available</span></div>
+                <div class="spec-row"><span class="spec-key">COM fabric</span><span class="spec-val">Accepted</span></div>
+                <div class="spec-row"><span class="spec-key">Finish</span><span class="spec-val">@(Model.Color?.Count > 0 ? Model.Color.Count + " options" : "Custom")</span></div>
+                <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">6–10 weeks</span></div>
+            </div>
+            <div>
+                <p class="spec-group-title">Delivery</p>
+                <div class="spec-row"><span class="spec-key">Made in</span><span class="spec-val">Toronto, ON</span></div>
+                <div class="spec-row"><span class="spec-key">Ships to</span><span class="spec-val">Canada &amp; US</span></div>
+                <div class="spec-row"><span class="spec-key">White glove</span><span class="spec-val">Available</span></div>
+                <div class="spec-row"><span class="spec-key">Warranty</span><span class="spec-val">5 years frame</span></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ── RELATED ────────────────────────────────────────────────────── -->
+@if (related.Any())
+{
+    <div class="container">
+        <section class="related-section">
+            <div class="section-head">
+                <h2>You may also like</h2>
+                <a href="/Products">All pieces <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="related-grid">
+                @foreach (var r in related)
+                {
+                    <a href="/Products/@r.Id" class="related-card" style="text-decoration:none">
+                        <div class="related-card-img">
+                            <img src="/Images/Products/@r.Id/1.png"
+                                 alt="@r.Name"
+                                 loading="lazy"
+                                 onerror="this.style.opacity='.1'">
+                        </div>
+                        <div class="related-card-body">
+                            @if (!string.IsNullOrEmpty(r.Sku))
+                            {
+                                <p class="related-card-sku">@r.Sku</p>
+                            }
+                            <p class="related-card-name">@r.Name</p>
+                            <span class="related-card-link">View <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    </div>
+}
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────────────── -->
+<div class="lb-overlay" id="lb" onclick="lbClose(event)">
+    <div class="lb-stage">
+        <img class="lb-img" id="lbImg" src="" alt="">
+        <button class="lb-btn lb-prev" onclick="lbNav(-1);event.stopPropagation()"><i class="bi bi-chevron-left"></i></button>
+        <button class="lb-btn lb-next" onclick="lbNav(1);event.stopPropagation()"><i class="bi bi-chevron-right"></i></button>
+    </div>
+    <button class="lb-close" onclick="lbCloseForce()"><i class="bi bi-x-lg"></i></button>
+    <div class="lb-dots" id="lbDots"></div>
+</div>
+
+@section Scripts {
+<script>
+(function(){
+  const imgs = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(images));
+  let currentIdx = 0;
+  window.currentIdx = 0;
+
+  window.setImg = function(idx){
+    const mainImg = document.getElementById('mainImg');
+    mainImg.classList.add('switching');
+    setTimeout(()=>{ mainImg.src = imgs[idx]; mainImg.classList.remove('switching'); }, 180);
+    document.querySelectorAll('.gallery-thumb').forEach((t,i)=>t.classList.toggle('active', i===idx));
+    const counter = document.getElementById('galleryCounter');
+    if(counter) counter.textContent = (idx+1) + ' / ' + imgs.length;
+    currentIdx = idx;
+    window.currentIdx = idx;
+  };
+
+  window.selectFinish = function(btn, name){
+    document.querySelectorAll('.finish-swatch').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    const el = document.getElementById('finishName');
+    if(el) el.textContent = name;
+  };
+
+  // Lightbox
+  const overlay = document.getElementById('lb');
+  const lbImg   = document.getElementById('lbImg');
+  const dotsEl  = document.getElementById('lbDots');
+  let lbIdx = 0;
+
+  function buildDots(){
+    dotsEl.innerHTML = imgs.map((_,i)=>`<button class="lb-dot${i===lbIdx?' active':''}" onclick="lbDot(${i});event.stopPropagation()"></button>`).join('');
+  }
+
+  window.lbOpen = function(idx){
+    lbIdx = idx;
+    lbImg.src = imgs[lbIdx];
+    buildDots();
+    overlay.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.lbClose = function(e){
+    if(e && e.target !== overlay) return;
+    overlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  };
+  window.lbCloseForce = function(){
+    overlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  };
+  window.lbNav = function(dir){
+    if(!imgs.length) return;
+    lbIdx = (lbIdx + dir + imgs.length) % imgs.length;
+    lbImg.src = imgs[lbIdx];
+    buildDots();
+  };
+  window.lbDot = function(i){ lbIdx=i; lbImg.src=imgs[i]; buildDots(); };
+
+  document.addEventListener('keydown', e=>{
+    if(!overlay.classList.contains('lb-open')) return;
+    if(e.key==='ArrowLeft') lbNav(-1);
+    if(e.key==='ArrowRight') lbNav(1);
+    if(e.key==='Escape') lbCloseForce();
+  });
+})();
+</script>
+}

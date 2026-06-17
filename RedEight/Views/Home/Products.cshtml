@@ -142,7 +142,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     @foreach(var p in Model.Products)
                     {
                         var priceLabel = p.Price > 0 ? $"From ${p.Price:0.##}" : "On request";
-                        <article class="product-card reveal" data-cat="@p.CategoryId" data-type="@p.TypeId">
+                        <a href="/Products/@p.Id" style="text-decoration:none;color:inherit;display:contents">
+                        <article class="product-card reveal" data-cat="@p.CategoryId" data-type="@p.TypeId" style="cursor:pointer">
                             <div class="product-card-media">
                                 <img src="/Images/Products/@p.Id/1.png"
                                      alt="@p.Name"
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function(){
                                 </div>
                             </div>
                         </article>
+                        </a>
                     }
 
                 </div>

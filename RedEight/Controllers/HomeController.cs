@@ -61,6 +61,40 @@ namespace RedEight.Controllers
             return View("StaticPage", "about");
         }
 
+        [Route("/Products/{id:guid}")]
+        public async Task<IActionResult> ProductDetail(Guid id)
+        {
+            var product = await _productRepo.GetByIdAsync(id);
+            if (product == null) return NotFound();
+
+            var imgDir = Path.Combine(_env.WebRootPath, "Images", "Products", id.ToString());
+            var images = new List<string>();
+            if (Directory.Exists(imgDir))
+            {
+                images = Directory.GetFiles(imgDir)
+                    .Select(Path.GetFileName).OfType<string>()
+                    .OrderBy(f => { var n = Path.GetFileNameWithoutExtension(f); return int.TryParse(n, out var num) ? num : int.MaxValue; })
+                    .Select(f => $"/Images/Products/{id}/{f}")
+                    .ToList();
+            }
+
+            var catSvc = HttpContext.RequestServices.GetService(typeof(RedEight.Services.ICategoryRepository)) as RedEight.Services.ICategoryRepository;
+            var typeSvc = HttpContext.RequestServices.GetService(typeof(RedEight.Services.ITypeRepository)) as RedEight.Services.ITypeRepository;
+            var allCats = catSvc != null ? await catSvc.GetAllAsync() : new();
+            var allTypes = typeSvc != null ? await typeSvc.GetAllAsync() : new();
+
+            var allProducts = await _productRepo.GetAllAsync();
+            var related = allProducts
+                .Where(p => p.Id != id && (p.CategoryId == product.CategoryId || p.TypeId == product.TypeId))
+                .Take(4).ToList();
+
+            ViewBag.Images = images;
+            ViewBag.CategoryName = allCats.FirstOrDefault(c => c.Id == product.CategoryId)?.Name ?? "";
+            ViewBag.TypeName = allTypes.FirstOrDefault(t => t.Id == product.TypeId)?.Name ?? "";
+            ViewBag.Related = related;
+            return View(product);
+        }
+
         [Route("/Blog")]
         public async Task<IActionResult> Blog()
         {
