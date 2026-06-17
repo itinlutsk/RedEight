@@ -85,7 +85,9 @@ namespace RedEight.Services
                 existing.Author = blog.Author;
                 existing.TextSecondary = blog.TextSecondary;
                 existing.VideoUrl = blog.VideoUrl;
-                // preserve Created date unless explicitly set in payload
+                existing.Tag = blog.Tag;
+                existing.ReadTime = blog.ReadTime;
+                existing.Featured = blog.Featured;
                 if (blog.Created != default) existing.Created = blog.Created;
 
                 await WriteAllAsync(list);

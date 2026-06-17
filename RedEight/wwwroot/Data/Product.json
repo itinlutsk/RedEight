@@ -3,11 +3,17 @@
     "id": "b8c2d1e4-7f6a-4d9b-8c1e-2f3a4b5c6d7e",
     "name": "The Geary Q",
     "description": "A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise \u0026 tenon joinery, hand-finished.",
-    "color": [],
+    "color": [
+      "#8b6f47",
+      "#e0caec"
+    ],
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 170,
-    "imageFiles": []
+    "imageFiles": [],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "d3e4f5a6-b7c8-4d9e-8f1a-2b3c4d5e6f7a",
@@ -23,7 +29,10 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-wingback.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "e7f8a9b1-c2d3-4e5f-8a9b-1c2d3e4f5a6b",
@@ -39,7 +48,10 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-upholstery.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "f1a2b3c4-d5e6-4f7a-8b9c-1d2e3f4a5b6c",
@@ -51,7 +63,10 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-restoration.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "a2b3c4d5-e6f7-4a8b-9c1d-2e3f4a5b6c7d",
@@ -63,7 +78,10 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-frame.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "b3c4d5e6-f7a8-4b9c-1d2e-3f4a5b6c7d8e",
@@ -75,7 +93,10 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-team.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   },
   {
     "id": "c4d5e6f7-a8b9-4c1d-2e3f-4a5b6c7d8e9f",
@@ -87,6 +108,9 @@
     "price": 0,
     "imageFiles": [
       "assets/workshop-designer.jpg"
-    ]
+    ],
+    "sku": "",
+    "badge": "",
+    "badgeType": ""
   }
 ]

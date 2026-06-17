@@ -10,7 +10,8 @@
         public string TextSecondary { get; set; } = string.Empty;
         public string VideoUrl { get; set; } = string.Empty;
         public List<string> ImageFiles { get; set; } = new();
-
-
+        public string Tag { get; set; } = string.Empty;
+        public string ReadTime { get; set; } = string.Empty;
+        public bool Featured { get; set; } = false;
     }
 }

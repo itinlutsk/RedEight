@@ -39,70 +39,6 @@ namespace RedEight.Controllers.Api
             return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
 
-        [HttpPost("{id:guid}/images")]
-        public async Task<IActionResult> UploadImages(Guid id, List<IFormFile> files)
-        {
-            var item = await _repo.GetByIdAsync(id);
-            if (item == null) return NotFound();
-
-            if (files == null || files.Count == 0) return BadRequest("No files uploaded");
-
-            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
-            Directory.CreateDirectory(imagesDir);
-
-            int index = 1;
-            // find current max index if existing files
-            var existingFiles = Directory.GetFiles(imagesDir).Select(f => Path.GetFileName(f)).ToList();
-            if (existingFiles.Count > 0)
-            {
-                var numbers = existingFiles.SelectMany(n =>
-                {
-                    var name = Path.GetFileNameWithoutExtension(n);
-                    var parts = name.Split('-');
-                    if (parts.Length >= 2 && int.TryParse(parts.Last(), out var num)) return new[] { num };
-                    return Array.Empty<int>();
-                });
-                if (numbers.Any()) index = numbers.Max() + 1;
-            }
-
-            var saved = new List<string>();
-            foreach (var file in files)
-            {
-                var ext = Path.GetExtension(file.FileName);
-                var fileName = $"{id.ToString()}-{index}{ext}";
-                var filePath = Path.Combine(imagesDir, fileName);
-                using var stream = new FileStream(filePath, FileMode.Create);
-                await file.CopyToAsync(stream);
-                saved.Add(Path.Combine("Images", "Blog", id.ToString(), fileName).Replace("\\", "/"));
-                index++;
-            }
-
-            item.ImageFiles.AddRange(saved);
-            await _repo.UpdateAsync(id, item);
-
-            return Ok(saved);
-        }
-
-        [HttpDelete("{id:guid}/images/{fileName}")]
-        public async Task<IActionResult> DeleteImage(Guid id, string fileName)
-        {
-            var item = await _repo.GetByIdAsync(id);
-            if (item == null) return NotFound();
-
-            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
-            var filePath = Path.Combine(imagesDir, fileName);
-            if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
-
-            var relative = Path.Combine("Images", "Blog", id.ToString(), fileName).Replace("\\", "/");
-            if (item.ImageFiles.Contains(relative))
-            {
-                item.ImageFiles.Remove(relative);
-                await _repo.UpdateAsync(id, item);
-            }
-
-            return NoContent();
-        }
-
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Blog blog)
         {
@@ -116,6 +52,66 @@ namespace RedEight.Controllers.Api
         {
             var ok = await _repo.DeleteAsync(id);
             if (!ok) return NotFound();
+            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
+            if (Directory.Exists(imagesDir)) Directory.Delete(imagesDir, recursive: true);
+            return NoContent();
+        }
+
+        /* ── IMAGES ── */
+
+        [HttpGet("{id:guid}/images")]
+        public IActionResult GetImages(Guid id)
+        {
+            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
+            if (!Directory.Exists(imagesDir)) return Ok(Array.Empty<string>());
+            var files = Directory.GetFiles(imagesDir)
+                .Select(f => Path.GetFileName(f))
+                .OrderBy(f =>
+                {
+                    var stem = Path.GetFileNameWithoutExtension(f);
+                    return int.TryParse(stem, out var n) ? n : int.MaxValue;
+                })
+                .ToList();
+            return Ok(files);
+        }
+
+        [HttpPost("{id:guid}/images")]
+        public async Task<IActionResult> UploadImages(Guid id, List<IFormFile> files)
+        {
+            var item = await _repo.GetByIdAsync(id);
+            if (item == null) return NotFound();
+            if (files == null || files.Count == 0) return BadRequest("No files uploaded");
+
+            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
+            Directory.CreateDirectory(imagesDir);
+
+            var existing = Directory.GetFiles(imagesDir)
+                .Select(f => Path.GetFileNameWithoutExtension(f))
+                .Where(n => int.TryParse(n, out _))
+                .Select(n => int.Parse(n));
+            int next = existing.Any() ? existing.Max() + 1 : 1;
+
+            var saved = new List<string>();
+            foreach (var file in files)
+            {
+                var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+                var fileName = $"{next}{ext}";
+                var filePath = Path.Combine(imagesDir, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(stream);
+                saved.Add(fileName);
+                next++;
+            }
+
+            return Ok(saved);
+        }
+
+        [HttpDelete("{id:guid}/images/{fileName}")]
+        public IActionResult DeleteImage(Guid id, string fileName)
+        {
+            var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Blog", id.ToString());
+            var filePath = Path.Combine(imagesDir, fileName);
+            if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
             return NoContent();
         }
     }

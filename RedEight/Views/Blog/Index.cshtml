@@ -1,113 +1,456 @@
 @model List<RedEight.Models.Blog>
 @{
-    Layout = null;
-    ViewData["Title"] = "Blog";
+    Layout = "_Layout";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body class="p-4">
-    <div class="container">
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Admin</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Blog</li>
-            </ol>
-        </nav>
 
-        <h1>Blog posts</h1>
-        <p>
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
-        </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Created</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var item in Model)
+@section Styles {
+    <link rel="stylesheet" href="/site/css/admin.css" />
+}
+
+<div class="container my-5" style="padding-top:3.5rem;">
+  @Html.AntiForgeryToken()
+
+  <div class="admin-page-header">
+    <div>
+      <p class="sec-num">Admin · Management</p>
+      <h1>Journal</h1>
+      <p>Create and manage posts published in the journal.</p>
+    </div>
+    <button class="btn-r8" onclick="openCreateModal()"><i class="bi bi-plus-lg"></i> New post</button>
+  </div>
+
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Journal</li>
+    </ol>
+  </nav>
+
+  <div class="admin-card">
+    <div class="admin-table-toolbar">
+      <div class="admin-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="blogSearch" placeholder="Search posts…" oninput="filterTable()">
+      </div>
+      <span class="admin-count" id="blogCount">@Model.Count post@(Model.Count == 1 ? "" : "s")</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table admin-table" id="blogTable">
+        <thead>
+          <tr>
+            <th style="width:4rem"></th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Tag</th>
+            <th>Date</th>
+            <th>Featured</th>
+            <th class="text-end" style="padding-right:1.25rem">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="blogBody">
+          @foreach (var p in Model)
+          {
+            <tr data-name="@p.Name.ToLower()">
+              <td>
+                <img src="/Images/Blog/@p.Id/1.jpg"
+                     style="width:48px;height:48px;object-fit:cover;"
+                     alt="@p.Name"
+                     onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Blog/@p.Id/1.png';}else{this.style.opacity='.15';}" />
+              </td>
+              <td style="font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@p.Name</td>
+              <td style="color:var(--c-mid);font-size:.82rem">@p.Author</td>
+              <td style="color:var(--c-mid);font-size:.82rem">@p.Tag</td>
+              <td style="font-size:.82rem">@p.Created.ToString("yyyy-MM-dd")</td>
+              <td>
+                @if (p.Featured)
                 {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Author</td>
-                        <td>@item.Created.ToString("yyyy-MM-dd")</td>
-                        <td>
-                            <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-sm btn-info" href="#" data-id="@item.Id" onclick="openUpload(this);return false;">Upload Images</a>
-                            <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="@item.Id">Delete</button>
-                        </td>
-                    </tr>
+                  <span style="font-size:.63rem;font-weight:700;letter-spacing:.06em;color:#c8a86b;text-transform:uppercase">Featured</span>
                 }
-            </tbody>
-        </table>
-    </div>
+              </td>
+              <td class="text-end">
+                <button class="btn-tbl-edit me-1"
+                        onclick="openEditModal('@p.Id')"
+                        data-id="@p.Id">
+                  <i class="bi bi-pencil"></i> Edit
+                </button>
+                <button class="btn-tbl-upload me-1"
+                        onclick="openImagesModal(this)"
+                        data-id="@p.Id"
+                        data-name="@p.Name">
+                  <i class="bi bi-images"></i> Images
+                </button>
+                <button class="btn-tbl-delete"
+                        onclick="openDeleteModal(this)"
+                        data-id="@p.Id"
+                        data-name="@p.Name">
+                  <i class="bi bi-trash3"></i> Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
 
-    <div id="uploadModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:1rem; width:420px; border-radius:6px;">
-            <h5>Upload Images</h5>
-            <form id="uploadForm">
-                <input type="file" name="files" accept="image/*" multiple />
-                <input type="hidden" name="id" />
-                <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
-                    <button class="btn btn-primary" type="button" onclick="submitUpload()">Upload</button>
-                    <button class="btn btn-secondary" type="button" onclick="closeUpload()">Cancel</button>
-                </div>
-            </form>
+      <div class="admin-empty d-none" id="emptyState">
+        <i class="bi bi-journal-text"></i>
+        <p>No posts match your search.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CREATE MODAL ──────────────────────────────────────────────────── -->
+<div class="r8-modal-backdrop" id="createModal" role="dialog" aria-modal="true" aria-labelledby="createModalTitle">
+  <div class="r8-modal" style="max-width:560px">
+    <div class="r8-modal-header">
+      <h2 id="createModalTitle">New post</h2>
+      <button class="r8-modal-close" onclick="closeModal('createModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <div class="r8-form-group">
+        <label class="r8-label" for="createName">Title</label>
+        <input class="r8-input" type="text" id="createName" placeholder="Post title">
+        <div class="r8-field-error" id="err-createName">Please enter a title.</div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="createDesc">Excerpt / Short description</label>
+        <textarea class="r8-input" id="createDesc" rows="2" placeholder="Brief summary shown in the listing…"></textarea>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="createTextSecondary">Body text</label>
+        <textarea class="r8-input" id="createTextSecondary" rows="4" placeholder="Main article body…"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="createAuthor">Author</label>
+          <input class="r8-input" type="text" id="createAuthor" placeholder="Full name">
         </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="createTag">Tag</label>
+          <input class="r8-input" type="text" id="createTag" placeholder="e.g. Materials">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="createReadTime">Read time</label>
+          <input class="r8-input" type="text" id="createReadTime" placeholder="e.g. 8 min">
+        </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="createCreated">Date</label>
+          <input class="r8-input" type="date" id="createCreated">
+        </div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="createVideoUrl">Video URL (optional)</label>
+        <input class="r8-input" type="url" id="createVideoUrl" placeholder="https://…">
+      </div>
+      <div class="r8-form-group" style="display:flex;align-items:center;gap:.75rem;padding:.25rem 0">
+        <input type="checkbox" id="createFeatured" style="width:1rem;height:1rem;accent-color:var(--c-ink);cursor:pointer">
+        <label for="createFeatured" class="r8-label" style="margin:0;cursor:pointer">Featured post</label>
+      </div>
     </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('createModal')">Cancel</button>
+      <button class="btn-r8" onclick="submitCreate()"><i class="bi bi-plus-lg"></i> Create post</button>
+    </div>
+  </div>
+</div>
 
-    <script>
-        function openUpload(el) {
-            var id = el.getAttribute('data-id');
-            var modal = document.getElementById('uploadModal');
-            modal.style.display = 'flex';
-            modal.querySelector('[name="id"]').value = id;
-        }
-        function closeUpload() { document.getElementById('uploadModal').style.display = 'none'; }
-        async function submitUpload(){
-            var form = document.getElementById('uploadForm');
-            var id = form.querySelector('[name="id"]').value;
-            var files = form.querySelector('[name="files"]').files;
-            if (!files || files.length==0) { alert('Select files'); return; }
-            var fd = new FormData();
-            for(var i=0;i<files.length;i++) fd.append('files', files[i]);
-            var r = await fetch('/api/blog/' + id + '/images', { method: 'POST', body: fd });
-            if (!r.ok) { var t = await r.text(); alert('Upload failed: ' + r.status + '\n' + t); return; }
-            location.reload();
-        }
+<!-- ── EDIT MODAL ────────────────────────────────────────────────────── -->
+<div class="r8-modal-backdrop" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+  <div class="r8-modal" style="max-width:560px">
+    <div class="r8-modal-header">
+      <h2 id="editModalTitle">Edit post</h2>
+      <button class="r8-modal-close" onclick="closeModal('editModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body" id="editModalBody">
+      <div style="text-align:center;padding:2rem;color:var(--c-mid);font-size:.85rem">Loading…</div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
+      <button class="btn-r8" onclick="submitEdit()"><i class="bi bi-check-lg"></i> Save changes</button>
+    </div>
+  </div>
+</div>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.btn-delete').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    var id = this.getAttribute('data-id');
-                    if (!confirm('Are you sure you want to delete this blog post?')) return;
+<!-- ── IMAGES MODAL ──────────────────────────────────────────────────── -->
+<div class="r8-modal-backdrop" id="imagesModal" role="dialog" aria-modal="true" aria-labelledby="imagesModalTitle">
+  <div class="r8-modal" style="max-width:600px">
+    <div class="r8-modal-header">
+      <h2 id="imagesModalTitle">Images</h2>
+      <button class="r8-modal-close" onclick="closeModal('imagesModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <input type="hidden" id="imagesPostId">
 
-                    fetch('/api/blog/' + id, { method: 'DELETE' }).then(function (resp) {
-                        if (resp.status === 204) {
-                            window.location = '/Blog';
-                        } else if (resp.status === 404) {
-                            alert('Blog not found');
-                        } else {
-                            return resp.text().then(function (text) {
-                                alert('Error: ' + resp.status + '\n' + text);
-                            });
-                        }
-                    }).catch(function (err) {
-                        console.error(err);
-                        alert('Request failed');
-                    });
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+      <div class="r8-label mb-1" style="margin-bottom:.5rem">Existing images</div>
+      <div id="imagesGrid" class="prod-img-grid">
+        <p style="color:var(--c-mid);font-size:.8rem">Loading…</p>
+      </div>
+
+      <div style="border-top:1px solid var(--c-line);margin:1.2rem 0"></div>
+
+      <div class="r8-label" style="margin-bottom:.5rem">Upload new images</div>
+      <p style="font-size:.72rem;color:var(--c-mid);margin-bottom:.7rem">Saved as <code>Images/Blog/{id}/1.jpg</code>, <code>2.jpg</code>… New uploads continue numbering from the last existing file.</p>
+      <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
+        <input class="r8-input" type="file" id="imageUploadInput" accept="image/*" multiple style="flex:1;min-width:0;padding:.5rem .8rem;font-size:.78rem">
+        <button class="btn-r8" style="white-space:nowrap" onclick="submitImageUpload()"><i class="bi bi-cloud-upload"></i> Upload</button>
+      </div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('imagesModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DELETE MODAL ──────────────────────────────────────────────────── -->
+<div class="r8-modal-backdrop" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="deleteModalTitle">Delete post</h2>
+      <button class="r8-modal-close" onclick="closeModal('deleteModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body delete-modal-body">
+      <div class="delete-modal-icon"><i class="bi bi-trash3"></i></div>
+      <p>Are you sure you want to delete <strong id="deleteTarget">"Post"</strong>? This action cannot be undone.</p>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn-danger-r8" onclick="submitDelete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="r8-toast" id="toast" role="alert">
+  <i class="bi bi-check-circle-fill" id="toastIcon"></i>
+  <span id="toastMsg">Done</span>
+</div>
+
+<script>
+  /* ── HELPERS ──────────────────────────────────────────────────────── */
+  function openModal(id)  { const el=document.getElementById(id); if(el){ el.classList.add('open'); document.body.style.overflow='hidden'; } }
+  function closeModal(id) { const el=document.getElementById(id); if(el){ el.classList.remove('open'); document.body.style.overflow=''; } }
+  document.querySelectorAll('.r8-modal-backdrop').forEach(bd=>bd.addEventListener('click', e=>{ if(e.target===bd){ bd.classList.remove('open'); document.body.style.overflow=''; } }));
+
+  function clearErr(id){ const el=document.getElementById(id); if(el) el.classList.remove('error'); const er=document.getElementById('err-'+id); if(er) er.classList.remove('visible'); }
+  function showErr(id)  { const el=document.getElementById(id); if(el) el.classList.add('error');    const er=document.getElementById('err-'+id); if(er) er.classList.add('visible'); }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  let toastTimer;
+  function showToast(type, msg){ const t=document.getElementById('toast'),i=document.getElementById('toastIcon'); if(!t)return; t.className='r8-toast '+type; if(i)i.className=type==='success'?'bi bi-check-circle-fill':'bi bi-trash3'; const m=document.getElementById('toastMsg'); if(m)m.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3200); }
+
+  function todayIso(){ return new Date().toISOString().slice(0,10); }
+
+  /* ── SEARCH ──────────────────────────────────────────────────────── */
+  function filterTable(){ const q=document.getElementById('blogSearch').value.toLowerCase(); const rows=document.querySelectorAll('#blogBody tr'); let v=0; rows.forEach(r=>{ const m=(r.dataset.name||'').includes(q); r.style.display=m?'':'none'; if(m)v++; }); document.getElementById('emptyState').classList.toggle('d-none',v>0); updateCount(); }
+  function updateCount(){ const v=[...document.querySelectorAll('#blogBody tr')].filter(r=>r.style.display!=='none').length; const el=document.getElementById('blogCount'); if(el) el.textContent=v+(v===1?' post':' posts'); }
+
+  /* ── CREATE ──────────────────────────────────────────────────────── */
+  function openCreateModal(){
+    document.getElementById('createName').value='';
+    document.getElementById('createDesc').value='';
+    document.getElementById('createTextSecondary').value='';
+    document.getElementById('createAuthor').value='';
+    document.getElementById('createTag').value='';
+    document.getElementById('createReadTime').value='';
+    document.getElementById('createVideoUrl').value='';
+    document.getElementById('createCreated').value=todayIso();
+    document.getElementById('createFeatured').checked=false;
+    clearErr('createName');
+    openModal('createModal');
+    setTimeout(()=>document.getElementById('createName').focus(),200);
+  }
+
+  async function submitCreate(){
+    const name=document.getElementById('createName').value.trim();
+    if(!name){ showErr('createName'); return; }
+    const body={
+      name,
+      description:    document.getElementById('createDesc').value.trim(),
+      textSecondary:  document.getElementById('createTextSecondary').value.trim(),
+      author:         document.getElementById('createAuthor').value.trim(),
+      tag:            document.getElementById('createTag').value.trim(),
+      readTime:       document.getElementById('createReadTime').value.trim(),
+      videoUrl:       document.getElementById('createVideoUrl').value.trim(),
+      created:        document.getElementById('createCreated').value || new Date().toISOString(),
+      featured:       document.getElementById('createFeatured').checked,
+      imageFiles:     []
+    };
+    try{
+      const resp=await fetch('/api/blog',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(resp.status===201){
+        closeModal('createModal');
+        showToast('success',`"${name}" created.`);
+        setTimeout(()=>location.reload(),600);
+      } else { showToast('error','Create failed: '+resp.status); }
+    }catch(e){ console.error(e); showToast('error','Request failed'); }
+  }
+
+  /* ── EDIT ────────────────────────────────────────────────────────── */
+  let _editId = '';
+
+  function editFormHtml(d){
+    const dateVal = d.created ? d.created.slice(0,10) : todayIso();
+    return `
+      <input type="hidden" id="editId" value="${esc(d.id)}">
+      <div class="r8-form-group">
+        <label class="r8-label" for="editName">Title</label>
+        <input class="r8-input" type="text" id="editName" value="${esc(d.name||'')}">
+        <div class="r8-field-error" id="err-editName">Please enter a title.</div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="editDesc">Excerpt / Short description</label>
+        <textarea class="r8-input" id="editDesc" rows="2">${esc(d.description||'')}</textarea>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="editTextSecondary">Body text</label>
+        <textarea class="r8-input" id="editTextSecondary" rows="4">${esc(d.textSecondary||'')}</textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="editAuthor">Author</label>
+          <input class="r8-input" type="text" id="editAuthor" value="${esc(d.author||'')}">
+        </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="editTag">Tag</label>
+          <input class="r8-input" type="text" id="editTag" value="${esc(d.tag||'')}">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+        <div class="r8-form-group">
+          <label class="r8-label" for="editReadTime">Read time</label>
+          <input class="r8-input" type="text" id="editReadTime" value="${esc(d.readTime||'')}">
+        </div>
+        <div class="r8-form-group">
+          <label class="r8-label" for="editCreated">Date</label>
+          <input class="r8-input" type="date" id="editCreated" value="${esc(dateVal)}">
+        </div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="editVideoUrl">Video URL (optional)</label>
+        <input class="r8-input" type="url" id="editVideoUrl" value="${esc(d.videoUrl||'')}">
+      </div>
+      <div class="r8-form-group" style="display:flex;align-items:center;gap:.75rem;padding:.25rem 0">
+        <input type="checkbox" id="editFeatured" ${d.featured?'checked':''} style="width:1rem;height:1rem;accent-color:var(--c-ink);cursor:pointer">
+        <label for="editFeatured" class="r8-label" style="margin:0;cursor:pointer">Featured post</label>
+      </div>`;
+  }
+
+  async function openEditModal(id){
+    _editId = id;
+    document.getElementById('editModalBody').innerHTML='<div style="text-align:center;padding:2rem;color:var(--c-mid);font-size:.85rem">Loading…</div>';
+    openModal('editModal');
+    try{
+      const resp = await fetch(`/api/blog/${id}`);
+      if(!resp.ok){ document.getElementById('editModalBody').innerHTML='<p style="color:red;padding:1rem">Failed to load post.</p>'; return; }
+      const data = await resp.json();
+      document.getElementById('editModalBody').innerHTML = editFormHtml(data);
+      setTimeout(()=>{ const el=document.getElementById('editName'); if(el) el.focus(); },100);
+    }catch(e){ document.getElementById('editModalBody').innerHTML='<p style="color:red;padding:1rem">Error loading post.</p>'; }
+  }
+
+  async function submitEdit(){
+    const id   = document.getElementById('editId')?.value;
+    const name = document.getElementById('editName')?.value.trim();
+    if(!name){ showErr('editName'); return; }
+    const body={
+      id,
+      name,
+      description:   document.getElementById('editDesc').value.trim(),
+      textSecondary: document.getElementById('editTextSecondary').value.trim(),
+      author:        document.getElementById('editAuthor').value.trim(),
+      tag:           document.getElementById('editTag').value.trim(),
+      readTime:      document.getElementById('editReadTime').value.trim(),
+      videoUrl:      document.getElementById('editVideoUrl').value.trim(),
+      created:       document.getElementById('editCreated').value || new Date().toISOString(),
+      featured:      document.getElementById('editFeatured').checked,
+      imageFiles:    []
+    };
+    try{
+      const resp=await fetch(`/api/blog/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(resp.status===204){
+        closeModal('editModal');
+        showToast('success',`"${name}" saved.`);
+        setTimeout(()=>location.reload(),600);
+      } else { showToast('error','Save failed: '+resp.status); }
+    }catch(e){ console.error(e); showToast('error','Request failed'); }
+  }
+
+  /* ── IMAGES ──────────────────────────────────────────────────────── */
+  async function openImagesModal(btn){
+    const id=btn.dataset.id, name=btn.dataset.name;
+    document.getElementById('imagesModalTitle').textContent=`Images — ${name}`;
+    document.getElementById('imagesPostId').value=id;
+    const inp=document.getElementById('imageUploadInput'); if(inp) inp.value='';
+    openModal('imagesModal');
+    await loadImages(id);
+  }
+
+  async function loadImages(id){
+    const grid=document.getElementById('imagesGrid');
+    grid.innerHTML='<p style="color:var(--c-mid);font-size:.8rem">Loading…</p>';
+    try{
+      const resp=await fetch(`/api/blog/${id}/images`);
+      const files=await resp.json();
+      if(!files.length){ grid.innerHTML='<p style="color:var(--c-mid);font-size:.8rem;padding:.5rem 0">No images yet. Upload some below.</p>'; return; }
+      grid.innerHTML=files.map(f=>`
+        <div class="prod-img-thumb" id="imgthumb-${esc(f)}">
+          <img src="/Images/Blog/${id}/${esc(f)}" alt="${esc(f)}" onerror="this.style.opacity='.2'">
+          <button class="prod-img-del" onclick="deleteImage('${id}','${esc(f)}')" title="Delete image"><i class="bi bi-x-lg"></i></button>
+          <span class="prod-img-name">${esc(f)}</span>
+        </div>`).join('');
+    }catch(e){ grid.innerHTML='<p style="color:var(--c-mid);font-size:.8rem">Error loading images.</p>'; }
+  }
+
+  async function deleteImage(postId, fileName){
+    if(!confirm(`Delete image "${fileName}"?`)) return;
+    try{
+      const resp=await fetch(`/api/blog/${postId}/images/${encodeURIComponent(fileName)}`,{method:'DELETE'});
+      if(resp.status===204){
+        const el=document.getElementById('imgthumb-'+fileName);
+        if(el) el.remove();
+        showToast('success','Image deleted.');
+        const grid=document.getElementById('imagesGrid');
+        if(grid && !grid.querySelector('.prod-img-thumb')) grid.innerHTML='<p style="color:var(--c-mid);font-size:.8rem;padding:.5rem 0">No images yet.</p>';
+      } else { showToast('error','Delete failed: '+resp.status); }
+    }catch(e){ showToast('error','Request failed'); }
+  }
+
+  async function submitImageUpload(){
+    const id=document.getElementById('imagesPostId').value;
+    const inp=document.getElementById('imageUploadInput');
+    if(!inp||!inp.files.length){ showToast('error','Select at least one image.'); return; }
+    const fd=new FormData();
+    for(const f of inp.files) fd.append('files', f);
+    try{
+      const resp=await fetch(`/api/blog/${id}/images`,{method:'POST',body:fd});
+      if(resp.ok){
+        inp.value='';
+        showToast('success','Images uploaded.');
+        await loadImages(id);
+      } else { showToast('error','Upload failed: '+resp.status); }
+    }catch(e){ showToast('error','Request failed'); }
+  }
+
+  /* ── DELETE ──────────────────────────────────────────────────────── */
+  let _deleteId='';
+  function openDeleteModal(btn){
+    _deleteId=btn.dataset.id;
+    document.getElementById('deleteTarget').textContent=`"${btn.dataset.name}"`;
+    openModal('deleteModal');
+  }
+
+  async function submitDelete(){
+    try{
+      const resp=await fetch(`/api/blog/${_deleteId}`,{method:'DELETE'});
+      if(resp.status===204){
+        closeModal('deleteModal');
+        showToast('delete','Post deleted.');
+        setTimeout(()=>location.reload(),600);
+      } else { showToast('error','Delete failed: '+resp.status); }
+    }catch(e){ showToast('error','Request failed'); }
+  }
+</script>
