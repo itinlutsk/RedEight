@@ -372,7 +372,7 @@
                 @for (int i = 0; i < latestPosts.Count; i++)
                 {
                     var post = latestPosts[i];
-                    <div class="col-md-4 reveal @delays[i]">
+                    <div class="col-md-4 reveal d-flex flex-column @delays[i]">
                         <article class="journal-card">
                             <div class="img-wrap">
                                 @if (post.Featured)

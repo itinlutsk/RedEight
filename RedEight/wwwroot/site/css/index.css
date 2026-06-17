@@ -96,12 +96,14 @@
 .review-role { font-size: .58rem; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--c-mid); margin-top: .1rem; }
 
 /* ── JOURNAL CARDS (homepage) ── */
-.journal-card .img-wrap { aspect-ratio: 16/9; margin-bottom: 1rem; }
+.journal-card { display: flex; flex-direction: column; height: 100%; }
+.journal-card .img-wrap { aspect-ratio: 16/9; margin-bottom: 1rem; flex-shrink: 0; }
 .journal-tag  { font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--c-red); }
 .journal-read { font-size: .6rem; font-weight: 600; letter-spacing: .12em; color: var(--c-mid); }
 .journal-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; color: var(--c-ink); margin: .45rem 0 .4rem; line-height: 1.35; transition: color .2s; }
 .journal-title a { color: inherit; transition: color .2s; }
 .journal-title a:hover, .journal-card:hover .journal-title a { color: var(--c-red); }
+.journal-card .card-desc { flex: 1; }
 .journal-author { font-size: .85rem; color: var(--c-mid); margin-top: .4rem; }
 
 /* ── CONTACT FORM INPUTS ── */
