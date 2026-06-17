@@ -64,7 +64,7 @@
                      class="prod-thumb" data-id="@p.Id"
                      alt="@p.Name"
                      style="width:48px;height:48px;object-fit:cover;"
-                     onerror="this.style.opacity='.15';this.src='/site/images/placeholder.svg'" />
+                     onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Products/@p.Id/1.png';}else{this.style.opacity='.15';}" />
               </td>
               <td style="font-weight:600">@p.Name</td>
               <td style="color:var(--c-mid);font-size:.82rem">@catName</td>

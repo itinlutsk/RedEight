@@ -138,6 +138,90 @@ uri = "file://artifacts/red-eight/public/images/products/project-hotel.png"
 type = "image"
 title = "hotel lobby bespoke furniture"
 
+[[generated]]
+id = "9lh2CRxAVj5LgEPXXQyXe"
+uri = "file://RedEight/wwwroot/Images/Products/b8c2d1e4-7f6a-4d9b-8c1e-2f3a4b5c6d7e/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "RharYx8XXCF-37SGABHYf"
+uri = "file://RedEight/wwwroot/Images/Products/b8c2d1e4-7f6a-4d9b-8c1e-2f3a4b5c6d7e/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "M_fmEcqruMo3Q8INL3uUp"
+uri = "file://RedEight/wwwroot/Images/Products/d3e4f5a6-b7c8-4d9e-8f1a-2b3c4d5e6f7a/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "GsOAAw426EceiUJHN9uFy"
+uri = "file://RedEight/wwwroot/Images/Products/d3e4f5a6-b7c8-4d9e-8f1a-2b3c4d5e6f7a/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ErhTpDg-thnMZ1UsULm0l"
+uri = "file://RedEight/wwwroot/Images/Products/e7f8a9b1-c2d3-4e5f-8a9b-1c2d3e4f5a6b/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "LDsUepsHY6qtPn_BP1q9N"
+uri = "file://RedEight/wwwroot/Images/Products/e7f8a9b1-c2d3-4e5f-8a9b-1c2d3e4f5a6b/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "6ifQ2l3AtmvLjYn4XKbfo"
+uri = "file://RedEight/wwwroot/Images/Products/f1a2b3c4-d5e6-4f7a-8b9c-1d2e3f4a5b6c/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "6sjrg6Da8DrtY7r6zch1d"
+uri = "file://RedEight/wwwroot/Images/Products/f1a2b3c4-d5e6-4f7a-8b9c-1d2e3f4a5b6c/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "hapZks2Gt01P2mhgIRGt5"
+uri = "file://RedEight/wwwroot/Images/Products/a2b3c4d5-e6f7-4a8b-9c1d-2e3f4a5b6c7d/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "FbzBbP9QSRsIWenn3yO1G"
+uri = "file://RedEight/wwwroot/Images/Products/a2b3c4d5-e6f7-4a8b-9c1d-2e3f4a5b6c7d/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "wTz-vc0MJh-rIqEGbxBnN"
+uri = "file://RedEight/wwwroot/Images/Products/b3c4d5e6-f7a8-4b9c-1d2e-3f4a5b6c7d8e/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "yi8UuA7eaBgFUSo4CaY-1"
+uri = "file://RedEight/wwwroot/Images/Products/b3c4d5e6-f7a8-4b9c-1d2e-3f4a5b6c7d8e/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "hV5EQHVv3-T2VRx66a4Cw"
+uri = "file://RedEight/wwwroot/Images/Products/c4d5e6f7-a8b9-4c1d-2e3f-4a5b6c7d8e9f/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "DJNICGAKf_3AwuVjWMHzs"
+uri = "file://RedEight/wwwroot/Images/Products/c4d5e6f7-a8b9-4c1d-2e3f-4a5b6c7d8e9f/2.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "oSddoZ9BcA0m-bmpOfRyE"
 uri = "file://red-eight-workshop.tar.gz"
