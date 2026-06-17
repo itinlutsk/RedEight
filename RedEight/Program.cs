@@ -28,6 +28,22 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+
+// Disable HTML page caching so view changes take effect immediately in the browser
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.OnStarting(() =>
+    {
+        if (ctx.Response.ContentType?.Contains("text/html") == true)
+        {
+            ctx.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+            ctx.Response.Headers["Pragma"] = "no-cache";
+        }
+        return Task.CompletedTask;
+    });
+    await next();
+});
+
 app.UseAuthorization();
 
 app.MapControllers();

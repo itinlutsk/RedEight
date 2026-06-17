@@ -209,10 +209,10 @@
                 <a href="/Products" style="text-decoration:none;color:inherit;display:flex;">
                     <article class="product-card reveal @delayClass" style="flex:1;min-width:0;">
                         <div class="product-card-media">
-                            <img src="/Images/Products/@p.Id/1.jpg"
+                            <img src="/Images/Products/@p.Id/1.png"
                                  alt="@p.Name"
                                  loading="lazy"
-                                 onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Products/@p.Id/1.png';}else{this.style.opacity='.15';}" />
+                                 onerror="this.style.opacity='.15'" />
                         </div>
                         <div class="product-card-body">
                             <h3 class="product-name">@p.Name</h3>
