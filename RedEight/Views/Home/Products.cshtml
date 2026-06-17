@@ -1,0 +1,196 @@
+﻿@model RedEight.Models.ProductsViewModel
+@section Styles
+{
+    <link rel="stylesheet" href="/site/css/products.css">
+}
+
+
+<!-- ── PAGE HERO ───────────────────────────────────────────────────── -->
+<div class="page-hero">
+    <div class="container">
+        <div class="row align-items-end g-5">
+            <div class="col-lg-6">
+                <p class="eyebrow reveal">Our catalogue</p>
+                <h1 class="mt-3 reveal reveal-d1">The <em>catalogue</em></h1>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <p class="page-hero-desc reveal reveal-d2">A selection of pieces we've designed and built. All made to order. Lead times from 30 days. Most are available in custom dimensions and finishes — ask.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // make reveal elements visible
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+
+    // mobile chips mirror sidebar filters and trigger filtering
+    document.querySelectorAll('.mfb-chip').forEach(function(b){
+        b.addEventListener('click', function(){
+            var cat = b.dataset.cat;
+            if (cat){
+                document.querySelectorAll('#catFilter .filter-btn').forEach(function(x){ x.classList.remove('active'); });
+                var target = document.querySelector('#catFilter .filter-btn[data-cat="'+cat+'"]');
+                if (target) target.classList.add('active');
+            }
+            var type = b.dataset.type;
+            if (type){
+                document.querySelectorAll('#typeFilter .filter-btn').forEach(function(x){ x.classList.remove('active'); });
+                var target2 = document.querySelector('#typeFilter .filter-btn[data-type="'+type+'"]');
+                if (target2) target2.classList.add('active');
+            }
+            applyFilters();
+        });
+    });
+
+    // filtering logic (normalize to lower-case strings for safe comparison)
+    function applyFilters(){
+        var activeCat = (document.querySelector('#catFilter .filter-btn.active')?.dataset.cat || 'all').toString().toLowerCase();
+        var activeType = (document.querySelector('#typeFilter .filter-btn.active')?.dataset.type || 'all').toString().toLowerCase();
+        var cards = document.querySelectorAll('#productGrid .product-card');
+        var anyVisible = false;
+        cards.forEach(function(card){
+            var c = (card.dataset.cat || '').toString().toLowerCase();
+            var t = (card.dataset.type || '').toString().toLowerCase();
+            var okCat = activeCat === 'all' || c === activeCat;
+            var okType = activeType === 'all' || t === activeType;
+            if (okCat && okType) { card.style.display = ''; anyVisible = true; } else { card.style.display = 'none'; }
+        });
+        var empty = document.getElementById('emptyState');
+        if (empty) empty.style.display = anyVisible ? 'none' : '';
+
+        // debug overlay removed
+    }
+
+    document.querySelectorAll('#catFilter .filter-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+            document.querySelectorAll('#catFilter .filter-btn').forEach(x=>x.classList.remove('active'));
+            b.classList.add('active');
+            applyFilters();
+        });
+    });
+    document.querySelectorAll('#typeFilter .filter-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+            document.querySelectorAll('#typeFilter .filter-btn').forEach(x=>x.classList.remove('active'));
+            b.classList.add('active');
+            applyFilters();
+        });
+    });
+
+    applyFilters();
+});
+</script>
+
+<!-- ── MOBILE FILTER BAR ──────────────────────────────────────────── -->
+    <div class="mobile-filter-bar" id="mobileFilterBar">
+    <div class="mfb-row" id="mfbCatRow">
+        <span class="mfb-label">Category</span>
+        <button class="mfb-chip active" data-cat="all">All <span class="mfb-count" id="mfc-all">@Model.Products.Count</span></button>
+        @foreach(var c in Model.Categories)
+        {
+            <button class="mfb-chip" data-cat="@c.Id">@c.Name</button>
+        }
+    </div>
+    <div class="mfb-row" id="mfbTypeRow">
+        <span class="mfb-label">Made for</span>
+        <button class="mfb-chip active" data-type="all">All spaces</button>
+        @foreach(var t in Model.Types)
+        {
+            <button class="mfb-chip" data-type="@t.Id">@t.Name</button>
+        }
+    </div>
+</div>
+
+<!-- ── CATALOGUE ──────────────────────────────────────────────────── -->
+<section style="padding: 4rem 0 6rem">
+    <div class="container">
+        <div class="catalogue-layout" id="catalogueTop">
+
+            <!-- SIDEBAR -->
+            <aside class="cat-sidebar reveal">
+
+                <div class="filter-group">
+                    <p class="sidebar-label">Category</p>
+                    <div class="filter-btns" id="catFilter">
+                        <button class="filter-btn active" data-cat="all">All <span class="filter-count" id="fc-all">@Model.Products.Count</span></button>
+                        @foreach(var c in Model.Categories)
+                        {
+                            <button class="filter-btn" data-cat="@c.Id">@c.Name <span class="filter-count">@Model.Products.Count(p => p.CategoryId == c.Id)</span></button>
+                        }
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <p class="sidebar-label">Made for</p>
+                    <div class="filter-btns" id="typeFilter">
+                        <button class="filter-btn active" data-type="all">All spaces</button>
+                        @foreach(var t in Model.Types)
+                        {
+                            <button class="filter-btn" data-type="@t.Id">@t.Name</button>
+                        }
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- MAIN -->
+            <div>
+
+                <!-- GRID -->
+                <div class="product-grid" id="productGrid">
+                    @foreach(var p in Model.Products)
+                    {
+                        var cat = Model.Categories.FirstOrDefault(c => c.Id == p.CategoryId)?.Name ?? "uncategorized";
+                        var type = Model.Types.FirstOrDefault(t => t.Id == p.TypeId)?.Name ?? "general";
+                        var img = p.ImageFiles != null && p.ImageFiles.Count > 0 ? "/" + p.ImageFiles[0] : "/assets/logo.jpg";
+                        <article class="product-card reveal" data-cat="@p.CategoryId" data-type="@p.TypeId">
+                            <div class="product-card-media">
+                                <img src="@img" alt="@p.Name" loading="lazy">
+                            </div>
+                            <div class="product-card-body">
+                                <p class="product-sku">@p.Id.ToString().Substring(0,8)</p>
+                                <h3 class="product-name">@p.Name</h3>
+                                <p class="product-desc">@p.Description</p>
+                                <div class="product-card-footer">
+                                    <span class="product-price">@((p.Price>0)?p.Price.ToString("C"):"Quote on request")</span>
+                                    <a href="/Product/Details/@p.Id" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                    }
+
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-state-icon"><i class="bi bi-funnel"></i></div>
+                    <p>No pieces match this filter combination.</p>
+                    <button class="btn-outline mt-3" onclick="resetFilters()">Clear filters</button>
+                </div>
+
+                <!-- PAGINATION -->
+                <div class="pagination-bar" id="paginationBar">
+                    <p class="pagination-info" id="pgInfo"></p>
+                    <nav class="pagination-pages" id="pgPages" aria-label="Catalogue pages"></nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA BAND ───────────────────────────────────────────────────── -->
+<div class="cta-band">
+    <div class="container">
+        <div class="text-center" style="max-width:580px;margin:0 auto;position:relative">
+            <p class="eyebrow" style="justify-content:center;color:var(--c-red)">Start a project</p>
+            <h2 class="mt-3">Want something<br>built like this? <em>Let's talk.</em></h2>
+            <p class="mt-4">Every piece starts with a conversation. Tell us what you need and we'll send you a quote within 48 hours.</p>
+            <div class="d-flex align-items-center justify-content-center gap-3 mt-5">
+                <a href="contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                <a href="services.html" class="btn-outline" style="color:var(--c-bg);border-color:rgba(240,236,227,.2)">Our services</a>
+            </div>
+        </div>
+    </div>
+</div>

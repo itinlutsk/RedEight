@@ -1,0 +1,113 @@
+@model List<RedEight.Models.Blog>
+@{
+    Layout = null;
+    ViewData["Title"] = "Blog";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="p-4">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Blog</li>
+            </ol>
+        </nav>
+
+        <h1>Blog posts</h1>
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Author</td>
+                        <td>@item.Created.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-sm btn-info" href="#" data-id="@item.Id" onclick="openUpload(this);return false;">Upload Images</a>
+                            <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="@item.Id">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div id="uploadModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center;">
+        <div style="background:#fff; padding:1rem; width:420px; border-radius:6px;">
+            <h5>Upload Images</h5>
+            <form id="uploadForm">
+                <input type="file" name="files" accept="image/*" multiple />
+                <input type="hidden" name="id" />
+                <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+                    <button class="btn btn-primary" type="button" onclick="submitUpload()">Upload</button>
+                    <button class="btn btn-secondary" type="button" onclick="closeUpload()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openUpload(el) {
+            var id = el.getAttribute('data-id');
+            var modal = document.getElementById('uploadModal');
+            modal.style.display = 'flex';
+            modal.querySelector('[name="id"]').value = id;
+        }
+        function closeUpload() { document.getElementById('uploadModal').style.display = 'none'; }
+        async function submitUpload(){
+            var form = document.getElementById('uploadForm');
+            var id = form.querySelector('[name="id"]').value;
+            var files = form.querySelector('[name="files"]').files;
+            if (!files || files.length==0) { alert('Select files'); return; }
+            var fd = new FormData();
+            for(var i=0;i<files.length;i++) fd.append('files', files[i]);
+            var r = await fetch('/api/blog/' + id + '/images', { method: 'POST', body: fd });
+            if (!r.ok) { var t = await r.text(); alert('Upload failed: ' + r.status + '\n' + t); return; }
+            location.reload();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.btn-delete').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var id = this.getAttribute('data-id');
+                    if (!confirm('Are you sure you want to delete this blog post?')) return;
+
+                    fetch('/api/blog/' + id, { method: 'DELETE' }).then(function (resp) {
+                        if (resp.status === 204) {
+                            window.location = '/Blog';
+                        } else if (resp.status === 404) {
+                            alert('Blog not found');
+                        } else {
+                            return resp.text().then(function (text) {
+                                alert('Error: ' + resp.status + '\n' + text);
+                            });
+                        }
+                    }).catch(function (err) {
+                        console.error(err);
+                        alert('Request failed');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

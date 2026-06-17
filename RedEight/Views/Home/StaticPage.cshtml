@@ -1,0 +1,43 @@
+@{
+    var pageName = Model as string ?? ViewData["PageName"] as string ?? "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot", "pages", pageName + ".html");
+    var html = System.IO.File.Exists(path) ? System.IO.File.ReadAllText(path) : "<h1>Page not found</h1>";
+}
+
+@Html.Raw(html)
+
+@if (pageName == "index")
+{
+    <script>
+    (function(){
+        async function loadServices(){
+            try{
+                var res = await fetch('/api/service');
+                if(!res.ok) return;
+                var services = await res.json();
+                var featured = document.querySelector('.featured');
+                if(!featured) return;
+                var html = '';
+                services.slice(0,3).forEach(function(s, idx){
+                    var img = s.imageFile ? ('/Images/Servises/' + s.imageFile) : 'assets/workshop-frame.jpg';
+                    var num = (idx+1).toString().padStart(2,'0');
+                    html += '<article class="featured__item reveal">' +
+                        '<div class="card__media"><img src="' + img + '" alt="' + escapeHtml(s.name) + '" loading="lazy"><div class="card__media-tag">No. ' + num + '</div></div>' +
+                        '<div class="card__body"><p class="featured__num">Service ' + num + '</p>' +
+                        '<h3 class="card__title">' + escapeHtml(s.name) + '</h3>' +
+                        '<p class="card__desc">' + escapeHtml(s.description) + '</p>' +
+                        '<a href="pages/services.html#' + s.id + '" class="card__link">Learn more</a></div>' +
+                        '</article>';
+                });
+                featured.innerHTML = html;
+            }catch(e){ /* ignore */ }
+        }
+        function escapeHtml(str){ if(!str) return ''; return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+        if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadServices); else loadServices();
+    })();
+    </script>
+}

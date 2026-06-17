@@ -1,4 +1,4 @@
-modules = ["nodejs-24", "python-3.11"]
+modules = ["dotnet-10.0", "nodejs-20"]
 
 [deployment]
 router = "application"
@@ -10,6 +10,27 @@ env = { "CI" = "true" }
 
 [workflows]
 runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Red Eight Workshop"
+
+[[workflows.workflow]]
+name = "Red Eight Workshop"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd RedEight && ASPNETCORE_URLS=http://0.0.0.0:8080 dotnet run"
+waitForPort = 8080
 
 [agent]
 stack = "PNPM_WORKSPACE"

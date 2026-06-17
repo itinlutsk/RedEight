@@ -1,0 +1,259 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to your Red Eight Workshop account.">
+  <title>Sign In — Red Eight Workshop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/site/css/main.css">
+  <link rel="stylesheet" href="/site/css/login.css">
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <div class="container-fluid px-4">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/site/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        
+      </a>
+      <ul class="nav-links">
+        <li><a href="/Products">Products</a></li>
+        <li><a href="/Services">Services</a></li>
+        <li><a href="/Blog">Journal</a></li>
+        <li><a href="/Contacts">Contact</a></li>
+      </ul>
+            <div class="nav-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-btn" id="langBtn" aria-label="Language">EN <i class="bi bi-chevron-down"></i></button>
+          <div class="lang-menu">
+            <a href="#" class="lang-opt active" data-lang="en">English</a>
+            <a href="#" class="lang-opt" data-lang="fr">Français</a>
+          </div>
+        </div>
+        <a href="tel:+14165550178" class="phone-btn" aria-label="Call us"><i class="bi bi-telephone-fill"></i></a>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── SIDE DRAWER ─────────────────────────────────────────────────── -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="side-drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <a href="/" class="nav-logo" onclick="closeMob()">
+      <img src="/site/images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+      
+    </a>
+    <button class="drawer-close" id="drawerClose"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="/Products" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+    <a href="/Services" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+    <a href="/Blog"  onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+    <a href="/Contacts"  onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+    <a href="/Account/Login"    onclick="closeMob()">Sign in  <i class="bi bi-arrow-right"></i></a>
+  </nav>
+</aside>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────── -->
+<main class="login-wrap">
+
+  <!-- VISUAL (desktop) -->
+  <div class="login-visual">
+    <img src="/site/images/products/chair-bellwoods.png" alt="Red Eight Workshop" onerror="this.style.background='var(--c-bg2)'">
+    <div class="login-visual-overlay"></div>
+    <div class="login-visual-copy">
+      <h2>Bespoke furniture, built to order.</h2>
+      <p>Access your account to manage orders, request quotes, and track custom builds.</p>
+    </div>
+  </div>
+
+  <!-- FORM COLUMN -->
+  <div class="login-form-col">
+    <div class="login-card">
+
+      <!-- LOGO -->
+      <a href="/" class="login-logo">
+        <img src="/site/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+        <span>Red Eight Workshop</span>
+      </a>
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignIn">Sign in</button>
+      </div>
+
+      <!-- ── SIGN IN PANEL ── -->
+      <div class="auth-panel active" id="panelSignin">
+
+        <form id="signinForm" asp-controller="Account" asp-action="Login" method="post" novalidate>
+          @Html.AntiForgeryToken()
+          <div class="form-group">
+            <label class="form-label" for="siEmail">Email address</label>
+            <input class="form-control" type="email" id="siEmail" name="login" placeholder="jane@example.com" autocomplete="email">
+            <span class="field-error" id="err-siEmail">Please enter a valid email.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="siPassword">Password</label>
+            <div class="password-wrap">
+              <input class="form-control" type="password" id="siPassword" name="password" placeholder="••••••••" autocomplete="current-password">
+              <button type="button" class="pw-toggle" onclick="togglePw('siPassword', this)" aria-label="Show password"><i class="bi bi-eye"></i></button>
+            </div>
+            <span class="field-error" id="err-siPassword">Please enter your password.</span>
+          </div>
+
+          <a href="#" class="forgot-link">Forgot password?</a>
+
+          <button type="submit" class="btn-submit" id="signinBtn">
+            <span class="btn-text">Sign in <i class="bi bi-arrow-right"></i></span>
+            <span class="spinner"></span>
+          </button>
+        </form>
+
+        
+      </div>
+
+      <!-- register removed: single sign-in only -->
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
+      <div class="col-lg-4">
+        <a href="/" class="nav-logo mb-3"><img src="images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"></a>
+        <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-2">
+        <p class="footer-label">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="products.html">Products</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Sign in</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-3">
+        <p class="footer-label">Contact</p>
+        <address style="font-style:normal;font-size:.78rem;color:var(--c-mid);line-height:1.95">
+          Red Eight Workshop Inc.<br>Toronto, Ontario, Canada<br>
+          <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+        </address>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
+      <p class="footer-copy">&copy; <span id="yr"></span> Red Eight Workshop Inc. All rights reserved.</p>
+      <div class="d-flex align-items-center gap-2"><div style="width:1.4rem;height:2px;background:var(--c-red)"></div><span style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid)">Toronto, Canada</span></div>
+    </div>
+  </div>
+</footer>
+<!-- COOKIE --><div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent"><div class="cookie-inner"><div class="cookie-text"><i class="bi bi-shield-check cookie-icon"></i><p>We use cookies to improve your experience. By continuing to browse you agree to our <a href="#">Privacy policy</a>.</p></div><div class="cookie-actions"><button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button><button class="cookie-btn cookie-accept" id="cookieAccept">Accept all</button></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  const html = document.documentElement;
+  function applyTheme(t) {
+    html.dataset.theme = t;
+    localStorage.setItem('r8-theme', t);
+    themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+  }
+  applyTheme(localStorage.getItem('r8-theme') || 'light');
+  themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  // Nav scroll
+  const nav = document.getElementById('siteNav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // Drawer
+  const toggle   = document.getElementById('navToggle');    
+  const drawer   = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const dClose   = document.getElementById('drawerClose');
+  function openMob()  { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMob() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+  dClose.addEventListener('click', closeMob);
+  backdrop.addEventListener('click', closeMob);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── TABS ──────────────────────────────────────────────────────────
+  function showTab(tab) {
+    document.getElementById('tabSignIn').classList.toggle('active', tab === 'signin');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+    document.getElementById('panelSignin').classList.toggle('active', tab === 'signin');
+    document.getElementById('panelRegister').classList.toggle('active', tab === 'register');
+  }
+
+  // ── PASSWORD TOGGLE ───────────────────────────────────────────────
+  function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+  }
+
+  // ── VALIDATION HELPERS ────────────────────────────────────────────
+  function isEmail(v) { return true; } // email format check removed — accept any login string
+  function setFieldState(id, ok, errId) {
+    const el  = document.getElementById(id);
+    const err = document.getElementById(errId);
+    el.classList.toggle('error', !ok);
+    if (err) err.classList.toggle('visible', !ok);
+    return ok;
+  }
+
+  function clearOnInput(id, errId) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      const err = document.getElementById(errId);
+      if (err) err.classList.remove('visible');
+    });
+  }
+  ['siEmail','siPassword'].forEach(id => clearOnInput(id, 'err-' + id));
+
+  function fakeSubmit(btnId, delay, onDone) {
+    const btn = document.getElementById(btnId);
+    btn.classList.add('loading'); btn.disabled = true;
+    setTimeout(() => { btn.classList.remove('loading'); btn.disabled = false; onDone(); }, delay);
+  }
+
+  // ── SIGN IN FORM: validate and submit to server
+  document.getElementById('signinForm').addEventListener('submit', e => {
+    const v1 = setFieldState('siEmail', document.getElementById('siEmail').value.trim().length > 0, 'err-siEmail');
+    const v2 = setFieldState('siPassword', document.getElementById('siPassword').value.length > 0, 'err-siPassword');
+    if (!v1 || !v2) { e.preventDefault(); return; }
+    // allow normal form submission to AccountController.Login which validates against Users.json
+  });
+
+  // register removed — no client-side registration
+
+  (function(){var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('r8-cookie-consent')){setTimeout(function(){b.classList.add('visible');},1000);}document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','accepted');b.classList.remove('visible');});document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','declined');b.classList.remove('visible');});})();
+  (function(){var s=document.getElementById('langSwitcher'),btn=document.getElementById('langBtn');if(!s||!btn)return;btn.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(){s.classList.remove('open');});document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.lang-opt').forEach(function(x){x.classList.remove('active');});o.classList.add('active');var l=o.dataset.lang||'en';btn.innerHTML=l.toUpperCase()+' <i class="bi bi-chevron-down"></i>';localStorage.setItem('r8-lang',l);s.classList.remove('open');});});var sv=localStorage.getItem('r8-lang');if(sv){var el=document.querySelector('.lang-opt[data-lang="'+sv+'"]');if(el)el.click();}})();
+</script>
+</body>
+</html>

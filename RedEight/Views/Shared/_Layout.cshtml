@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Red Eight Workshop — custom-built furniture, full-frame restoration and bespoke reupholstery. Made by hand. Built to outlast. Toronto, Canada.">
+    <title>Red Eight Workshop — Custom Furniture, Restoration & Reupholstery</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/site/css/main.css">
+    
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    <!-- ── NAVBAR ─────────────────────────────────────────────────────── -->
+    <nav class="site-nav" id="siteNav">
+        <div class="container-fluid px-4">
+            <div class="nav-inner">
+                <a href="#" class="nav-logo">
+                    <img src="/site/images/logo.jpg" alt="Red Eight Workshop" onerror="this.style.display='none'">
+
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Products">Products</a></li> 
+                    
+                    <li><a href="/Services">Services</a></li>
+                    <li><a href="/Blog">Journal</a></li>
+                    <li><a href="/Contacts">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="lang-switcher" id="langSwitcher">
+                        <button class="lang-btn" id="langBtn" aria-label="Language">EN <i class="bi bi-chevron-down"></i></button>
+                        <div class="lang-menu">
+                            <a href="#" class="lang-opt active" data-lang="en">English</a>
+                            <a href="#" class="lang-opt" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <a href="tel:+14165550178" class="phone-btn" aria-label="Call us"><i class="bi bi-telephone-fill"></i></a>
+                    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="bi bi-sun"></i></button>
+                    <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── SIDE DRAWER ────────────────────────────────────────────────── -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <aside class="side-drawer" id="sideDrawer" aria-label="Navigation menu">
+
+        <!-- header -->
+        <div class="drawer-header">
+            <a href="#" class="nav-logo" onclick="closeMob()">
+                <img src="images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'">
+
+            </a>
+            <button class="drawer-close" id="drawerClose" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <!-- nav links -->
+            <nav class="drawer-nav">
+            <a href="products.html" onclick="closeMob()">Products <i class="bi bi-arrow-right"></i></a>
+            <a href="/Services" onclick="closeMob()">Services <i class="bi bi-arrow-right"></i></a>
+            <a href="journal.html" onclick="closeMob()">Journal  <i class="bi bi-arrow-right"></i></a>
+            <a href="contact.html" onclick="closeMob()">Contact  <i class="bi bi-arrow-right"></i></a>
+        </nav>
+
+        <!-- contact info -->
+        <div class="drawer-contact">
+            <p class="drawer-contact-label">Contact us</p>
+            <div class="drawer-contact-item">
+                <i class="bi bi-telephone"></i>
+                <div>
+                    <a href="tel:+14165550178">+1 (416) 555-0178</a><br>
+                    <span style="font-size:.78rem;color:var(--c-mid)">Mon – Fri, 9 am – 5 pm ET</span>
+                </div>
+            </div>
+            <div class="drawer-contact-item">
+                <i class="bi bi-envelope"></i>
+                <a href="mailto:hello@redeightworkshop.ca">hello@redeightworkshop.ca</a>
+            </div>
+            <div class="drawer-contact-item">
+                <i class="bi bi-geo-alt"></i>
+                <span>Toronto, Ontario, Canada</span>
+            </div>
+        </div>
+
+        <!-- socials -->
+        <div class="drawer-socials">
+            <p class="drawer-socials-label">Follow us</p>
+            <div class="drawer-social-links">
+                <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+                <a href="#"><i class="bi bi-pinterest"></i> Pinterest</a>
+                <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
+            </div>
+        </div>
+
+        <!-- footer strip -->
+        <div class="drawer-footer">
+            <span class="drawer-footer-copy">&copy; 2025 Red Eight Workshop</span>
+            <div class="drawer-red-bar"></div>
+        </div>
+
+    </aside>
+
+    <main id="main">
+        @RenderBody()
+    </main>
+
+    <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row g-5 pb-4" style="border-bottom:1px solid var(--c-line)">
+                <div class="col-lg-4">
+                    <a href="#" class="nav-logo mb-3"><img src="images/logo.jpg" alt="Red Eight Workshop" style="width:38px;height:38px;object-fit:cover" onerror="this.style.display='none'"></a>
+                    <p style="font-size:1rem;color:var(--c-mid);max-width:26ch;line-height:1.8;margin-top:.8rem">Bespoke hardwood furniture for residential, hospitality, and commercial interiors. Built in Toronto, Canada.</p>
+                </div>
+                <div class="col-6 col-lg-2 offset-lg-2">
+                    <p class="footer-label">Navigation</p>
+                    <ul class="footer-links">
+                        <li><a href="/Products">Products</a></li>
+                        <li><a href="/Services">Services</a></li>
+                        <li><a href="/Blog">Journal</a></li>
+                        <li><a href="/Contacts">Contact</a></li>
+                        <li><a href="/Account/Login">Sign in</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <p class="footer-label">Contact</p>
+                    <address style="font-style:normal;font-size:.78rem;color:var(--c-mid);line-height:1.95">
+                        Red Eight Workshop Inc.<br>Toronto, Ontario, Canada<br>
+                        <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+                    </address>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
+                <p class="footer-copy">&copy; <span id="yr"></span> Red Eight Workshop Inc. All rights reserved.</p>
+                <div class="d-flex align-items-center gap-2"><div style="width:1.4rem;height:2px;background:var(--c-red)"></div><span style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid)">Toronto, Canada</span></div>
+            </div>
+        </div>
+    </footer>
+    <!-- COOKIE -->
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent"><div class="cookie-inner"><div class="cookie-text"><i class="bi bi-shield-check cookie-icon"></i><p>We use cookies to improve your experience. By continuing to browse you agree to our <a href="#">Privacy policy</a>.</p></div><div class="cookie-actions"><button class="cookie-btn cookie-decline" id="cookieDecline">Decline</button><button class="cookie-btn cookie-accept" id="cookieAccept">Accept all</button></div></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        /* ── THEME ── */
+        const themeBtn = document.getElementById('themeBtn');
+        const html     = document.documentElement;
+
+        function applyTheme(t) {
+        html.dataset.theme = t;
+        localStorage.setItem('r8-theme', t);
+        themeBtn.querySelector('i').className = t === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+        }
+        applyTheme(localStorage.getItem('r8-theme') || 'light');
+        themeBtn.addEventListener('click', () => applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+        /* ── NAV scroll ── */
+        const nav = document.getElementById('siteNav');
+        addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+        /* ── Side drawer ── */
+        const toggle   = document.getElementById('navToggle');
+        const drawer   = document.getElementById('sideDrawer');
+        const backdrop = document.getElementById('drawerBackdrop');
+        const dClose   = document.getElementById('drawerClose');
+
+        function openMob() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        toggle.querySelector('i').className = 'bi bi-x-lg';
+        }
+        function closeMob() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+        toggle.querySelector('i').className = 'bi bi-list';
+        }
+
+        toggle.addEventListener('click', () => drawer.classList.contains('open') ? closeMob() : openMob());
+        dClose.addEventListener('click', closeMob);
+        backdrop.addEventListener('click', closeMob);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+
+        /* Carousel dots + counter */
+        const car   = document.getElementById('heroCarousel');
+        const bsCar = bootstrap.Carousel.getOrCreateInstance(car);
+        const dots  = document.querySelectorAll('.hero-dot');
+        const ctr   = document.getElementById('slideCounter');
+        dots.forEach(d => d.addEventListener('click', () => bsCar.to(+d.dataset.idx)));
+        car.addEventListener('slid.bs.carousel', e => {
+        dots.forEach((d, i) => d.classList.toggle('active', i === e.to));
+        ctr.textContent = String(e.to + 1).padStart(2,'0') + ' / 04';
+        });
+
+        /* Reveal on scroll */
+        const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* CountUp */
+        const statsIo = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+        let v = 0;
+        const step = Math.ceil(target / 88);
+        const t = setInterval(() => { v = Math.min(v + step, target); el.textContent = v + suffix; if (v >= target) clearInterval(t); }, 16);
+        statsIo.unobserve(el);
+        });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-count]').forEach(el => statsIo.observe(el));
+
+        /* Footer year */
+        document.getElementById('yr').textContent = new Date().getFullYear();
+
+        (function(){var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('r8-cookie-consent')){setTimeout(function(){b.classList.add('visible');},1000);}document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','accepted');b.classList.remove('visible');});document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('r8-cookie-consent','declined');b.classList.remove('visible');});})();
+        (function(){var s=document.getElementById('langSwitcher'),btn=document.getElementById('langBtn');if(!s||!btn)return;btn.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(){s.classList.remove('open');});document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.lang-opt').forEach(function(x){x.classList.remove('active');});o.classList.add('active');var l=o.dataset.lang||'en';btn.innerHTML=l.toUpperCase()+' <i class="bi bi-chevron-down"></i>';localStorage.setItem('r8-lang',l);s.classList.remove('open');});});var sv=localStorage.getItem('r8-lang');if(sv){var el=document.querySelector('.lang-opt[data-lang="'+sv+'"]');if(el)el.click();}})();
+    </script>
+</body>
+</html>

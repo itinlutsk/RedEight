@@ -1,0 +1,65 @@
+@model RedEight.Models.Category
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Category";
+}
+
+<div class="container my-5">
+    <h1>Create Category</h1>
+
+    <form id="createForm" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <div class="text-danger" asp-validation-for="Name"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Back</a>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        (function(){
+            var form = document.getElementById('createForm');
+            if (!form) return;
+            form.addEventListener('submit', function(e){
+                if ($(form).valid && !$(form).valid()) {
+                    return;
+                }
+                e.preventDefault();
+                var name = form.querySelector('[name="Name"]').value;
+                var idField = form.querySelector('[name="Id"]');
+                var id = idField ? idField.value : undefined;
+
+                var payload = { Name: name };
+                if (id) payload.Id = id;
+
+                fetch('/api/category', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(function(response){
+                    if (response.status === 201) {
+                        window.location = '/Category';
+                    } else {
+                        return response.text().then(function(text){
+                            alert('Error: ' + response.status + '\n' + text);
+                        });
+                    }
+                }).catch(function(err){
+                    console.error(err);
+                    alert('Request failed');
+                });
+            });
+        })();
+    </script>
+}

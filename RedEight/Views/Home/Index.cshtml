@@ -1,0 +1,414 @@
+@model RedEight.Models.HomeIndexViewModel
+
+@section Styles
+{
+    <link rel="stylesheet" href="/site/css/index.css">
+}
+
+
+
+
+<!-- ── HERO SLIDER ────────────────────────────────────────────────── -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+    <div class="carousel-inner">
+
+        <div class="carousel-item active">
+            <img src="/site/images/slider/slide-1.png" alt="Red Eight Workshop">
+            <div class="hero-grad-lr"></div><div class="hero-grad-bt"></div>
+            <div class="hero-body">
+                <div class="container">
+                    <p class="eyebrow">Workshop · Est. 2014</p>
+                    <h1 class="hero-title mt-3">Made by hand.<em class="accent">Built to outlast.</em></h1>
+                    <p class="hero-sub">Custom furniture, frame restoration and reupholstery. Toronto, Canada.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
+                        <a href="products.html" class="btn-outline-white">See the work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="/site/images/slider/slide-2.png" alt="Estate interior">
+            <div class="hero-grad-lr"></div><div class="hero-grad-bt"></div>
+            <div class="hero-body">
+                <div class="container">
+                    <p class="eyebrow">Residential · Private commissions</p>
+                    <h1 class="hero-title mt-3">Built for estates.<em class="accent">Designed to stay.</em></h1>
+                    <p class="hero-sub">Bespoke hardwood pieces for private homes — from concept to delivery.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
+                        <a href="products.html" class="btn-outline-white">See the work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="/site/images/slider/slide-3.png" alt="Restaurant interior">
+            <div class="hero-grad-lr"></div><div class="hero-grad-bt"></div>
+            <div class="hero-body">
+                <div class="container">
+                    <p class="eyebrow">Hospitality · Contract grade</p>
+                    <h1 class="hero-title mt-3">Restaurants trust us.<em class="accent">Repeatedly.</em></h1>
+                    <p class="hero-sub">Contract-grade seating for high-volume hospitality. Stamped, serialised, guaranteed.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
+                        <a href="products.html" class="btn-outline-white">See the work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="/site/images/slider/slide-4.png" alt="Craftsman at work">
+            <div class="hero-grad-lr"></div><div class="hero-grad-bt"></div>
+            <div class="hero-body">
+                <div class="container">
+                    <p class="eyebrow">Craft · No shortcuts</p>
+                    <h1 class="hero-title mt-3">Every joint.<em class="accent">Every surface.</em></h1>
+                    <p class="hero-sub">Mortise & tenon. Full-grain leather. Hand-tied springs. The inside matches the outside.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
+                        <a href="products.html" class="btn-outline-white">See the work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hero-counter" id="slideCounter">01 / 04</div>
+    <div class="hero-dots" id="heroDots">
+        <button class="hero-dot active" data-idx="0"></button>
+        <button class="hero-dot" data-idx="1"></button>
+        <button class="hero-dot" data-idx="2"></button>
+        <button class="hero-dot" data-idx="3"></button>
+    </div>
+
+    <div class="hero-meta">
+        <div class="container-fluid px-4">
+            <div class="row g-0">
+                <div class="col-6 col-md-3"><div class="meta-cell"><div class="meta-lbl">Founded</div><div class="meta-val">Toronto · 2014</div></div></div>
+                <div class="col-6 col-md-3"><div class="meta-cell"><div class="meta-lbl">Specialty</div><div class="meta-val">Custom + restoration</div></div></div>
+                <div class="col-6 col-md-3"><div class="meta-cell"><div class="meta-lbl">Lead time</div><div class="meta-val">From 30 days</div></div></div>
+                <div class="col-6 col-md-3"><div class="meta-cell"><div class="meta-lbl">Trade</div><div class="meta-val">Welcome</div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── TICKER ─────────────────────────────────────────────────────── -->
+<div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+        <span class="ticker-item">Custom builds</span>
+        <span class="ticker-item">Solid oak · ash · walnut</span>
+        <span class="ticker-item">Frame restoration</span>
+        <span class="ticker-item">Full-grain leather</span>
+        <span class="ticker-item">Reupholstery</span>
+        <span class="ticker-item">Hand-finished</span>
+        <span class="ticker-item">Trade welcome</span>
+        <span class="ticker-item">Toronto, Canada</span>
+        <span class="ticker-item">Custom builds</span>
+        <span class="ticker-item">Solid oak · ash · walnut</span>
+        <span class="ticker-item">Frame restoration</span>
+        <span class="ticker-item">Full-grain leather</span>
+        <span class="ticker-item">Reupholstery</span>
+        <span class="ticker-item">Hand-finished</span>
+        <span class="ticker-item">Trade welcome</span>
+        <span class="ticker-item">Toronto, Canada</span>
+    </div>
+</div>
+
+<!-- ── SERVICES ───────────────────────────────────────────────────── -->
+<section class="r8-sec" id="services">
+    <div class="container">
+        <div class="row align-items-end mb-5 g-4">
+            <div class="col-lg-6">
+                <p class="sec-num reveal">01 · What we make</p>
+                <h2 class="mt-2 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">Three things, done <em style="color:var(--c-red);font-weight:800;font-style:normal">properly</em></h2>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <p class="card-desc reveal d2 mb-0">We focus on what we're good at. Every job goes through the same hands, from the first conversation to the day it leaves the shop.</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @if (Model.Services != null && Model.Services.Any())
+            {
+                var idx = 1;
+                foreach (var s in Model.Services.Take(3))
+                {
+                    <div class="col-md-4">
+                        <article class="service-card reveal @(idx % 2 == 0 ? "d1" : (idx % 3 == 0 ? "d2" : ""))">
+                            <div class="img-wrap">
+                                <div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div>
+                                @try
+                                {
+                                    var src =  $"/Images/Services/{s.Id}.jpg";
+                                    <img src="@src" alt="@s.Name" loading="lazy" />
+                                }
+                                catch
+                                {
+                                    <img src="/assets/logo.jpg" alt="@s.Name" loading="lazy" />
+                                }
+                                <div class="media-tag">No. @idx</div>
+                            </div>
+                            <p class="card-num">Service @idx</p>
+                            <h3 class="card-title">@s.Name</h3>
+                            <p class="card-desc">@s.Description</p>
+                            <span class="card-link">Learn more <i class="bi bi-arrow-right"></i></span>
+                        </article>
+                    </div>
+                    idx++;
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="card-desc">No services available at the moment.</p>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-5 reveal"><a href="contact.html" class="btn-outline">All services</a></div>
+    </div>
+</section>
+
+<!-- ── CRAFT STRIP ────────────────────────────────────────────────── -->
+<section class="r8-sec bg-bg2" style="padding-top:4rem;padding-bottom:4rem">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="sec-num reveal">02 · The four standards</p>
+            <h2 class="mt-2 reveal d1" style="font-size:clamp(1.6rem,3vw,2.2rem);max-width:22ch;margin:0.5rem auto 0">How every piece <em style="color:var(--c-red);font-weight:800;font-style:normal">leaves the workshop</em></h2>
+        </div>
+        <div class="row g-0" style="border:1px solid var(--c-line)">
+            <div class="col-sm-6 col-lg-3 reveal"><div class="craft-item"><p class="craft-num">01</p><h4 class="craft-title">Solid frames</h4><p class="craft-desc">No MDF in load-bearing parts. Mortise & tenon, doweled or pegged. Kiln-dried hardwood only.</p></div></div>
+            <div class="col-sm-6 col-lg-3 reveal d1"><div class="craft-item"><p class="craft-num">02</p><h4 class="craft-title">Eight-way ties</h4><p class="craft-desc">Hand-tied springs on traditional pieces. Sinuous wire only where it makes sense. Webbing tested under load.</p></div></div>
+            <div class="col-sm-6 col-lg-3 reveal d2"><div class="craft-item"><p class="craft-num">03</p><h4 class="craft-title">Honest materials</h4><p class="craft-desc">Full-grain leather, natural-fibre fabric, oil finishes. We tell you what's underneath before you sign.</p></div></div>
+            <div class="col-sm-6 col-lg-3 reveal d3"><div class="craft-item"><p class="craft-num">04</p><h4 class="craft-title">Finished out of sight</h4><p class="craft-desc">The bottom of the frame matters too. Sanded, stained, stamped with our shop mark and serial number.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PRODUCTS ───────────────────────────────────────────────────── -->
+<section class="r8-sec" id="products">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-5 gap-3">
+            <div>
+                <p class="sec-num reveal">Standard issue</p>
+                <h2 class="mt-2 mb-0 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">The collection</h2>
+            </div>
+            <a href="products.html" class="card-link reveal d2" style="font-size:.62rem">View full catalogue <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-4 g-lg-5">
+            @foreach(var p in Model.Products.Take(6))
+            {
+                <div class="col-md-6 col-lg-4">
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@p.Id">
+                        <article class="product-card reveal">
+                            <div class="img-wrap">
+                                @if (p.ImageFiles != null && p.ImageFiles.Count > 0)
+                                {
+                                    <img src="/@p.ImageFiles[0]" alt="@p.Name" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <img src="/assets/logo.jpg" alt="@p.Name" loading="lazy" />
+                                }
+                            </div>
+                            <h3 class="product-name">@p.Name</h3>
+                            <p class="product-desc">@p.Description</p>
+                        </article>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ── ABOUT ──────────────────────────────────────────────────────── -->
+<section class="r8-sec bg-bg2">
+    <div class="container">
+        <div class="row align-items-center g-5 g-lg-6">
+            <div class="col-lg-5 reveal">
+                <div class="about-media">
+                    <img src="images/about/workshop-team.png" alt="Craftsmen at Red Eight Workshop" loading="lazy">
+                    <div class="about-frame"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 offset-lg-1 reveal d1">
+                <p class="sec-num">03 · The workshop</p>
+                <h2 class="mt-2" style="font-size:clamp(1.9rem,4vw,2.9rem)">A small shop. <em style="color:var(--c-red);font-weight:800;font-style:normal">By design.</em></h2>
+                <div class="sec-divider"></div>
+                <p style="color:rgba(240,236,227,.72);font-size:1rem;line-height:1.85;margin-bottom:.75rem">Red Eight was started in 2014 by two upholsterers who'd spent fifteen years working other people's brands. We wanted a shop where every piece was touched by the same hands from the day the lumber arrived to the day it was loaded on the truck.</p>
+                <p style="color:var(--c-mid);font-size:1rem;line-height:1.85;margin-bottom:1.8rem">That's still how we work. Eight craftspeople. One floor. No middlemen, no sub-contracted production, no shortcuts we wouldn't put our names on.</p>
+                <a href="contact.html" class="btn-outline">The full story</a>
+                <div class="row g-3 mt-4 pt-4" style="border-top:1px solid var(--c-line)">
+                    <div class="col-4 text-center"><div class="stat-num" data-count="420" data-suffix="+">0+</div><div class="stat-label">Pieces built</div></div>
+                    <div class="col-4 text-center"><div class="stat-num" data-count="11" data-suffix="">0</div><div class="stat-label">Years in trade</div></div>
+                    <div class="col-4 text-center"><div class="stat-num" data-count="8" data-suffix="">0</div><div class="stat-label">Craftspeople</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PROJECTS ───────────────────────────────────────────────────── -->
+<section class="r8-sec">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-5 gap-3">
+            <div>
+                <p class="sec-num reveal">04 · Recent projects</p>
+                <h2 class="mt-2 mb-0 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">From the <em style="color:var(--c-red);font-weight:800;font-style:normal">bench</em></h2>
+            </div>
+            <a href="#" class="card-link reveal d2" style="font-size:.62rem">All projects <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 reveal">
+                <article class="project-card">
+                    <div class="img-wrap"><div class="media-tag">Restoration</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/products/chair-holloway.png" alt="The Holloway wingback" loading="lazy"></div>
+                    <div class="mt-3"><span class="project-tag-red">Private commission</span><h3 class="project-title">The Holloway Wingback</h3><p class="card-desc mb-0">A 1940s wingback rebuilt from the frame up — eight-way ties, horsehair pad, hand-stitched edges.</p></div>
+                </article>
+            </div>
+            <div class="col-lg-4 reveal d1">
+                <article class="project-card">
+                    <div class="img-wrap"><div class="media-tag">Hospitality</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/products/chair-bellwoods.png" alt="Bellwoods Tavern" loading="lazy"></div>
+                    <div class="mt-3"><span class="project-tag">Restaurant</span><h3 class="project-title">Bellwoods Tavern</h3><p class="card-desc mb-0">42 dining chairs and a 14-metre banquette run in full-grain saddle leather.</p></div>
+                </article>
+            </div>
+            <div class="col-lg-4 reveal d2">
+                <article class="project-card">
+                    <div class="img-wrap"><div class="media-tag">Hospitality</div><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/products/project-hotel.png" alt="Fairmont Residences" loading="lazy"></div>
+                    <div class="mt-3"><span class="project-tag">Hotel</span><h3 class="project-title">Fairmont Residences</h3><p class="card-desc mb-0">Bespoke lobby reception desk and lounge seating in solid white oak and aged brass.</p></div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── REVIEWS ────────────────────────────────────────────────────── -->
+<section class="r8-sec bg-bg2">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="sec-num reveal">05 · Word of mouth</p>
+            <h2 class="mt-2 reveal d1" style="font-size:clamp(1.7rem,3.5vw,2.6rem)">What clients say <em style="color:var(--c-red);font-weight:800;font-style:normal">after delivery</em></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 reveal">
+                <div class="review-card">
+                    <p class="review-quote">They saved a chair my grandmother had reupholstered fifty years ago. Down to the original spring system. I have it in my living room and it will outlive me.</p>
+                    <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Sarah W.</div><div class="review-role">Private client · Toronto</div></div></div>
+                </div>
+            </div>
+            <div class="col-md-4 reveal d1">
+                <div class="review-card">
+                    <p class="review-quote">We ordered forty-two chairs and a banquette. They arrived on the day they said they would, finished the way they said they'd be. That's harder to find than it should be.</p>
+                    <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Marco D.</div><div class="review-role">Operations · Bellwoods Group</div></div></div>
+                </div>
+            </div>
+            <div class="col-md-4 reveal d2">
+                <div class="review-card">
+                    <p class="review-quote">I send all my restoration clients to Red Eight. They tell people the truth about what can and can't be saved, and they price it fairly.</p>
+                    <div class="review-author"><div class="review-author-dot"></div><div><div class="review-name">Helen K.</div><div class="review-role">Interior designer · Studio HKD</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA BAND ───────────────────────────────────────────────────── -->
+<div class="cta-band">
+    <div class="container">
+        <div class="text-center" style="max-width:640px;margin:0 auto;position:relative">
+            <p class="eyebrow" style="justify-content:center">Start a project</p>
+            <h2 class="mt-3">Got a piece worth keeping?<br><em>Bring it in.</em></h2>
+            <p class="mt-3 mb-4">Send us photos and dimensions and we'll come back with an honest assessment — what can be saved, what should be rebuilt, what it'll cost. No pressure either way.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                <a href="contact.html" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">Visit the workshop</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── JOURNAL ────────────────────────────────────────────────────── -->
+<section class="r8-sec" id="journal">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-5 gap-3">
+            <div>
+                <p class="sec-num reveal">Journal</p>
+                <h2 class="mt-2 mb-0 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">From the bench.</h2>
+            </div>
+            <a href="journal.html" class="card-link reveal d2" style="font-size:.62rem">All articles <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 reveal">
+                <article class="journal-card">
+                    <div class="img-wrap"><span class="badge-red">Featured</span><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-leather.png" alt="Full-grain leather" loading="lazy"></div>
+                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Materials</span><span class="journal-read">14 min read</span></div>
+                    <h3 class="journal-title"><a href="article-reading-room-chair.html">Why we only buy full-grain leather — and how to tell the difference</a></h3>
+                    <p class="card-desc">There are four grades of leather sold to upholstery shops. Three of them shouldn't be in your living room.</p>
+                    <p class="journal-author">Mark Lockhart · March 14, 2025</p>
+                </article>
+            </div>
+            <div class="col-md-4 reveal d1">
+                <article class="journal-card">
+                    <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-springs.png" alt="Eight-way springs" loading="lazy"></div>
+                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Technique</span><span class="journal-read">9 min read</span></div>
+                    <h3 class="journal-title"><a href="article-reading-room-chair.html">Eight-way hand-tied: what it is and why it costs what it costs</a></h3>
+                    <p class="card-desc">The seat construction every upholsterer says they offer and few actually do.</p>
+                    <p class="journal-author">Dave Reinhart · February 20, 2025</p>
+                </article>
+            </div>
+            <div class="col-md-4 reveal d2">
+                <article class="journal-card">
+                    <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-restoration.png" alt="Restoration guide" loading="lazy"></div>
+                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Restoration</span><span class="journal-read">6 min read</span></div>
+                    <h3 class="journal-title"><a href="article-reading-room-chair.html">When to restore, when to walk away: a frame-by-frame guide</a></h3>
+                    <p class="card-desc">Not every old chair is worth saving. Here's what we look at first when a piece arrives.</p>
+                    <p class="journal-author">Jamie Costa · January 15, 2025</p>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────────── -->
+<section class="r8-sec bg-bg2" id="contact">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5 reveal">
+                <p class="sec-num">Get in touch</p>
+                <h2 class="mt-2" style="font-size:clamp(1.9rem,4vw,2.9rem)">Start a <em style="color:var(--c-red);font-weight:800;font-style:normal">project</em></h2>
+                <div class="sec-divider"></div>
+                <p class="card-desc">Send us what you have — photos, dimensions, a rough sketch, or just a description. We'll come back with an honest assessment and a fair quote.</p>
+                <div class="mt-4" style="font-size:1rem;color:var(--c-mid);line-height:2.1">
+                    <strong style="color:var(--c-ink);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block">Address</strong>
+                    Toronto, Ontario, Canada
+                    <strong style="color:var(--c-ink);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-top:.8rem">Email</strong>
+                    <a href="mailto:hello@redeightworkshop.ca" style="color:var(--c-red)">hello@redeightworkshop.ca</a>
+                </div>
+            </div>
+            <div class="col-lg-6 offset-lg-1 reveal d1">
+                <form onsubmit="return false">
+                    <div class="row g-3">
+                        <div class="col-sm-6"><label class="r8-label" for="fname">First name</label><input class="r8-input" id="fname" type="text" placeholder="Jane"></div>
+                        <div class="col-sm-6"><label class="r8-label" for="lname">Last name</label><input class="r8-input" id="lname" type="text" placeholder="Smith"></div>
+                        <div class="col-12"><label class="r8-label" for="email">Email</label><input class="r8-input" id="email" type="email" placeholder="jane@example.com"></div>
+                        <div class="col-12">
+                            <label class="r8-label" for="service">Service</label>
+                            <select class="r8-select" id="service">
+                                <option value="">Select a service…</option>
+                                <option>Custom furniture build</option>
+                                <option>Frame restoration</option>
+                                <option>Reupholstery</option>
+                                <option>Not sure yet</option>
+                            </select>
+                        </div>
+                        <div class="col-12"><label class="r8-label" for="msg">Tell us about the piece</label><textarea class="r8-textarea" id="msg" rows="4" placeholder="What do you have, what do you need?"></textarea></div>
+                        <div class="col-12 mt-1"><button type="submit" class="btn-r8 w-100 justify-content-center">Send enquiry <i class="bi bi-arrow-right"></i></button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

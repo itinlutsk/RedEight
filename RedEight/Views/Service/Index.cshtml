@@ -1,0 +1,223 @@
+@model List<RedEight.Models.Service>
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/site/css/admin.css" />
+}
+
+<div class="container my-5" style="padding-top:3.5rem;">
+  @Html.AntiForgeryToken()
+  <div class="admin-page-header">
+    <div>
+      <p class="sec-num">Admin · Management</p>
+      <h1>Services</h1>
+      <p>Create and manage services used across the site.</p>
+    </div>
+    <button class="btn-r8" onclick="openCreateModal()"><i class="bi bi-plus-lg"></i> Create service</button>
+  </div>
+
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Services</li>
+    </ol>
+  </nav>
+
+  <div class="admin-card">
+    <div class="admin-table-toolbar">
+      <div class="admin-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="svcSearch" placeholder="Search services…" oninput="filterTable()">
+      </div>
+      <span class="admin-count" id="svcCount">@Model.Count services</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table admin-table" id="svcTable">
+        <thead>
+          <tr>
+            <th style="width:3rem"></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th class="text-end" style="padding-right:1.25rem">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="svcBody">
+          @foreach(var s in Model)
+          {
+            <tr data-name="@s.Name.ToLower()">
+              <td><div class="cat-icon"><i class="bi bi-gear"></i></div></td>
+              <td>@s.Name</td>
+              <td style="max-width:36ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">@s.Description</td>
+              <td>
+                <img src="@(Url.Content("~/Images/Services/" + s.Id + ".jpg"))" alt="@s.Name" style="max-width:100px;" onerror="this.style.display='none'" />
+              </td>
+              <td class="text-end">
+                <a class="btn-tbl-edit me-1" href="/Service/Edit/@s.Id"><i class="bi bi-pencil"></i> Edit</a>
+                <button class="btn-tbl-upload me-1" onclick="openUpload(this)" data-id="@s.Id"><i class="bi bi-cloud-upload"></i> Upload</button>
+                <button class="btn-tbl-delete" onclick="openDeleteModal(this)" data-id="@s.Id" data-name="@s.Name"><i class="bi bi-trash3"></i> Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="admin-empty d-none" id="emptyState">
+        <i class="bi bi-gear"></i>
+        <p>No services match your search.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create modal -->
+<div class="r8-modal-backdrop" id="createModalService" role="dialog" aria-modal="true" aria-labelledby="createModalServiceTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="createModalServiceTitle">Create service</h2>
+      <button class="r8-modal-close" onclick="closeModal('createModalService')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <div class="r8-form-group">
+        <label class="r8-label" for="createSvcName">Name</label>
+        <input class="r8-input" type="text" id="createSvcName" placeholder="Service name">
+        <div class="r8-field-error" id="err-createSvcName">Please enter a name.</div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="createSvcDesc">Description</label>
+        <textarea class="r8-input" id="createSvcDesc" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('createModalService')">Cancel</button>
+      <button class="btn-r8" onclick="submitCreateService()"><i class="bi bi-plus-lg"></i> Create service</button>
+    </div>
+  </div>
+</div>
+
+<!-- edit modal -->
+<div class="r8-modal-backdrop" id="editModalService" role="dialog" aria-modal="true" aria-labelledby="editModalServiceTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="editModalServiceTitle">Edit service</h2>
+      <button class="r8-modal-close" onclick="closeModal('editModalService')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <input type="hidden" id="editSvcId">
+      <div class="r8-form-group">
+        <label class="r8-label" for="editSvcName">Name</label>
+        <input class="r8-input" type="text" id="editSvcName">
+        <div class="r8-field-error" id="err-editSvcName">Please enter a name.</div>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label" for="editSvcDesc">Description</label>
+        <textarea class="r8-input" id="editSvcDesc" rows="3"></textarea>
+      </div>
+      <div class="r8-form-group">
+        <label class="r8-label">Current image</label>
+        <div id="editSvcImageWrap"><img id="editSvcImage" src="" style="max-width:140px;display:none" onerror="this.style.display='none'" /></div>
+      </div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('editModalService')">Cancel</button>
+      <button class="btn-r8" onclick="submitEditService()"><i class="bi bi-check-lg"></i> Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- upload modal (uses same modal style) -->
+<div class="r8-modal-backdrop" id="uploadModal" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="uploadModalTitle">Upload image</h2>
+      <button class="r8-modal-close" onclick="closeUpload()" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <form id="uploadForm">
+        <input type="file" name="file" accept="image/*" />
+        <input type="hidden" name="id" />
+      </form>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeUpload()">Cancel</button>
+      <button class="btn-r8" onclick="submitUpload()"><i class="bi bi-cloud-upload"></i> Upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- delete modal -->
+<div class="r8-modal-backdrop" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="deleteModalTitle">Delete service</h2>
+      <button class="r8-modal-close" onclick="closeModal('deleteModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body delete-modal-body">
+      <div class="delete-modal-icon"><i class="bi bi-trash3"></i></div>
+      <p>Are you sure you want to delete <strong id="deleteTarget">"Service"</strong>? This action cannot be undone.</p>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn-danger-r8" id="confirmDeleteBtn" onclick="submitDelete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="r8-toast" id="toast" role="alert">
+  <i class="bi bi-check-circle-fill" id="toastIcon"></i>
+  <span id="toastMsg">Done</span>
+</div>
+
+<script>
+  // modal helpers
+  function openUpload(el){ var id = el.dataset.id; const m = document.getElementById('uploadModal'); if(!m) return; m.classList.add('open'); document.body.style.overflow='hidden'; m.querySelector('[name="id"]').value = id; }
+  function closeUpload(){ const m = document.getElementById('uploadModal'); if(!m) return; m.classList.remove('open'); document.body.style.overflow=''; }
+  async function submitUpload(){ const form = document.getElementById('uploadForm'); const id = form.querySelector('[name="id"]').value; const file = form.querySelector('[name="file"]').files[0]; if(!file){ showToast('error','Select a file'); return; } const fd = new FormData(); fd.append('file', file);
+    try{ const resp = await fetch('/api/service/' + id + '/image', { method:'POST', body: fd }); if(resp.ok){ closeUpload(); location.reload(); } else { const txt = await resp.text(); console.error('Upload failed', resp.status, txt); showToast('error','Upload failed'); } }catch(e){ console.error(e); showToast('error','Upload failed'); } }
+
+  // delete flow (uses existing delete modal)
+  let pendingDeleteId = null;
+  function openDeleteModal(btn){ pendingDeleteId = btn.dataset.id; const dt = document.getElementById('deleteTarget'); if(dt) dt.textContent = '"' + (btn.dataset.name || '') + '"'; openModal('deleteModal'); }
+  async function submitDelete(){ if(!pendingDeleteId) return; try{ const resp = await fetch('/api/service/' + pendingDeleteId, { method:'DELETE' }); if(resp.status===204){ const rows = document.querySelectorAll('#svcBody tr'); rows.forEach(row=>{ const delBtn = row.querySelector('.btn-tbl-delete'); if(delBtn && delBtn.dataset.id==pendingDeleteId){ const name = delBtn.dataset.name; row.style.transition='opacity .25s, transform .25s'; row.style.opacity='0'; row.style.transform='translateX(12px)'; setTimeout(()=>{ row.remove(); updateCount(); },280); showToast('error','"'+name+'" deleted.'); } }); } else { const txt = await resp.text(); console.error('Delete failed', resp.status, txt); showToast('error','Delete failed'); } }catch(e){ console.error(e); showToast('error','Request failed'); } closeModal('deleteModal'); pendingDeleteId=null; }
+
+  // utility functions (search, count, toast)
+  function esc(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function filterTable(){ const q=document.getElementById('svcSearch').value.toLowerCase(); const rows=document.querySelectorAll('#svcBody tr'); let visible=0; rows.forEach(row=>{ const nm=(row.dataset.name||''); const match = nm.includes(q); row.style.display = match ? '' : 'none'; if(match) visible++; }); const empty = document.getElementById('emptyState'); if(empty) empty.classList.toggle('d-none', visible>0); const cnt = document.getElementById('svcCount'); if(cnt) cnt.textContent = visible + (visible===1? ' service' : ' services'); }
+  function updateCount(){ const visible=[...document.querySelectorAll('#svcBody tr')].filter(r=>r.style.display!=='none').length; const cnt = document.getElementById('svcCount'); if(cnt) cnt.textContent = visible + (visible===1? ' service' : ' services'); }
+  let toastTimer; function showToast(type,msg){ const t=document.getElementById('toast'); const i=document.getElementById('toastIcon'); if(!t) return; t.className = 'r8-toast ' + type; if(i) i.className = type==='success' ? 'bi bi-check-circle-fill' : 'bi bi-trash3'; const m=document.getElementById('toastMsg'); if(m) m.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3200); }
+
+  // keep basic modal helpers used by delete/upload
+  function openModal(id){ const el=document.getElementById(id); if(el) { el.classList.add('open'); document.body.style.overflow='hidden'; } }
+  function closeModal(id){ const el=document.getElementById(id); if(el) { el.classList.remove('open'); document.body.style.overflow=''; } }
+
+  // Open modals based on query parameters: ?create=1, ?edit={id}, ?delete={id}
+  (function(){
+    try{
+      const qp = new URLSearchParams(location.search);
+      if (qp.has('create')) { openCreateModal(); history.replaceState(null,'', location.pathname + location.hash); }
+      if (qp.has('edit')) { const id = qp.get('edit'); // find row and open edit
+        const btn = document.querySelector('.btn-tbl-edit[data-id="'+id+'"]'); if(btn) { openEditModalService(btn); history.replaceState(null,'', location.pathname + location.hash); }
+        else { /* if row not present, fetch item to populate */ fetch('/api/service/'+id).then(r=>r.json()).then(s=>{ const idEl=document.getElementById('editSvcId'); if(idEl) idEl.value=s.id; const nm=document.getElementById('editSvcName'); if(nm) nm.value=s.name; const d=document.getElementById('editSvcDesc'); if(d) d.value=s.description; const img=document.getElementById('editSvcImage'); if(img){ img.src = '/Images/Services/'+id+'.jpg'; img.style.display=''; } openModal('editModalService'); history.replaceState(null,'', location.pathname + location.hash); }).catch(()=>{}); }
+      }
+      if (qp.has('delete')) { const id = qp.get('delete'); const btn = document.querySelector('.btn-tbl-delete[data-id="'+id+'"]'); if(btn) { openDeleteModal(btn); history.replaceState(null,'', location.pathname + location.hash); } }
+    }catch(e){ console.error(e); }
+  })();
+
+  // create/edit handlers using API with antiforgery + credentials
+  function getAntiForgery() { const el = document.querySelector('input[name="__RequestVerificationToken"]'); return el ? el.value : null; }
+
+  function openCreateModal(){ const el = document.getElementById('createSvcName'); if(el) el.value=''; const desc = document.getElementById('createSvcDesc'); if(desc) desc.value=''; clearErr('createSvcName'); openModal('createModalService'); }
+
+  async function submitCreateService(){ const name = document.getElementById('createSvcName').value.trim(); const desc = document.getElementById('createSvcDesc').value.trim(); if(!name){ showErr('createSvcName'); return; } const token = getAntiForgery(); try{ const resp = await fetch('/api/service', { method:'POST', credentials:'same-origin', headers: Object.assign({'Content-Type':'application/json'}, token?{'RequestVerificationToken':token}:{}), body: JSON.stringify({ name, description: desc }) }); if(resp.status===201){ const created = await resp.json(); addRowService({ id: created.id, name: created.name, description: created.description, image: null }); updateCount(); closeModal('createModalService'); showToast('success','"'+created.name+'" created'); } else { const txt = await resp.text(); console.error('Create failed', resp.status, txt); showToast('error','Create failed'); } }catch(e){ console.error(e); showToast('error','Request failed'); } }
+
+  function addRowService({ id, name, description, image }){ const tbody=document.getElementById('svcBody'); if(!tbody) return; const tr=document.createElement('tr'); tr.dataset.name = name.toLowerCase(); tr.innerHTML = `<td><div class="cat-icon"><i class="bi bi-gear"></i></div></td><td>${esc(name)}</td><td style="max-width:36ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(description||'')}</td><td><img src="/Images/Services/${id}.jpg" style="max-width:100px;" onerror="this.style.display='none'" /></td><td class="text-end"><a class="btn-tbl-edit me-1" onclick="openEditModalService(this)" data-id="${id}" data-name="${esc(name)}" data-desc="${esc(description||'')}"><i class="bi bi-pencil"></i> Edit</a><button class="btn-tbl-upload me-1" onclick="openUpload(this)" data-id="${id}"><i class="bi bi-cloud-upload"></i> Upload</button><button class="btn-tbl-delete" onclick="openDeleteModal(this)" data-id="${id}" data-name="${esc(name)}"><i class="bi bi-trash3"></i> Delete</button></td>`; tr.style.opacity='0'; tr.style.transform='translateY(-6px)'; tr.style.transition='opacity .25s, transform .25s'; tbody.prepend(tr); requestAnimationFrame(()=>requestAnimationFrame(()=>{ tr.style.opacity='1'; tr.style.transform=''; })); }
+
+  function openEditModalService(btn){ const id = btn.dataset.id; const name = btn.dataset.name; const desc = btn.dataset.desc; const idEl = document.getElementById('editSvcId'); if(idEl) idEl.value = id; const nm = document.getElementById('editSvcName'); if(nm) nm.value = name; const d = document.getElementById('editSvcDesc'); if(d) d.value = desc; const img = document.getElementById('editSvcImage'); if(img) { img.src = '/Images/Services/' + id + '.jpg'; img.style.display = ''; } clearErr('editSvcName'); openModal('editModalService'); }
+
+  async function submitEditService(){ const id = document.getElementById('editSvcId').value; const name = document.getElementById('editSvcName').value.trim(); const desc = document.getElementById('editSvcDesc').value.trim(); if(!name){ showErr('editSvcName'); return; } const token = getAntiForgery(); try{ const resp = await fetch('/api/service/' + id, { method:'PUT', credentials:'same-origin', headers: Object.assign({'Content-Type':'application/json'}, token?{'RequestVerificationToken':token}:{}), body: JSON.stringify({ id, name, description: desc }) }); if(resp.status===204){ const rows=document.querySelectorAll('#svcBody tr'); rows.forEach(row=>{ const editBtn = row.querySelector('.btn-tbl-edit'); if(editBtn && editBtn.dataset.id==id){ row.dataset.name = name.toLowerCase(); row.cells[1].textContent = name; row.cells[2].textContent = desc; editBtn.dataset.name = name; editBtn.dataset.desc = desc; } }); closeModal('editModalService'); showToast('success','"'+name+'" updated'); } else { const txt = await resp.text(); console.error('Update failed', resp.status, txt); showToast('error','Update failed'); } }catch(e){ console.error(e); showToast('error','Request failed'); } }
+
+</script>

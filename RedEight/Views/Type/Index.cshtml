@@ -1,0 +1,185 @@
+@model List<RedEight.Models.Type>
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/site/css/admin.css" />
+}
+
+<div class="container my-5" style="padding-top:3.5rem;">
+  <div class="admin-page-header">
+    <div>
+      <p class="sec-num">Admin · Management</p>
+      <h1>Types</h1>
+      <p>Manage product types used across the site.</p>
+    </div>
+    <button class="btn-r8" onclick="openCreateModal()">
+      <i class="bi bi-plus-lg"></i> Create type
+    </button>
+  </div>
+
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Types</li>
+    </ol>
+  </nav>
+
+  <div class="admin-card">
+    <div class="admin-table-toolbar">
+      <div class="admin-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="typeSearch" placeholder="Search types…" oninput="filterTable()">
+      </div>
+      <span class="admin-count" id="typeCount">@Model.Count types</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table admin-table" id="typeTable">
+        <thead>
+          <tr>
+            <th style="width:3rem"></th>
+            <th>Name</th>
+            <th class="text-end" style="padding-right:1.25rem">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="typeBody">
+          @foreach(var t in Model)
+          {
+            <tr data-name="@t.Name.ToLower()">
+              <td><div class="cat-icon"><i class="bi bi-tags"></i></div></td>
+              <td>@t.Name</td>
+              <td class="text-end">
+                <button class="btn-tbl-edit me-1" onclick="openEditModal(this)" data-id="@t.Id" data-name="@t.Name"><i class="bi bi-pencil"></i> Edit</button>
+                <button class="btn-tbl-delete" onclick="openDeleteModal(this)" data-id="@t.Id" data-name="@t.Name"><i class="bi bi-trash3"></i> Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="admin-empty d-none" id="emptyState">
+        <i class="bi bi-tags"></i>
+        <p>No types match your search.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="r8-modal-backdrop" id="createModal" role="dialog" aria-modal="true" aria-labelledby="createModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="createModalTitle">Create type</h2>
+      <button class="r8-modal-close" onclick="closeModal('createModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <div class="r8-form-group">
+        <label class="r8-label" for="createName">Type name</label>
+        <input class="r8-input" type="text" id="createName" placeholder="e.g. Dining">
+        <div class="r8-field-error" id="err-createName">Please enter a type name.</div>
+      </div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('createModal')">Cancel</button>
+      <button class="btn-r8" onclick="submitCreate()"><i class="bi bi-plus-lg"></i> Create type</button>
+    </div>
+  </div>
+</div>
+
+<div class="r8-modal-backdrop" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="editModalTitle">Edit type</h2>
+      <button class="r8-modal-close" onclick="closeModal('editModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body">
+      <input type="hidden" id="editId">
+      <div class="r8-form-group">
+        <label class="r8-label" for="editName">Type name</label>
+        <input class="r8-input" type="text" id="editName">
+        <div class="r8-field-error" id="err-editName">Please enter a type name.</div>
+      </div>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
+      <button class="btn-r8" onclick="submitEdit()"><i class="bi bi-check-lg"></i> Save changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="r8-modal-backdrop" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+  <div class="r8-modal">
+    <div class="r8-modal-header">
+      <h2 id="deleteModalTitle">Delete type</h2>
+      <button class="r8-modal-close" onclick="closeModal('deleteModal')" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="r8-modal-body delete-modal-body">
+      <div class="delete-modal-icon"><i class="bi bi-trash3"></i></div>
+      <p>Are you sure you want to delete <strong id="deleteTarget">"Type"</strong>? This action cannot be undone.</p>
+    </div>
+    <div class="r8-modal-footer">
+      <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn-danger-r8" id="confirmDeleteBtn" onclick="submitDelete()"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="r8-toast" id="toast" role="alert">
+  <i class="bi bi-check-circle-fill" id="toastIcon"></i>
+  <span id="toastMsg">Done</span>
+</div>
+
+<script>
+  // Safe DOM helpers
+  const themeBtn = document.getElementById('themeBtn');
+  const html = document.documentElement;
+  function applyTheme(t){ if(!html) return; html.dataset.theme=t; try{ localStorage.setItem('r8-theme',t);}catch{} if(themeBtn){const icon=themeBtn.querySelector('i'); if(icon) icon.className = t==='dark' ? 'bi bi-sun' : 'bi bi-moon-stars'; } }
+  try{ applyTheme(localStorage.getItem('r8-theme')||'light'); }catch(e){applyTheme('light');}
+  if(themeBtn) themeBtn.addEventListener('click', ()=> applyTheme(html.dataset.theme==='dark'?'light':'dark'));
+
+  function openModal(id){ const el=document.getElementById(id); if(el){ el.classList.add('open'); document.body.style.overflow='hidden'; }}
+  function closeModal(id){ const el=document.getElementById(id); if(el){ el.classList.remove('open'); document.body.style.overflow=''; }}
+  function closeAll(){ ['createModal','editModal','deleteModal'].forEach(closeModal); }
+  document.querySelectorAll('.r8-modal-backdrop').forEach(bd=>{ bd.addEventListener('click', e=>{ if(e.target===bd) closeAll(); }); });
+
+  const createNameEl = document.getElementById('createName'); if(createNameEl) createNameEl.addEventListener('input', ()=> clearErr('createName'));
+  const editNameEl = document.getElementById('editName'); if(editNameEl) editNameEl.addEventListener('input', ()=> clearErr('editName'));
+  function clearErr(id){ const el=document.getElementById(id); if(el) el.classList.remove('error'); const err = document.getElementById('err-'+id); if(err) err.classList.remove('visible'); }
+  function showErr(id){ const el=document.getElementById(id); if(el) el.classList.add('error'); const err = document.getElementById('err-'+id); if(err) err.classList.add('visible'); }
+
+  function openCreateModal(){ if(createNameEl) createNameEl.value=''; clearErr('createName'); openModal('createModal'); setTimeout(()=>{ if(createNameEl) createNameEl.focus(); },200); }
+
+  async function submitCreate(){ const nameEl=document.getElementById('createName'); const name = nameEl?nameEl.value.trim():''; if(!name){ showErr('createName'); return; }
+    try{ const resp = await fetch('/api/type', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name }) });
+      if(resp.status===201){ const created = await resp.json(); addRow({ id: created.id, name: created.name }); updateCount(); closeModal('createModal'); showToast('success', '"'+created.name+'" created.'); }
+      else { const txt = await resp.text(); console.error('Create failed', resp.status, txt); showToast('error','Create failed'); }
+    }catch(e){ console.error(e); showToast('error','Request failed'); }
+  }
+
+  function openEditModal(btn){ const idEl=document.getElementById('editId'); if(idEl) idEl.value = btn.dataset.id || ''; const en=document.getElementById('editName'); if(en) en.value = btn.dataset.name || ''; clearErr('editName'); openModal('editModal'); setTimeout(()=>{ if(editNameEl) editNameEl.focus(); },200); }
+
+  async function submitEdit(){ const id=document.getElementById('editId').value; const name=document.getElementById('editName').value.trim(); if(!name){ showErr('editName'); return; }
+    try{ const resp = await fetch('/api/type/' + id, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, name }) });
+      if(resp.status===204){ const rows=document.querySelectorAll('#typeBody tr'); rows.forEach(row=>{ const editBtn = row.querySelector('.btn-tbl-edit'); if(editBtn && editBtn.dataset.id==id){ row.dataset.name = name.toLowerCase(); row.cells[1].textContent = name; editBtn.dataset.name = name; const delBtn = row.querySelector('.btn-tbl-delete'); if(delBtn) delBtn.dataset.name = name; }}); closeModal('editModal'); showToast('success','"'+name+'" updated.'); }
+      else { const txt = await resp.text(); console.error('Update failed', resp.status, txt); showToast('error','Update failed'); }
+    }catch(e){ console.error(e); showToast('error','Request failed'); }
+  }
+
+  let pendingDeleteId = null;
+  function openDeleteModal(btn){ pendingDeleteId = btn.dataset.id; const dt = document.getElementById('deleteTarget'); if(dt) dt.textContent = '"' + (btn.dataset.name || '') + '"'; openModal('deleteModal'); }
+
+  async function submitDelete(){ if(!pendingDeleteId) return; try{ const resp = await fetch('/api/type/' + pendingDeleteId, { method:'DELETE' }); if(resp.status===204){ const rows=document.querySelectorAll('#typeBody tr'); rows.forEach(row=>{ const delBtn = row.querySelector('.btn-tbl-delete'); if(delBtn && delBtn.dataset.id==pendingDeleteId){ const name = delBtn.dataset.name; row.style.transition='opacity .25s, transform .25s'; row.style.opacity='0'; row.style.transform='translateX(12px)'; setTimeout(()=>{ row.remove(); updateCount(); },280); showToast('error','"'+name+'" deleted.'); } }); } else { const txt = await resp.text(); console.error('Delete failed', resp.status, txt); showToast('error','Delete failed'); } }catch(e){ console.error(e); showToast('error','Request failed'); } closeModal('deleteModal'); pendingDeleteId = null; }
+
+  function addRow({ id, name }){ const tbody=document.getElementById('typeBody'); if(!tbody) return; const tr=document.createElement('tr'); tr.dataset.name = name.toLowerCase(); tr.innerHTML = `<td><div class="cat-icon"><i class="bi bi-tags"></i></div></td><td>${esc(name)}</td><td class="text-end"><button class="btn-tbl-edit me-1" onclick="openEditModal(this)" data-id="${id}" data-name="${esc(name)}"><i class="bi bi-pencil"></i> Edit</button><button class="btn-tbl-delete" onclick="openDeleteModal(this)" data-id="${id}" data-name="${esc(name)}"><i class="bi bi-trash3"></i> Delete</button></td>`; tr.style.opacity='0'; tr.style.transform='translateY(-6px)'; tr.style.transition='opacity .25s, transform .25s'; tbody.prepend(tr); requestAnimationFrame(()=>requestAnimationFrame(()=>{ tr.style.opacity='1'; tr.style.transform=''; })); }
+
+  function esc(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function filterTable(){ const q = document.getElementById('typeSearch').value.toLowerCase(); const rows = document.querySelectorAll('#typeBody tr'); let visible = 0; rows.forEach(row=>{ const name = (row.dataset.name||''); const match = name.includes(q); row.style.display = match ? '' : 'none'; if(match) visible++; }); const empty = document.getElementById('emptyState'); if(empty) empty.classList.toggle('d-none', visible>0); const cnt = document.getElementById('typeCount'); if(cnt) cnt.textContent = visible + (visible===1? ' type' : ' types'); }
+
+  function updateCount(){ const visible = [...document.querySelectorAll('#typeBody tr')].filter(r=>r.style.display !== 'none').length; const cnt = document.getElementById('typeCount'); if(cnt) cnt.textContent = visible + (visible===1? ' type' : ' types'); }
+
+  let toastTimer; function showToast(type,msg){ const t = document.getElementById('toast'); const i = document.getElementById('toastIcon'); if(!t) return; t.className = 'r8-toast ' + type; if(i) i.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-trash3'; const m = document.getElementById('toastMsg'); if(m) m.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'),3200); }
+</script>

@@ -1,0 +1,42 @@
+@model RedEight.Models.Service
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/site/css/admin.css" />
+}
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+            <li class="breadcrumb-item"><a href="/Service">Services</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+
+    <h1>Edit Service</h1>
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <div class="text-danger" asp-validation-for="Name"></div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <div class="text-danger" asp-validation-for="Description"></div>
+        </div>
+        <div class="mb-3">
+            <label>Current Image</label>
+            <div>@(string.IsNullOrEmpty(Model.ImageFile) ? "-" : Model.ImageFile)</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+

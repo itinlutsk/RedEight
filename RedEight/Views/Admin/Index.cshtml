@@ -1,0 +1,74 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="r8-sec" style="padding-top:3.5rem; padding-bottom:3.5rem">
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <div class="col-lg-8">
+                <p class="sec-num">Admin</p>
+                <h1 class="mt-2">Dashboard</h1>
+                <p class="card-desc">Manage site content and data. All actions require admin privileges.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="/Account/Logout" class="btn-outline">Logout</a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Categories</h3>
+                    <p class="card-desc">Create, edit and remove product categories.</p>
+                    <a href="/Category" class="btn-r8 mt-2">Manage categories</a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Products</h3>
+                    <p class="card-desc">Manage product catalogue, images and pricing.</p>
+                    <a href="/Product" class="btn-r8 mt-2">Manage products</a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Services</h3>
+                    <p class="card-desc">Edit service listings and media.</p>
+                    <a href="/Service" class="btn-r8 mt-2">Manage services</a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Types</h3>
+                    <p class="card-desc">Manage product types used for filtering.</p>
+                    <a href="/Type" class="btn-r8 mt-2">Manage types</a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Blog</h3>
+                    <p class="card-desc">Create and manage blog posts and images.</p>
+                    <a href="/Blog" class="btn-r8 mt-2">Manage blog</a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="admin-card">
+                    <h3>Settings</h3>
+                    <p class="card-desc">Site settings, users and permissions.</p>
+                    <a href="/Admin/Settings" class="btn-r8 mt-2">Settings</a>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .admin-card{background:var(--c-bg2);padding:1.2rem;border-radius:8px;border:1px solid var(--c-line)}
+    .admin-card h3{margin-bottom:.5rem}
+    .admin-card .card-desc{color:var(--c-mid);font-size:.95rem}
+</style>

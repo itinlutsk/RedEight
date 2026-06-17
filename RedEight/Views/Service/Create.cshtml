@@ -1,0 +1,115 @@
+@model RedEight.Models.Service
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/site/css/admin.css" />
+}
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+            <li class="breadcrumb-item"><a href="/Service">Services</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create</li>
+        </ol>
+    </nav>
+
+    <h1>Create Service</h1>
+    <form id="createFormService" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <div class="text-danger" asp-validation-for="Name"></div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <div class="text-danger" asp-validation-for="Description"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" id="imageFile" name="file" accept="image/*" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const form = document.getElementById('createFormService');
+            if (!form) return;
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                try {
+                    if (window.$ && typeof $(form).valid === 'function' && !$(form).valid()) {
+                        return;
+                    }
+
+                    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+                    const token = tokenInput ? tokenInput.value : '';
+
+                    const name = (form.querySelector('[name="Name"]') || {}).value || '';
+                    const description = (form.querySelector('[name="Description"]') || {}).value || '';
+                    const payload = { name: name, description: description };
+
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (token) headers['RequestVerificationToken'] = token;
+
+                    const apiRes = await fetch('/api/service', {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: headers,
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!apiRes.ok) {
+                        const txt = await apiRes.text();
+                        throw new Error('Create failed: ' + apiRes.status + ' ' + txt);
+                    }
+
+                    let created = null;
+                    try { created = await apiRes.clone().json(); } catch (_) { created = null; }
+                    let createdId = created && (created.id ?? created.Id ?? created.ID);
+
+                    if (!createdId) {
+                        const loc = apiRes.headers.get('Location');
+                        if (loc) {
+                            const m = loc.match(/\/api\/service\/([^\/\?]+)/i) || loc.match(/\/Service\/Edit\/(\d+)/i) || loc.match(/\/Service\/Details\/(\d+)/i);
+                            if (m) createdId = m[1];
+                        }
+                    }
+
+                    const fileInput = document.getElementById('imageFile');
+                    if (fileInput && fileInput.files && fileInput.files.length > 0 && createdId) {
+                        const fd = new FormData();
+                        fd.append('file', fileInput.files[0]);
+                        const imgHeaders = {};
+                        if (token) imgHeaders['RequestVerificationToken'] = token;
+                        const imgRes = await fetch(`/api/service/${createdId}/image`, {
+                            method: 'POST',
+                            body: fd,
+                            credentials: 'same-origin',
+                            headers: Object.keys(imgHeaders).length ? imgHeaders : undefined
+                        });
+                        if (!imgRes.ok) {
+                            const it = await imgRes.text();
+                            throw new Error('Image upload failed: ' + imgRes.status + ' ' + it);
+                        }
+                    }
+
+                    window.location.href = '/Service';
+                } catch (err) {
+                    console.error(err);
+                    alert(err && err.message ? err.message : String(err));
+                }
+            });
+        })();
+    </script>
+}

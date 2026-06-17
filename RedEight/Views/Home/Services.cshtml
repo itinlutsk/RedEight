@@ -1,0 +1,124 @@
+﻿@model List<RedEight.Models.Service>
+@section Styles
+{
+    <link rel="stylesheet" href="/site/css/services.css">
+}
+
+
+<!-- ── PAGE HERO ──────────────────────────────────────────────────── -->
+<div class="page-hero">
+    <div class="page-hero-img">
+        <img src="/site/images/services/custom-builds.png" alt="Red Eight Workshop" loading="eager">
+    </div>
+    <div class="container">
+        <div class="page-hero-body">
+            <p class="page-hero-eyebrow">What we do</p>
+            <h1>Three services.<br><span>Done properly.</span></h1>
+            <p class="page-hero-sub">Each job is handled by the same hands, start to finish. No sub-contractors, no shortcuts.</p>
+        </div>
+    </div>
+    <div class="page-hero-breadcrumb">
+        <a href="/">Home</a> <span style="margin:0 .4rem;opacity:.4">/</span> Services
+    </div>
+</div>
+
+@{
+    var COUNT = 1;
+    var services = Model ?? new List<RedEight.Models.Service>();
+}
+
+
+
+@if (!services.Any())
+{
+    <section class="svc-sec">
+        <div class="container">
+            <p class="card-desc">Services are not available at the moment.</p>
+        </div>
+    </section>
+}
+@foreach (var service in services)
+{
+    // compute image source with sensible fallbacks
+    var imgSrc  = $"/Images/Services/{service.Id}.jpg";
+    
+
+    if (COUNT % 2 > 0)
+    {
+    <section class="svc-sec" id="@service.Id">
+        <div class="container">
+            <div class="row align-items-center g-5 g-xl-6">
+                <div class="col-lg-5 reveal">
+                    <div class="svc-img-wrap">
+                        <img src="@imgSrc" alt="@service.Name" loading="lazy">
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal d1">
+                    <p class="svc-num">@COUNT</p>
+                    <h2 class="svc-title">@service.Name</h2>
+                    <div class="svc-divider"></div>
+                    <p class="svc-desc">@service.Description</p>
+                    <div class="svc-actions">
+                        <a href="/contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                        <a href="/Service/Details/@service.Id" class="btn-outline">See the work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+    else
+    {
+    <section class="svc-sec bg-bg2" id="@service.Id">
+        <div class="container">
+            <div class="row align-items-center g-5 g-xl-6">
+                <div class="col-lg-6 order-lg-1 reveal">
+                    <p class="svc-num">@COUNT</p>
+                    <h2 class="svc-title">@service.Name</h2>
+                    <div class="svc-divider"></div>
+                    <p class="svc-desc">@service.Description</p>
+                    <div class="svc-actions">
+                        <a href="/contact" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                        <a href="/Service/Details/@service.Id" class="btn-outline">See the work</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1 order-lg-2 reveal d1">
+                    <div class="svc-img-wrap">
+                        <img src="@imgSrc" alt="@service.Name" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+
+    COUNT++;
+}
+
+
+
+
+<!-- ── CTA BAND ───────────────────────────────────────────────────── -->
+<div class="cta-band">
+    <div class="container">
+        <div class="text-center" style="max-width:600px;margin:0 auto;position:relative">
+            <p class="eyebrow" style="justify-content:center">Start a project</p>
+            <h2 class="mt-3">Got a piece worth keeping?<br><em>Bring it in.</em></h2>
+            <p class="mt-3 mb-4">Send us photos and we'll come back with an honest assessment — what can be saved, what it'll cost.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                <a href="tel:+14165550178" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">+1 (416) 555-0178</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // If reveal animations hide content (IntersectionObserver not triggered), force visibility
+    document.addEventListener('DOMContentLoaded', function(){
+        try {
+            document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+            document.querySelectorAll('.svc-sec').forEach(function(el){ el.classList.add('visible'); });
+        } catch (e) { /* ignore */ }
+    });
+</script>
