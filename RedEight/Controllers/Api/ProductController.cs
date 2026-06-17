@@ -99,6 +99,23 @@ namespace RedEight.Controllers.Api
             return Ok(saved);
         }
 
+        [HttpGet("{id:guid}/images")]
+        public IActionResult GetImages(Guid id)
+        {
+            var dir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Products", id.ToString());
+            if (!Directory.Exists(dir)) return Ok(Array.Empty<string>());
+            var files = Directory.GetFiles(dir)
+                .Select(Path.GetFileName)
+                .OfType<string>()
+                .OrderBy(f =>
+                {
+                    var n = Path.GetFileNameWithoutExtension(f);
+                    return int.TryParse(n, out var num) ? num : int.MaxValue;
+                })
+                .ToArray();
+            return Ok(files);
+        }
+
         [HttpDelete("{id:guid}/images/{fileName}")]
         public async Task<IActionResult> DeleteImage(Guid id, string fileName)
         {

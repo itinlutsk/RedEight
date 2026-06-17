@@ -458,3 +458,69 @@ body { padding-top: 0; }
     gap: 1rem;
   }
 }
+
+/* ── PRODUCT IMAGE GRID ── */
+.prod-img-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: .75rem;
+  min-height: 60px;
+}
+.prod-img-thumb {
+  position: relative;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  overflow: hidden;
+}
+.prod-img-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.prod-img-del {
+  position: absolute;
+  top: .3rem;
+  right: .3rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  background: rgba(232,35,26,.85);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .65rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.prod-img-thumb:hover .prod-img-del { opacity: 1; }
+.prod-img-name {
+  display: block;
+  font-size: .6rem;
+  color: var(--c-mid);
+  padding: .3rem .4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* upload button variant */
+.btn-tbl-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .42rem .85rem;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--c-line);
+  color: var(--c-mid);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-tbl-upload:hover { border-color: var(--c-ink); color: var(--c-ink); }

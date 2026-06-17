@@ -8,29 +8,35 @@ namespace RedEight.Controllers
     public class ProductController : Controller
     {
         private readonly IProductRepository _repo;
+        private readonly ICategoryRepository _catRepo;
+        private readonly ITypeRepository _typeRepo;
 
-        public ProductController(IProductRepository repo)
+        public ProductController(IProductRepository repo, ICategoryRepository catRepo, ITypeRepository typeRepo)
         {
             _repo = repo;
+            _catRepo = catRepo;
+            _typeRepo = typeRepo;
         }
 
         public async Task<IActionResult> Index()
         {
             var list = await _repo.GetAllAsync();
+            var categories = await _catRepo.GetAllAsync();
+            var types = await _typeRepo.GetAllAsync();
+            ViewBag.CatMap  = categories.ToDictionary(c => c.Id.ToString(), c => c.Name);
+            ViewBag.TypeMap = types.ToDictionary(t => t.Id.ToString(), t => t.Name);
+            ViewBag.CategoryList = categories;
+            ViewBag.TypeList = types;
             return View(list);
         }
 
-        public IActionResult Create()
-        {
-            return View(new Product());
-        }
+        public IActionResult Create() => View(new Product());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product model)
         {
             if (!ModelState.IsValid) return View(model);
-            // Use API approach for images; but allow MVC fallback
             await _repo.AddAsync(model);
             return RedirectToAction(nameof(Index));
         }
