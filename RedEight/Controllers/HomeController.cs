@@ -61,10 +61,37 @@ namespace RedEight.Controllers
             return View("StaticPage", "about");
         }
 
+        [Route("/Blog")]
         public async Task<IActionResult> Blog()
         {
             var posts = await _blogRepo.GetAllAsync();
             return View(posts.OrderByDescending(p => p.Created).ToList());
+        }
+
+        [Route("/Blog/{id:guid}")]
+        public async Task<IActionResult> BlogPost(Guid id)
+        {
+            var post = await _blogRepo.GetByIdAsync(id);
+            if (post == null) return NotFound();
+
+            // Scan filesystem for available images
+            var imgDir = Path.Combine(_env.WebRootPath, "Images", "Blog", id.ToString());
+            var images = new List<string>();
+            if (Directory.Exists(imgDir))
+            {
+                images = Directory.GetFiles(imgDir)
+                    .Select(Path.GetFileName)
+                    .OfType<string>()
+                    .OrderBy(f => {
+                        var n = Path.GetFileNameWithoutExtension(f);
+                        return int.TryParse(n, out var num) ? num : int.MaxValue;
+                    })
+                    .Select(f => $"/Images/Blog/{id}/{f}")
+                    .ToList();
+            }
+
+            ViewBag.Images = images;
+            return View(post);
         }
 
         public IActionResult Cases()

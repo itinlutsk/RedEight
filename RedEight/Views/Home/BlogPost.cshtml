@@ -1,0 +1,202 @@
+@model RedEight.Models.Blog
+@{
+    var images = ViewBag.Images as List<string> ?? new List<string>();
+    var heroImg = images.FirstOrDefault() ?? "";
+    var galleryImgs = images.Skip(1).ToList();
+}
+@section Styles {
+    <link rel="stylesheet" href="/site/css/article.css">
+}
+
+<!-- ── ARTICLE HERO ─────────────────────────────────────────────── -->
+<section class="article-hero">
+    @if (!string.IsNullOrEmpty(heroImg))
+    {
+        <div class="article-hero-img">
+            <img src="@heroImg" alt="@Model.Name" loading="eager">
+        </div>
+    }
+    else
+    {
+        <div class="article-hero-img" style="background:var(--c-bg2)"></div>
+    }
+    <div class="article-hero-body">
+        <div class="container">
+            <a href="/Blog" class="back-link"><i class="bi bi-arrow-left"></i> All articles</a>
+            @if (!string.IsNullOrEmpty(Model.Tag))
+            {
+                <div><span class="article-tag-hero">@Model.Tag</span></div>
+            }
+            <h1>@Model.Name</h1>
+            <div class="article-hero-meta">
+                <span class="meta-author">@Model.Author</span>
+                <span class="meta-sep"></span>
+                <span class="meta-date">@Model.Created.ToString("MMMM d, yyyy")</span>
+                @if (!string.IsNullOrEmpty(Model.ReadTime))
+                {
+                    <span class="meta-sep"></span>
+                    <span class="meta-read">@Model.ReadTime read</span>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── ARTICLE BODY ─────────────────────────────────────────────── -->
+<section class="article-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <p class="article-lede">@Model.Description</p>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.TextSecondary))
+                {
+                    <div class="article-divider"></div>
+                    @foreach (var para in Model.TextSecondary.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <p class="article-text">@para</p>
+                    }
+                }
+
+                @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                {
+                    <div class="video-block">
+                        @{
+                            var videoSrc = Model.VideoUrl;
+                            if (videoSrc.Contains("youtube.com/watch?v="))
+                                videoSrc = "https://www.youtube.com/embed/" + videoSrc.Split("v=")[1].Split("&")[0];
+                            else if (videoSrc.Contains("youtu.be/"))
+                                videoSrc = "https://www.youtube.com/embed/" + videoSrc.Split("youtu.be/")[1].Split("?")[0];
+                            else if (videoSrc.Contains("vimeo.com/"))
+                                videoSrc = "https://player.vimeo.com/video/" + videoSrc.Split("vimeo.com/")[1].Split("?")[0];
+                        }
+                        <iframe src="@videoSrc" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                }
+
+                @if (galleryImgs.Any())
+                {
+                    <div class="photo-gallery">
+                        <p class="photo-gallery-label">From the workshop</p>
+                        <div class="gallery-grid">
+                            @foreach (var img in galleryImgs)
+                            {
+                                <div class="gallery-item" onclick="lbOpen('@img')">
+                                    <img src="@img" alt="" loading="lazy">
+                                    <i class="bi bi-zoom-in gallery-zoom-icon"></i>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- ── SHARE BAR ── -->
+                <div class="share-bar">
+                    <span class="share-label">Share</span>
+                    <a class="share-btn" href="https://twitter.com/intent/tweet?text=@Uri.EscapeDataString(Model.Name)&url=@Uri.EscapeDataString(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)" target="_blank" rel="noopener">
+                        <i class="bi bi-twitter-x"></i> X
+                    </a>
+                    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=@Uri.EscapeDataString(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)" target="_blank" rel="noopener">
+                        <i class="bi bi-facebook"></i> Facebook
+                    </a>
+                    <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=@Uri.EscapeDataString(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path)" target="_blank" rel="noopener">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+
+                <!-- ── AUTHOR CARD ── -->
+                <div class="author-card">
+                    <div class="author-avatar">@(string.IsNullOrEmpty(Model.Author) ? "?" : Model.Author.Substring(0,1).ToUpper())</div>
+                    <div>
+                        <div class="author-name">@Model.Author</div>
+                        <div class="author-role">Red Eight Workshop</div>
+                        <p class="author-bio">Craftsman at Red Eight Workshop — Toronto's custom furniture and upholstery studio.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── SIDEBAR ── -->
+            <div class="col-lg-3 offset-lg-1 mt-5 mt-lg-0">
+                <div style="position:sticky;top:5rem">
+                    <p style="font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-mid);margin-bottom:1.2rem">About this post</p>
+                    <dl style="font-size:.85rem;line-height:2">
+                        @if (!string.IsNullOrEmpty(Model.Tag))
+                        {
+                            <dt style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c-mid)">Category</dt>
+                            <dd style="color:var(--c-ink);font-weight:700;margin:0 0 .8rem">@Model.Tag</dd>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ReadTime))
+                        {
+                            <dt style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c-mid)">Read time</dt>
+                            <dd style="color:var(--c-ink);margin:0 0 .8rem">@Model.ReadTime</dd>
+                        }
+                        <dt style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c-mid)">Published</dt>
+                        <dd style="color:var(--c-ink);margin:0 0 .8rem">@Model.Created.ToString("MMMM d, yyyy")</dd>
+                        <dt style="font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c-mid)">Author</dt>
+                        <dd style="color:var(--c-ink);margin:0">@Model.Author</dd>
+                    </dl>
+                    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--c-line)">
+                        <a href="/Blog" style="font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c-red);display:inline-flex;align-items:center;gap:.4rem">
+                            <i class="bi bi-arrow-left"></i> All articles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────────────── -->
+<div class="lb-overlay" id="lb" onclick="lbClose(event)">
+    <div class="lb-stage">
+        <img class="lb-img" id="lbImg" src="" alt="">
+        <button class="lb-btn lb-prev" onclick="lbNav(-1);event.stopPropagation()"><i class="bi bi-chevron-left"></i></button>
+        <button class="lb-btn lb-next" onclick="lbNav(1);event.stopPropagation()"><i class="bi bi-chevron-right"></i></button>
+    </div>
+    <button class="lb-close" onclick="lbClose()"><i class="bi bi-x-lg"></i></button>
+    <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+@section Scripts {
+<script>
+(function(){
+  const imgs = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(galleryImgs));
+  let cur = 0;
+  const overlay = document.getElementById('lb');
+  const img     = document.getElementById('lbImg');
+  const counter = document.getElementById('lbCounter');
+
+  window.lbOpen = function(src){
+    cur = imgs.indexOf(src);
+    if(cur < 0) cur = 0;
+    update();
+    overlay.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.lbClose = function(e){
+    if(e && e.target !== overlay && !e.target.closest('.lb-close')) return;
+    overlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  };
+  window.lbNav = function(dir){
+    cur = (cur + dir + imgs.length) % imgs.length;
+    update();
+  };
+  function update(){
+    img.src = imgs[cur];
+    counter.textContent = (cur+1) + ' / ' + imgs.length;
+  }
+  document.addEventListener('keydown', e => {
+    if(!overlay.classList.contains('lb-open')) return;
+    if(e.key==='ArrowLeft') lbNav(-1);
+    if(e.key==='ArrowRight') lbNav(1);
+    if(e.key==='Escape') { overlay.classList.remove('lb-open'); document.body.style.overflow=''; }
+  });
+})();
+</script>
+}

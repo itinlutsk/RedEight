@@ -52,7 +52,8 @@ else
                         {
                             <span class="tag-pill reveal">@featured.Tag</span>
                         }
-                        <h2 class="featured-title reveal reveal-d1">@featured.Name</h2>
+                        <a href="/Blog/@featured.Id" style="text-decoration:none;color:inherit">
+                        <h2 class="featured-title reveal reveal-d1">@featured.Name</h2></a>
                         <p class="featured-desc reveal reveal-d2">@featured.Description</p>
                         <div class="article-meta reveal reveal-d2">
                             <span class="article-meta-author">@featured.Author</span>
@@ -93,7 +94,7 @@ else
                                     </div>
                                 }
                                 <h3 class="article-card-title">
-                                    <a href="#">@post.Name</a>
+                                    <a href="/Blog/@post.Id">@post.Name</a>
                                 </h3>
                                 <p class="article-card-desc">@post.Description</p>
                                 <div class="article-card-footer">
