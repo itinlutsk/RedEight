@@ -3,6 +3,7 @@
 @section Styles
 {
     <link rel="stylesheet" href="/site/css/index.css">
+    <link rel="stylesheet" href="/site/css/products.css">
 }
 
 
@@ -197,31 +198,45 @@
                 <p class="sec-num reveal">Standard issue</p>
                 <h2 class="mt-2 mb-0 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">The collection</h2>
             </div>
-            <a href="products.html" class="card-link reveal d2" style="font-size:.62rem">View full catalogue <i class="bi bi-arrow-right"></i></a>
+            <a href="/Products" class="card-link reveal d2" style="font-size:.62rem">View full catalogue <i class="bi bi-arrow-right"></i></a>
         </div>
-        <div class="row g-4 g-lg-5">
-            @foreach(var p in Model.Products.Take(6))
+        <div class="product-grid">
+            @{ var pIdx = 0; }
+            @foreach (var p in Model.Products.Take(6))
             {
-                <div class="col-md-6 col-lg-4">
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@p.Id">
-                        <article class="product-card reveal">
-                            <div class="img-wrap">
-                                @if (p.ImageFiles != null && p.ImageFiles.Count > 0)
-                                {
-                                    <img src="/@p.ImageFiles[0]" alt="@p.Name" loading="lazy" />
-                                }
-                                else
-                                {
-                                    <img src="/assets/logo.jpg" alt="@p.Name" loading="lazy" />
-                                }
-                            </div>
+                var delayClass = pIdx % 3 == 1 ? "d1" : (pIdx % 3 == 2 ? "d2" : "");
+                var priceLabel = p.Price > 0 ? $"From ${p.Price:0.##}" : "On request";
+                <a href="/Products" style="text-decoration:none;color:inherit">
+                    <article class="product-card reveal @delayClass">
+                        <div class="product-card-media">
+                            <img src="/Images/Products/@p.Id/1.jpg"
+                                 alt="@p.Name"
+                                 loading="lazy"
+                                 onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Products/@p.Id/1.png';}else{this.style.opacity='.15';}" />
+                        </div>
+                        <div class="product-card-body">
                             <h3 class="product-name">@p.Name</h3>
-                            <p class="product-desc">@p.Description</p>
-                        </article>
-                    </a>
-                </div>
+                            <p class="product-desc">@(p.Description.Length > 100 ? p.Description[..100] + "…" : p.Description)</p>
+                            @if (p.Color != null && p.Color.Any())
+                            {
+                                <div class="product-swatches">
+                                    @foreach (var c in p.Color.Take(5))
+                                    {
+                                        <span class="swatch" style="background:@c" title="@c"></span>
+                                    }
+                                </div>
+                            }
+                            <div class="product-card-footer">
+                                <span class="product-price">@priceLabel</span>
+                                <span class="product-more">View <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+                pIdx++;
             }
         </div>
+        <div class="text-center mt-5 reveal"><a href="/Products" class="btn-outline">Full catalogue <i class="bi bi-arrow-right"></i></a></div>
     </div>
 </section>
 
