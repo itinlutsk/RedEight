@@ -61,9 +61,10 @@ namespace RedEight.Controllers
             return View("StaticPage", "about");
         }
 
-        public IActionResult Blog()
+        public async Task<IActionResult> Blog()
         {
-            return View("StaticPage", "blog");
+            var posts = await _blogRepo.GetAllAsync();
+            return View(posts.OrderByDescending(p => p.Created).ToList());
         }
 
         public IActionResult Cases()

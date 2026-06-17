@@ -1,0 +1,117 @@
+@model List<RedEight.Models.Blog>
+@{
+    var posts = Model ?? new List<RedEight.Models.Blog>();
+    var featured = posts.FirstOrDefault(p => p.Featured) ?? posts.FirstOrDefault();
+    var grid = featured != null ? posts.Where(p => p.Id != featured.Id).ToList() : posts;
+}
+@section Styles {
+    <link rel="stylesheet" href="/site/css/journal.css">
+}
+
+<!-- ── PAGE HERO ──────────────────────────────────────────────────── -->
+<div class="page-hero">
+    <div class="container">
+        <div class="page-hero-body">
+            <p class="page-hero-eyebrow reveal">Our journal</p>
+            <h1 class="reveal reveal-d1">The <em><span>journal</span></em></h1>
+            <p class="page-hero-sub reveal reveal-d2">Stories from the workshop — materials, craft, and the thinking behind each piece.</p>
+        </div>
+    </div>
+    <div class="page-hero-breadcrumb">
+        <a href="/">Home</a> <span style="margin:0 .4rem;opacity:.4">/</span> Journal
+    </div>
+</div>
+
+@if (!posts.Any())
+{
+    <section style="padding:6rem 0;text-align:center">
+        <div class="container">
+            <p style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c-mid)">No posts yet — check back soon.</p>
+        </div>
+    </section>
+}
+else
+{
+    @if (featured != null)
+    {
+        <!-- ── FEATURED ──────────────────────────────────────────────────── -->
+        <section class="featured-wrap">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-7">
+                        <div class="featured-img reveal">
+                            <img src="/Images/Blog/@featured.Id/1.jpg"
+                                 alt="@featured.Name"
+                                 loading="eager"
+                                 onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Blog/@featured.Id/1.png';}else{this.style.opacity='.08';}">
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <p class="featured-label reveal">Featured</p>
+                        @if (!string.IsNullOrEmpty(featured.Tag))
+                        {
+                            <span class="tag-pill reveal">@featured.Tag</span>
+                        }
+                        <h2 class="featured-title reveal reveal-d1">@featured.Name</h2>
+                        <p class="featured-desc reveal reveal-d2">@featured.Description</p>
+                        <div class="article-meta reveal reveal-d2">
+                            <span class="article-meta-author">@featured.Author</span>
+                            <span class="article-meta-sep"></span>
+                            <span class="article-meta-date">@featured.Created.ToString("MMMM d, yyyy")</span>
+                            @if (!string.IsNullOrEmpty(featured.ReadTime))
+                            {
+                                <span class="article-meta-sep"></span>
+                                <span class="article-meta-read">@featured.ReadTime read</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    @if (grid.Any())
+    {
+        <!-- ── ARTICLE GRID ─────────────────────────────────────────────── -->
+        <section class="grid-sec">
+            <div class="container">
+                <div class="row g-4">
+                    @foreach (var post in grid)
+                    {
+                        <div class="col-md-6 col-lg-4 reveal">
+                            <article class="article-card">
+                                <div class="article-card-img">
+                                    <img src="/Images/Blog/@post.Id/1.jpg"
+                                         alt="@post.Name"
+                                         loading="lazy"
+                                         onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Blog/@post.Id/1.png';}else{this.style.opacity='.08';}">
+                                </div>
+                                @if (!string.IsNullOrEmpty(post.Tag))
+                                {
+                                    <div class="article-card-tag">
+                                        <span class="tag-pill">@post.Tag</span>
+                                    </div>
+                                }
+                                <h3 class="article-card-title">
+                                    <a href="#">@post.Name</a>
+                                </h3>
+                                <p class="article-card-desc">@post.Description</p>
+                                <div class="article-card-footer">
+                                    <span class="article-card-byline">
+                                        @post.Author · @post.Created.ToString("MMM d, yyyy")
+                                    </span>
+                                    @if (!string.IsNullOrEmpty(post.ReadTime))
+                                    {
+                                        <span class="article-card-read">
+                                            @post.ReadTime <i class="bi bi-arrow-right"></i>
+                                        </span>
+                                    }
+                                </div>
+                            </article>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+}

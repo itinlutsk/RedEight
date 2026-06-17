@@ -44,6 +44,7 @@ app.Use(async (ctx, next) =>
     await next();
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
