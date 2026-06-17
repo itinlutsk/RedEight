@@ -206,8 +206,8 @@
             {
                 var delayClass = pIdx % 3 == 1 ? "d1" : (pIdx % 3 == 2 ? "d2" : "");
                 var priceLabel = p.Price > 0 ? $"From ${p.Price:0.##}" : "On request";
-                <a href="/Products" style="text-decoration:none;color:inherit">
-                    <article class="product-card reveal @delayClass">
+                <a href="/Products" style="text-decoration:none;color:inherit;display:flex;">
+                    <article class="product-card reveal @delayClass" style="flex:1;min-width:0;">
                         <div class="product-card-media">
                             <img src="/Images/Products/@p.Id/1.jpg"
                                  alt="@p.Name"
