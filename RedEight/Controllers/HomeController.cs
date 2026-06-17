@@ -133,9 +133,10 @@ namespace RedEight.Controllers
             return View("StaticPage", "cases");
         }
 
+        [Route("/Contacts")]
         public IActionResult Contacts()
         {
-            return View("StaticPage", "contacts");
+            return View();
         }
 
         public IActionResult Faq()

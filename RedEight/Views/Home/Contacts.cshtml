@@ -1,0 +1,260 @@
+@{
+    ViewData["Title"] = "Contact — Red Eight Workshop";
+}
+@section Styles {
+    <link rel="stylesheet" href="/site/css/contact.css">
+}
+
+<!-- ── PAGE HERO ─────────────────────────────────────────────────── -->
+<div class="page-hero">
+    <div class="container">
+        <div class="row align-items-end g-5">
+            <div class="col-lg-6">
+                <p class="eyebrow reveal">Get in touch</p>
+                <h1 class="mt-3 reveal reveal-d1">Start a <em>project</em></h1>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <p class="page-hero-desc reveal reveal-d2">Send us what you have — photos, dimensions, a rough sketch, or just a description. We'll come back with an honest assessment and a fair quote within 48 hours.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CONTACT LAYOUT ─────────────────────────────────────────────── -->
+<div class="container">
+    <div class="contact-layout">
+
+        <!-- ── INFO COLUMN ── -->
+        <aside class="info-sticky reveal">
+
+            <div class="info-block">
+                <p class="info-label">Contact</p>
+                <div class="info-item">
+                    <i class="bi bi-envelope"></i>
+                    <div><a href="mailto:hello@redeightworkshop.ca">hello@redeightworkshop.ca</a></div>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-telephone"></i>
+                    <div><a href="tel:+14165550178">+1 (416) 555-0178</a></div>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-geo-alt"></i>
+                    <div>Toronto, Ontario, Canada</div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <p class="info-label">Studio hours</p>
+                <div class="hours-row"><span class="hours-day">Monday – Friday</span><span class="hours-time">9 am – 5 pm</span></div>
+                <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10 am – 3 pm</span></div>
+                <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">Closed</span></div>
+            </div>
+
+            <div class="info-block">
+                <p class="info-label">Follow us</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="bi bi-instagram"></i> Instagram</a>
+                    <a href="#" class="social-link"><i class="bi bi-facebook"></i> Facebook</a>
+                    <a href="#" class="social-link"><i class="bi bi-pinterest"></i> Pinterest</a>
+                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- ── FORM COLUMN ── -->
+        <div class="reveal reveal-d1">
+            <div class="form-card" id="formCard">
+
+                <!-- FORM -->
+                <div class="form-inner">
+                    <h2 class="form-title">Request a quote</h2>
+                    <p class="form-subtitle">Fill in the details below — we respond within 48 hours on business days.</p>
+
+                    <form id="contactForm" novalidate>
+
+                        <div class="form-row form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="fname">First name <span class="req">*</span></label>
+                                <input class="form-control" type="text" id="fname" name="fname" placeholder="Jane" autocomplete="given-name">
+                                <span class="field-error" id="err-fname">Required</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="lname">Last name <span class="req">*</span></label>
+                                <input class="form-control" type="text" id="lname" name="lname" placeholder="Smith" autocomplete="family-name">
+                                <span class="field-error" id="err-lname">Required</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row form-row-2">
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email <span class="req">*</span></label>
+                                <input class="form-control" type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email">
+                                <span class="field-error" id="err-email">Enter a valid email</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input class="form-control" type="tel" id="phone" name="phone" placeholder="+1 (416) 000-0000" autocomplete="tel">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="service">Service <span class="req">*</span></label>
+                                <div class="select-wrap">
+                                    <select class="form-select" id="service" name="service">
+                                        <option value="">— Select a service —</option>
+                                        <option value="custom-build">Custom build</option>
+                                        <option value="restoration">Frame restoration</option>
+                                        <option value="reupholstery">Reupholstery</option>
+                                        <option value="trade">Trade enquiry</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <span class="field-error" id="err-service">Please select a service</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="budget">Budget range</label>
+                                <div class="select-wrap">
+                                    <select class="form-select" id="budget" name="budget">
+                                        <option value="">— Approximate budget —</option>
+                                        <option value="under-2k">Under $2,000</option>
+                                        <option value="2k-5k">$2,000 – $5,000</option>
+                                        <option value="5k-15k">$5,000 – $15,000</option>
+                                        <option value="15k-50k">$15,000 – $50,000</option>
+                                        <option value="50k+">$50,000+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="msg">Tell us about the project <span class="req">*</span></label>
+                                <textarea class="form-control" id="msg" name="msg" rows="5" placeholder="Describe what you need — materials, dimensions, timeline, reference images…" maxlength="1200"></textarea>
+                                <div class="char-count" id="charCount">0 / 1200</div>
+                                <span class="field-error" id="err-msg">Please describe your project</span>
+                            </div>
+                        </div>
+
+                        <div class="form-footer">
+                            <p class="form-disclaimer">We don't share your details. We respond within 48 hours on business days.</p>
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <span class="btn-text">Send enquiry <i class="bi bi-arrow-right"></i></span>
+                                <span class="spinner"></span>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- SUCCESS STATE -->
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+                    <h3 class="success-title">Message sent</h3>
+                    <p class="success-msg">Thanks — we'll get back to you within 48 hours on business days.</p>
+                    <button class="btn-reset" onclick="resetForm()">Send another enquiry</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ── MAP BAND ───────────────────────────────────────────────────── -->
+<div class="map-band">
+    <div class="map-inner">
+        <div class="map-frame">
+            <div class="map-placeholder">
+                <i class="bi bi-geo-alt-fill"></i>
+                <p>Red Eight Workshop<br>Toronto, Ontario</p>
+            </div>
+        </div>
+        <div class="map-address">
+            <p class="map-address-label">Studio address</p>
+            <p>
+                Red Eight Workshop Inc.<br>
+                Toronto, Ontario<br>
+                Canada
+            </p>
+            <p style="margin-top:.8rem;font-size:.82rem;color:var(--c-mid)">Visits by appointment only.<br>Mon – Fri, 9 am – 5 pm ET</p>
+            <a href="tel:+14165550178"><i class="bi bi-telephone"></i> Call us now</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+(function(){
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+
+    const msg      = document.getElementById('msg');
+    const charCnt  = document.getElementById('charCount');
+    if (msg && charCnt) {
+        msg.addEventListener('input', () => {
+            const n = msg.value.length, max = 1200;
+            charCnt.textContent = n + ' / ' + max;
+            charCnt.classList.toggle('warn', n > max * .9);
+        });
+    }
+
+    function setError(id, errId, ok) {
+        const el = document.getElementById(id), er = document.getElementById(errId);
+        if (el) el.classList.toggle('error', !ok);
+        if (er) er.classList.toggle('visible', !ok);
+        return ok;
+    }
+    function clearErr(id, errId) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', () => {
+            el.classList.remove('error');
+            const er = document.getElementById(errId);
+            if (er) er.classList.remove('visible');
+        });
+    }
+    ['fname','lname','email','service','msg'].forEach(id => clearErr(id, 'err-' + id));
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fname   = document.getElementById('fname').value.trim();
+        const lname   = document.getElementById('lname').value.trim();
+        const emailV  = document.getElementById('email').value.trim();
+        const service = document.getElementById('service').value;
+        const msgV    = document.getElementById('msg').value.trim();
+
+        const emailRx = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        let ok = true;
+        ok = setError('fname',   'err-fname',   fname.length > 0)   && ok;
+        ok = setError('lname',   'err-lname',   lname.length > 0)   && ok;
+        ok = setError('email',   'err-email',   emailRx.test(emailV)) && ok;
+        ok = setError('service', 'err-service', service.length > 0)  && ok;
+        ok = setError('msg',     'err-msg',     msgV.length > 0)     && ok;
+        if (!ok) return;
+
+        const btn = document.getElementById('submitBtn');
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        setTimeout(() => {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+            document.getElementById('formCard').classList.add('success-shown');
+            document.getElementById('formSuccess').classList.add('visible');
+        }, 1200);
+    });
+
+    window.resetForm = function() {
+        document.getElementById('contactForm').reset();
+        if (charCnt) { charCnt.textContent = '0 / 1200'; charCnt.classList.remove('warn'); }
+        document.getElementById('formCard').classList.remove('success-shown');
+        document.getElementById('formSuccess').classList.remove('visible');
+    };
+})();
+</script>
+}
