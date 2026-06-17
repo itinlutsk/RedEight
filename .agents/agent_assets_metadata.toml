@@ -222,6 +222,114 @@ uri = "file://RedEight/wwwroot/Images/Products/c4d5e6f7-a8b9-4c1d-2e3f-4a5b6c7d8
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "cxui4usDP7oelGpdChs4H"
+uri = "file://RedEight/wwwroot/Images/Blog/6f8b7f73-9a9e-4f1d-b4b7-7a9c9a4f1a11/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "1cHKUfEHGu1fiqhcahYaw"
+uri = "file://RedEight/wwwroot/Images/Blog/6f8b7f73-9a9e-4f1d-b4b7-7a9c9a4f1a11/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "6MwvdsK7v4-kjXWDN7kUb"
+uri = "file://RedEight/wwwroot/Images/Blog/6f8b7f73-9a9e-4f1d-b4b7-7a9c9a4f1a11/3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "nDoHC2iWdLS7cbUIgu87T"
+uri = "file://RedEight/wwwroot/Images/Blog/7c1d2e84-a5b3-4c6f-8d2a-3f9e7b5d2c22/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Q8olWarXlFlSoqLhoPQmd"
+uri = "file://RedEight/wwwroot/Images/Blog/7c1d2e84-a5b3-4c6f-8d2a-3f9e7b5d2c22/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "xr4_kihIaFDwvgIarDVc5"
+uri = "file://RedEight/wwwroot/Images/Blog/7c1d2e84-a5b3-4c6f-8d2a-3f9e7b5d2c22/3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "pk3ui1ocUlv1JTtxwMPJL"
+uri = "file://RedEight/wwwroot/Images/Blog/8d2e3f95-b6c4-5d7a-9e3b-4a0f8c6e3d33/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "S4zzdrvg4zHnnfBtiD3oX"
+uri = "file://RedEight/wwwroot/Images/Blog/8d2e3f95-b6c4-5d7a-9e3b-4a0f8c6e3d33/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "UVyUNzpMR_TKU_7KT6Nvl"
+uri = "file://RedEight/wwwroot/Images/Blog/8d2e3f95-b6c4-5d7a-9e3b-4a0f8c6e3d33/3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "XVDRcFmqOivYpQBSpiZTb"
+uri = "file://RedEight/wwwroot/Images/Blog/9e3f4a06-c7d5-6e8b-af4c-5b1a7d0f4e44/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "hVTW4PO_3p9NdJZL3LMOA"
+uri = "file://RedEight/wwwroot/Images/Blog/9e3f4a06-c7d5-6e8b-af4c-5b1a7d0f4e44/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "hCfcgUgRJbuOjO2Weyick"
+uri = "file://RedEight/wwwroot/Images/Blog/9e3f4a06-c7d5-6e8b-af4c-5b1a7d0f4e44/3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "h0e7WNnBN70fOX_xaI2Pc"
+uri = "file://RedEight/wwwroot/Images/Blog/af4a5b17-d8e6-7f9c-b05d-6c2b8e1a5f55/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "67aEA4swk1jtArh5orkl5"
+uri = "file://RedEight/wwwroot/Images/Blog/af4a5b17-d8e6-7f9c-b05d-6c2b8e1a5f55/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "L1hC6YIFYlBs1046MOUcz"
+uri = "file://RedEight/wwwroot/Images/Blog/af4a5b17-d8e6-7f9c-b05d-6c2b8e1a5f55/3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "gLL5HYnqZFM0k4W-2ddCG"
+uri = "file://RedEight/wwwroot/Images/Blog/b05b6c28-e9f7-8a0d-c16e-7d3c9f2b6a66/1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ns-L-NDUxomFJ3cnHPANM"
+uri = "file://RedEight/wwwroot/Images/Blog/b05b6c28-e9f7-8a0d-c16e-7d3c9f2b6a66/2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "9WGRn7gweLIWPaJytsXun"
+uri = "file://RedEight/wwwroot/Images/Blog/b05b6c28-e9f7-8a0d-c16e-7d3c9f2b6a66/3.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "oSddoZ9BcA0m-bmpOfRyE"
 uri = "file://red-eight-workshop.tar.gz"
