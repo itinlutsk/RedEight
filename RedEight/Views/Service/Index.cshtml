@@ -207,6 +207,9 @@
     }catch(e){ console.error(e); }
   })();
 
+  function clearErr(id){ const el=document.getElementById(id); if(el) el.classList.remove('error'); const err=document.getElementById('err-'+id); if(err) err.classList.remove('visible'); }
+  function showErr(id){ const el=document.getElementById(id); if(el) el.classList.add('error'); const err=document.getElementById('err-'+id); if(err) err.classList.add('visible'); }
+
   // create/edit handlers using API with antiforgery + credentials
   function getAntiForgery() { const el = document.querySelector('input[name="__RequestVerificationToken"]'); return el ? el.value : null; }
 
