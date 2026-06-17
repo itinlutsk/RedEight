@@ -141,20 +141,29 @@ document.addEventListener('DOMContentLoaded', function(){
                 <div class="product-grid" id="productGrid">
                     @foreach(var p in Model.Products)
                     {
-                        var cat = Model.Categories.FirstOrDefault(c => c.Id == p.CategoryId)?.Name ?? "uncategorized";
-                        var type = Model.Types.FirstOrDefault(t => t.Id == p.TypeId)?.Name ?? "general";
-                        var img = p.ImageFiles != null && p.ImageFiles.Count > 0 ? "/" + p.ImageFiles[0] : "/assets/logo.jpg";
+                        var priceLabel = p.Price > 0 ? $"From ${p.Price:0.##}" : "On request";
                         <article class="product-card reveal" data-cat="@p.CategoryId" data-type="@p.TypeId">
                             <div class="product-card-media">
-                                <img src="@img" alt="@p.Name" loading="lazy">
+                                <img src="/Images/Products/@p.Id/1.jpg"
+                                     alt="@p.Name"
+                                     loading="lazy"
+                                     onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Products/@p.Id/1.png';}else{this.style.opacity='.15';}" />
                             </div>
                             <div class="product-card-body">
-                                <p class="product-sku">@p.Id.ToString().Substring(0,8)</p>
                                 <h3 class="product-name">@p.Name</h3>
                                 <p class="product-desc">@p.Description</p>
+                                @if (p.Color != null && p.Color.Any())
+                                {
+                                    <div class="product-swatches">
+                                        @foreach (var c in p.Color.Take(6))
+                                        {
+                                            <span class="swatch" style="background:@c" title="@c"></span>
+                                        }
+                                    </div>
+                                }
                                 <div class="product-card-footer">
-                                    <span class="product-price">@((p.Price>0)?p.Price.ToString("C"):"Quote on request")</span>
-                                    <a href="/Product/Details/@p.Id" class="product-more">Details <i class="bi bi-arrow-right"></i></a>
+                                    <span class="product-price">@priceLabel</span>
+                                    <span class="product-more">View <i class="bi bi-arrow-right"></i></span>
                                 </div>
                             </div>
                         </article>
