@@ -88,13 +88,9 @@ namespace RedEight.Controllers.Api
                 var filePath = Path.Combine(imagesDir, fileName);
                 using var stream = new FileStream(filePath, FileMode.Create);
                 await file.CopyToAsync(stream);
-                saved.Add(Path.Combine("Images", "Products", id.ToString(), fileName).Replace("\\", "/"));
+                saved.Add(fileName);
                 index++;
             }
-
-            // Replace image files with the newly saved ones so previous asset links are updated
-            item.ImageFiles = saved;
-            await _repo.UpdateAsync(id, item);
 
             return Ok(saved);
         }
@@ -125,13 +121,6 @@ namespace RedEight.Controllers.Api
             var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Products", id.ToString());
             var filePath = Path.Combine(imagesDir, fileName);
             if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
-
-            var relative = Path.Combine("Images", "Products", id.ToString(), fileName).Replace("\\", "/");
-            if (item.ImageFiles.Contains(relative))
-            {
-                item.ImageFiles.Remove(relative);
-                await _repo.UpdateAsync(id, item);
-            }
 
             return NoContent();
         }

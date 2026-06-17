@@ -389,7 +389,6 @@
       badge:       document.getElementById('createBadge').value.trim(),
       badgeType:   document.getElementById('createBadgeType').value,
       color:       [...clr.create],
-      imageFiles:  []
     };
     try{
       const resp=await fetch('/api/product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -435,7 +434,6 @@
       badge:       document.getElementById('editBadge').value.trim(),
       badgeType:   document.getElementById('editBadgeType').value,
       color:       [...clr.edit],
-      imageFiles:  []
     };
     try{
       const resp=await fetch(`/api/product/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});

@@ -9,7 +9,6 @@ namespace RedEight.Models
         public Guid CategoryId { get; set; }
         public Guid TypeId { get; set; }
         public decimal Price { get; set; } = 0.0m;
-        public List<string> ImageFiles { get; set; } = new();
         public string Sku { get; set; } = string.Empty;
         public string Badge { get; set; } = string.Empty;
         public string BadgeType { get; set; } = string.Empty;

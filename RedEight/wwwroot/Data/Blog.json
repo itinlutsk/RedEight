@@ -1,15 +1,12 @@
 [
   {
     "id": "6f8b7f73-9a9e-4f1d-b4b7-7a9c9a4f1a11",
-    "name": "Why? we only buy full-grain leather \u2014 and how to tell the difference",
-    "description": "There are four grades of leather sold to upholstery shops. Three of them shouldn\u0027t be in your living room. Here\u0027s how to read a hide before it ends up on a chair you\u0027ll regret in eighteen months.",
+    "name": "Why? we only buy full-grain leather — and how to tell the difference",
+    "description": "There are four grades of leather sold to upholstery shops. Three of them shouldn't be in your living room. Here's how to read a hide before it ends up on a chair you'll regret in eighteen months.",
     "created": "2025-03-14T00:00:00",
     "author": "Mark Lockhart",
     "textSecondary": "Full-grain leather is the only grade that develops a patina over time. Everything else either peels, cracks or fades. We break down the differences so you can make an informed decision before you sign.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-leather.jpg"
-    ],
     "tag": "Materials",
     "readTime": "14 min",
     "featured": true
@@ -20,11 +17,8 @@
     "description": "The seat construction every upholsterer says they offer and few actually do. We break down the steps that make the price.",
     "created": "2025-02-20T14:30:00Z",
     "author": "Dave Reinhart",
-    "textSecondary": "Hand-tied springs require more time, more skill and more materials than any other seat construction method. We explain exactly why \u2014 and what you\u0027re missing without it.",
+    "textSecondary": "Hand-tied springs require more time, more skill and more materials than any other seat construction method. We explain exactly why — and what you're missing without it.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-restoration.jpg"
-    ],
     "tag": "Technique",
     "readTime": "9 min",
     "featured": false
@@ -32,14 +26,11 @@
   {
     "id": "8d2e3f95-b6c4-5d7a-9e3b-4a0f8c6e3d33",
     "name": "When to restore, when to walk away: a frame-by-frame guide",
-    "description": "Not every old chair is worth saving. Here\u0027s what we look at first when a piece arrives for an assessment.",
+    "description": "Not every old chair is worth saving. Here's what we look at first when a piece arrives for an assessment.",
     "created": "2025-01-15T11:15:00Z",
     "author": "Jamie Costa",
-    "textSecondary": "We\u0027ve turned away jobs that other shops would have taken. Here\u0027s the checklist we use when a piece comes in for evaluation \u2014 and the honest criteria for when restoration makes financial sense.",
+    "textSecondary": "We've turned away jobs that other shops would have taken. Here's the checklist we use when a piece comes in for evaluation — and the honest criteria for when restoration makes financial sense.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-wingback.jpg"
-    ],
     "tag": "Restoration",
     "readTime": "6 min",
     "featured": false
@@ -47,14 +38,11 @@
   {
     "id": "9e3f4a06-c7d5-6e8b-af4c-5b1a7d0f4e44",
     "name": "Oak, ash, walnut: choosing the right hardwood for a custom build",
-    "description": "The three woods we use ninety percent of the time, and what each one does that the others don\u0027t.",
+    "description": "The three woods we use ninety percent of the time, and what each one does that the others don't.",
     "created": "2024-12-10T10:00:00Z",
     "author": "Mark Lockhart",
     "textSecondary": "Wood selection determines how the piece ages, how it machines, and how much it costs. We explain our choices in plain terms.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-frame.jpg"
-    ],
     "tag": "Materials",
     "readTime": "11 min",
     "featured": false
@@ -62,14 +50,11 @@
   {
     "id": "af4a5b17-d8e6-7f9c-b05d-6c2b8e1a5f55",
     "name": "A tour of the bench: what each station does",
-    "description": "Eight people, five rooms, one rule \u2014 every piece touches every station. Here\u0027s how it flows.",
+    "description": "Eight people, five rooms, one rule — every piece touches every station. Here's how it flows.",
     "created": "2024-12-05T09:30:00Z",
     "author": "Dave Reinhart",
-    "textSecondary": "From the lumber rack to the finishing room, a Red Eight piece passes through five distinct stations. Here\u0027s what happens at each one.",
+    "textSecondary": "From the lumber rack to the finishing room, a Red Eight piece passes through five distinct stations. Here's what happens at each one.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-team.jpg"
-    ],
     "tag": "Studio",
     "readTime": "5 min",
     "featured": false
@@ -77,14 +62,11 @@
   {
     "id": "b05b6c28-e9f7-8a0d-c16e-7d3c9f2b6a66",
     "name": "From sketch to seat: how the Reading-room chair came together",
-    "description": "Six rounds of drawings, two prototypes, one chair the library couldn\u0027t stop ordering. The process behind a quiet piece.",
+    "description": "Six rounds of drawings, two prototypes, one chair the library couldn't stop ordering. The process behind a quiet piece.",
     "created": "2024-10-22T14:00:00Z",
     "author": "Lena Park",
-    "textSecondary": "Designing a chair that invites people to stay for three hours requires more than ergonomics. Here\u0027s the design process behind one of our best-selling pieces.",
+    "textSecondary": "Designing a chair that invites people to stay for three hours requires more than ergonomics. Here's the design process behind one of our best-selling pieces.",
     "videoUrl": "",
-    "imageFiles": [
-      "assets/workshop-designer.jpg"
-    ],
     "tag": "Design",
     "readTime": "10 min",
     "featured": false

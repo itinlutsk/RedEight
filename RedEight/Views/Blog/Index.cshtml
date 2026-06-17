@@ -277,7 +277,6 @@
       videoUrl:       document.getElementById('createVideoUrl').value.trim(),
       created:        document.getElementById('createCreated').value || new Date().toISOString(),
       featured:       document.getElementById('createFeatured').checked,
-      imageFiles:     []
     };
     try{
       const resp=await fetch('/api/blog',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -367,7 +366,6 @@
       videoUrl:      document.getElementById('editVideoUrl').value.trim(),
       created:       document.getElementById('editCreated').value || new Date().toISOString(),
       featured:      document.getElementById('editFeatured').checked,
-      imageFiles:    []
     };
     try{
       const resp=await fetch(`/api/blog/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});

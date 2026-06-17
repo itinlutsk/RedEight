@@ -2,7 +2,7 @@
   {
     "id": "b8c2d1e4-7f6a-4d9b-8c1e-2f3a4b5c6d7e",
     "name": "The Geary Q",
-    "description": "A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise \u0026 tenon joinery, hand-finished.",
+    "description": "A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise & tenon joinery, hand-finished.",
     "color": [
       "#8b6f47",
       "#e0caec"
@@ -10,7 +10,6 @@
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 170,
-    "imageFiles": [],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -27,9 +26,6 @@
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-wingback.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -46,9 +42,6 @@
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-upholstery.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -61,9 +54,6 @@
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-restoration.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -71,14 +61,11 @@
   {
     "id": "a2b3c4d5-e6f7-4a8b-9c1d-2e3f4a5b6c7d",
     "name": "The Geary table",
-    "description": "Solid walnut or oak top, trestle base. Custom lengths from 180\u2013360 cm. Hand-finished with oil or lacquer.",
+    "description": "Solid walnut or oak top, trestle base. Custom lengths from 180–360 cm. Hand-finished with oil or lacquer.",
     "color": [],
     "categoryId": "2c7b1e8f-6d4a-4b8a-a3e7-5d9f2c1b7a42",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-frame.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -91,9 +78,6 @@
     "categoryId": "2c7b1e8f-6d4a-4b8a-a3e7-5d9f2c1b7a42",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-team.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""
@@ -106,9 +90,6 @@
     "categoryId": "7a3e9d4c-1b2f-4c6d-8e5a-9f7b3c2d1e53",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "imageFiles": [
-      "assets/workshop-designer.jpg"
-    ],
     "sku": "",
     "badge": "",
     "badgeType": ""

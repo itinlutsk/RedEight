@@ -59,9 +59,6 @@ namespace RedEight.Controllers.Api
                 await file.CopyToAsync(stream);
             }
 
-            item.ImageFile = fileName;
-            await _repo.UpdateAsync(id, item);
-
             return CreatedAtAction(nameof(Get), new { id = id }, new { fileName });
         }
 
@@ -71,14 +68,9 @@ namespace RedEight.Controllers.Api
             var item = await _repo.GetByIdAsync(id);
             if (item == null) return NotFound();
 
-            if (string.IsNullOrEmpty(item.ImageFile)) return NoContent();
-
             var imagesDir = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", "Services");
-            var filePath = Path.Combine(imagesDir, item.ImageFile);
+            var filePath = Path.Combine(imagesDir, id.ToString() + ".jpg");
             if (System.IO.File.Exists(filePath)) System.IO.File.Delete(filePath);
-
-            item.ImageFile = string.Empty;
-            await _repo.UpdateAsync(id, item);
 
             return NoContent();
         }

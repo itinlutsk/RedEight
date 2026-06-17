@@ -50,15 +50,6 @@
                 <label asp-for="VideoUrl" class="form-label"></label>
                 <input asp-for="VideoUrl" class="form-control" />
             </div>
-            <div class="mb-3">
-                <label>Current Images</label>
-                <ul>
-                    @foreach(var img in Model.ImageFiles)
-                    {
-                        <li>@img</li>
-                    }
-                </ul>
-            </div>
             <button type="submit" class="btn btn-primary">Save</button>
             <a asp-action="Index" class="btn btn-secondary">Back</a>
         </form>

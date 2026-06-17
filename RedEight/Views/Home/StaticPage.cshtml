@@ -23,7 +23,7 @@
                 if(!featured) return;
                 var html = '';
                 services.slice(0,3).forEach(function(s, idx){
-                    var img = s.imageFile ? ('/Images/Servises/' + s.imageFile) : 'assets/workshop-frame.jpg';
+                    var img = '/Images/Services/' + s.id + '.jpg';
                     var num = (idx+1).toString().padStart(2,'0');
                     html += '<article class="featured__item reveal">' +
                         '<div class="card__media"><img src="' + img + '" alt="' + escapeHtml(s.name) + '" loading="lazy"><div class="card__media-tag">No. ' + num + '</div></div>' +
