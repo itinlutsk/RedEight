@@ -23,7 +23,7 @@
                     <p class="hero-sub">Custom furniture, frame restoration and reupholstery. Toronto, Canada.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
-                        <a href="products.html" class="btn-outline-white">See the work</a>
+                        <a href="/Products" class="btn-outline-white">See the work</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <p class="hero-sub">Bespoke hardwood pieces for private homes — from concept to delivery.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
-                        <a href="products.html" class="btn-outline-white">See the work</a>
+                        <a href="/Products" class="btn-outline-white">See the work</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <p class="hero-sub">Contract-grade seating for high-volume hospitality. Stamped, serialised, guaranteed.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
-                        <a href="products.html" class="btn-outline-white">See the work</a>
+                        <a href="/Products" class="btn-outline-white">See the work</a>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <p class="hero-sub">Mortise & tenon. Full-grain leather. Hand-tied springs. The inside matches the outside.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="#services" class="btn-r8">Start a project <i class="bi bi-arrow-right"></i></a>
-                        <a href="products.html" class="btn-outline-white">See the work</a>
+                        <a href="/Products" class="btn-outline-white">See the work</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                             <p class="card-num">Service @idx</p>
                             <h3 class="card-title">@s.Name</h3>
                             <p class="card-desc">@s.Description</p>
-                            <span class="card-link">Learn more <i class="bi bi-arrow-right"></i></span>
+                            <a href="/Services" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
                         </article>
                     </div>
                     idx++;
@@ -170,7 +170,7 @@
                 </div>
             }
         </div>
-        <div class="text-center mt-5 reveal"><a href="contact.html" class="btn-outline">All services</a></div>
+        <div class="text-center mt-5 reveal"><a href="/Services" class="btn-outline">All services</a></div>
     </div>
 </section>
 
@@ -206,7 +206,7 @@
             {
                 var delayClass = pIdx % 3 == 1 ? "d1" : (pIdx % 3 == 2 ? "d2" : "");
                 var priceLabel = p.Price > 0 ? $"From ${p.Price:0.##}" : "On request";
-                <a href="/Products" style="text-decoration:none;color:inherit;display:flex;">
+                <a href="/Products/@p.Id" style="text-decoration:none;color:inherit;display:flex;">
                     <article class="product-card reveal @delayClass" style="flex:1;min-width:0;">
                         <div class="product-card-media">
                             <img src="/Images/Products/@p.Id/1.png"
@@ -256,7 +256,7 @@
                 <div class="sec-divider"></div>
                 <p style="color:rgba(240,236,227,.72);font-size:1rem;line-height:1.85;margin-bottom:.75rem">Red Eight was started in 2014 by two upholsterers who'd spent fifteen years working other people's brands. We wanted a shop where every piece was touched by the same hands from the day the lumber arrived to the day it was loaded on the truck.</p>
                 <p style="color:var(--c-mid);font-size:1rem;line-height:1.85;margin-bottom:1.8rem">That's still how we work. Eight craftspeople. One floor. No middlemen, no sub-contracted production, no shortcuts we wouldn't put our names on.</p>
-                <a href="contact.html" class="btn-outline">The full story</a>
+                <a href="/Contacts" class="btn-outline">The full story</a>
                 <div class="row g-3 mt-4 pt-4" style="border-top:1px solid var(--c-line)">
                     <div class="col-4 text-center"><div class="stat-num" data-count="420" data-suffix="+">0+</div><div class="stat-label">Pieces built</div></div>
                     <div class="col-4 text-center"><div class="stat-num" data-count="11" data-suffix="">0</div><div class="stat-label">Years in trade</div></div>
@@ -366,8 +366,8 @@
             <h2 class="mt-3">Got a piece worth keeping?<br><em>Bring it in.</em></h2>
             <p class="mt-3 mb-4">Send us photos and dimensions and we'll come back with an honest assessment — what can be saved, what should be rebuilt, what it'll cost. No pressure either way.</p>
             <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="contact.html" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
-                <a href="contact.html" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">Visit the workshop</a>
+                <a href="/Contacts" class="btn-r8">Request a quote <i class="bi bi-arrow-right"></i></a>
+                <a href="/Contacts" class="btn-outline" style="border-color:rgba(17,17,17,.22);color:var(--c-bg)">Visit the workshop</a>
             </div>
         </div>
     </div>
