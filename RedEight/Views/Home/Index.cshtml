@@ -353,37 +353,56 @@
                 <p class="sec-num reveal">Journal</p>
                 <h2 class="mt-2 mb-0 reveal d1" style="font-size:clamp(1.9rem,4vw,2.9rem)">From the bench.</h2>
             </div>
-            <a href="journal.html" class="card-link reveal d2" style="font-size:.62rem">All articles <i class="bi bi-arrow-right"></i></a>
+            <a href="/Blog" class="card-link reveal d2" style="font-size:.62rem">All articles <i class="bi bi-arrow-right"></i></a>
         </div>
-        <div class="row g-4">
-            <div class="col-md-4 reveal">
-                <article class="journal-card">
-                    <div class="img-wrap"><span class="badge-red">Featured</span><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-leather.png" alt="Full-grain leather" loading="lazy"></div>
-                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Materials</span><span class="journal-read">14 min read</span></div>
-                    <h3 class="journal-title"><a href="article-reading-room-chair.html">Why we only buy full-grain leather — and how to tell the difference</a></h3>
-                    <p class="card-desc">There are four grades of leather sold to upholstery shops. Three of them shouldn't be in your living room.</p>
-                    <p class="journal-author">Mark Lockhart · March 14, 2025</p>
-                </article>
+        @{
+            var latestPosts = (Model.Blogs ?? new List<RedEight.Models.Blog>())
+                .OrderByDescending(b => b.Created)
+                .Take(3)
+                .ToList();
+            var delays = new[] { "", "d1", "d2" };
+        }
+        @if (!latestPosts.Any())
+        {
+            <p class="card-desc">No posts yet.</p>
+        }
+        else
+        {
+            <div class="row g-4">
+                @for (int i = 0; i < latestPosts.Count; i++)
+                {
+                    var post = latestPosts[i];
+                    <div class="col-md-4 reveal @delays[i]">
+                        <article class="journal-card">
+                            <div class="img-wrap">
+                                @if (post.Featured)
+                                {
+                                    <span class="badge-red">Featured</span>
+                                }
+                                <div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div>
+                                <img src="/Images/Blog/@post.Id/1.png"
+                                     alt="@post.Name"
+                                     loading="lazy"
+                                     onerror="if(!this.dataset.t){this.dataset.t='1';this.src='/Images/Blog/@post.Id/1.jpg';}else{this.style.opacity='.08';}">
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                @if (!string.IsNullOrEmpty(post.Tag))
+                                {
+                                    <span class="journal-tag">@post.Tag</span>
+                                }
+                                @if (!string.IsNullOrEmpty(post.ReadTime))
+                                {
+                                    <span class="journal-read">@post.ReadTime read</span>
+                                }
+                            </div>
+                            <h3 class="journal-title"><a href="/Blog">@post.Name</a></h3>
+                            <p class="card-desc">@post.Description</p>
+                            <p class="journal-author">@post.Author · @post.Created.ToString("MMMM d, yyyy")</p>
+                        </article>
+                    </div>
+                }
             </div>
-            <div class="col-md-4 reveal d1">
-                <article class="journal-card">
-                    <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-springs.png" alt="Eight-way springs" loading="lazy"></div>
-                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Technique</span><span class="journal-read">9 min read</span></div>
-                    <h3 class="journal-title"><a href="article-reading-room-chair.html">Eight-way hand-tied: what it is and why it costs what it costs</a></h3>
-                    <p class="card-desc">The seat construction every upholsterer says they offer and few actually do.</p>
-                    <p class="journal-author">Dave Reinhart · February 20, 2025</p>
-                </article>
-            </div>
-            <div class="col-md-4 reveal d2">
-                <article class="journal-card">
-                    <div class="img-wrap"><div class="img-view"><span><i class="bi bi-arrow-right"></i></span></div><img src="images/blog/blog-restoration.png" alt="Restoration guide" loading="lazy"></div>
-                    <div class="d-flex align-items-center gap-3"><span class="journal-tag">Restoration</span><span class="journal-read">6 min read</span></div>
-                    <h3 class="journal-title"><a href="article-reading-room-chair.html">When to restore, when to walk away: a frame-by-frame guide</a></h3>
-                    <p class="card-desc">Not every old chair is worth saving. Here's what we look at first when a piece arrives.</p>
-                    <p class="journal-author">Jamie Costa · January 15, 2025</p>
-                </article>
-            </div>
-        </div>
+        }
     </div>
 </section>
 
