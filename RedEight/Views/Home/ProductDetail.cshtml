@@ -32,7 +32,7 @@
             <div class="gallery-main" id="galleryMain" onclick="lbOpen(currentIdx)">
                 @if (!string.IsNullOrEmpty(Model.Badge))
                 {
-                    <span class="gallery-badge">@Model.Badge</span>
+                    <span class="gallery-badge @(!string.IsNullOrEmpty(Model.BadgeType) ? "gallery-badge--" + Model.BadgeType : "")">@Model.Badge</span>
                 }
                 <img class="gallery-main-img" id="mainImg"
                      src="@(images.FirstOrDefault() ?? "")"
@@ -66,16 +66,9 @@
                 {
                     <span class="meta-tag">@typeName</span>
                 }
-                @if (!string.IsNullOrEmpty(Model.BadgeType))
-                {
-                    <span class="meta-tag">@Model.BadgeType</span>
-                }
             </div>
 
-            @if (!string.IsNullOrEmpty(Model.Sku))
-            {
-                <p class="product-sku-line">SKU · @Model.Sku</p>
-            }
+            <p class="product-sku-line">SKU · @(string.IsNullOrEmpty(Model.Sku) ? "—" : Model.Sku)</p>
 
             <h1 class="product-title">@Model.Name</h1>
 

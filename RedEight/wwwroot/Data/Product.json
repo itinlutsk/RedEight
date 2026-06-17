@@ -3,30 +3,23 @@
     "id": "b8c2d1e4-7f6a-4d9b-8c1e-2f3a4b5c6d7e",
     "name": "The Geary Q",
     "description": "A solid-oak lounge chair with a curved arm-rail and webbed seat platform. Eight finish options. Mortise & tenon joinery, hand-finished.",
-    "color": [
-      "#8b6f47",
-      "#e0caec"
-    ],
+    "color": [ "#8b6f47", "#e0caec" ],
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 170,
-    "sku": "",
-    "badge": "",
-    "badgeType": ""
+    "sku": "R8-GQ-001",
+    "badge": "Bestseller",
+    "badgeType": "primary"
   },
   {
     "id": "d3e4f5a6-b7c8-4d9e-8f1a-2b3c4d5e6f7a",
     "name": "The Holloway",
     "description": "A traditional wingback with hand-tied springs. Available restored from existing frames or built new. Solid hardwood frame.",
-    "color": [
-      "#7B4F35",
-      "#3C342D",
-      "#A8907A"
-    ],
+    "color": [ "#7B4F35", "#3C342D", "#A8907A" ],
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "sku": "",
+    "sku": "R8-HW-002",
     "badge": "",
     "badgeType": ""
   },
@@ -34,39 +27,35 @@
     "id": "e7f8a9b1-c2d3-4e5f-8a9b-1c2d3e4f5a6b",
     "name": "The Bellwoods",
     "description": "Designed for high-volume hospitality. Ash frame, full-grain leather seat, contract-grade. Stamped and serialised.",
-    "color": [
-      "#7B4F35",
-      "#2C2520",
-      "#5F4E3A"
-    ],
+    "color": [ "#7B4F35", "#2C2520", "#5F4E3A" ],
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "sku": "",
-    "badge": "",
-    "badgeType": ""
+    "sku": "R8-BW-003",
+    "badge": "Contract",
+    "badgeType": "dark"
   },
   {
     "id": "f1a2b3c4-d5e6-4f7a-8b9c-1d2e3f4a5b6c",
     "name": "The Annex club",
     "description": "A reading chair. Down-and-feather seat, hand-stitched edge roll. Built to be sat in for hours. White oak frame.",
-    "color": [],
+    "color": [ "#C8A97E", "#E8DDD0", "#6B5A4A" ],
     "categoryId": "9f5d5c6a-8f8f-4d9d-9c2d-7f1e3b4a5c61",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "sku": "",
-    "badge": "",
-    "badgeType": ""
+    "sku": "R8-AC-004",
+    "badge": "New",
+    "badgeType": "primary"
   },
   {
     "id": "a2b3c4d5-e6f7-4a8b-9c1d-2e3f4a5b6c7d",
     "name": "The Geary table",
     "description": "Solid walnut or oak top, trestle base. Custom lengths from 180–360 cm. Hand-finished with oil or lacquer.",
-    "color": [],
+    "color": [ "#5C4033", "#3D2B1F", "#8B7355" ],
     "categoryId": "2c7b1e8f-6d4a-4b8a-a3e7-5d9f2c1b7a42",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "sku": "",
+    "sku": "R8-GT-005",
     "badge": "",
     "badgeType": ""
   },
@@ -74,23 +63,23 @@
     "id": "b3c4d5e6-f7a8-4b9c-1d2e-3f4a5b6c7d8e",
     "name": "The Bistro",
     "description": "Cast-iron base, solid oak top. 60, 70 or 80 cm round. Stackable in storage. Ideal for hospitality settings.",
-    "color": [],
+    "color": [ "#1A1A1A", "#8B7355" ],
     "categoryId": "2c7b1e8f-6d4a-4b8a-a3e7-5d9f2c1b7a42",
     "typeId": "c5e1a7b9-3d4f-4a8c-9e2b-6f1d3a7c8b9e",
     "price": 0,
-    "sku": "",
-    "badge": "",
-    "badgeType": ""
+    "sku": "R8-BS-006",
+    "badge": "Contract",
+    "badgeType": "dark"
   },
   {
     "id": "c4d5e6f7-a8b9-4c1d-2e3f-4a5b6c7d8e9f",
     "name": "The Geary sideboard",
     "description": "Solid hardwood, hand-cut dovetails, soft-close hardware. Three lengths available. Brass detail hardware.",
-    "color": [],
+    "color": [ "#5C4033", "#C9A96E", "#2D2420" ],
     "categoryId": "7a3e9d4c-1b2f-4c6d-8e5a-9f7b3c2d1e53",
     "typeId": "a3f8d2e7-6b4c-4f9a-8d1e-7c5b2a9f3d4e",
     "price": 0,
-    "sku": "",
+    "sku": "R8-GS-007",
     "badge": "",
     "badgeType": ""
   }
