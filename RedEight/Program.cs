@@ -59,8 +59,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-var portStr = Environment.GetEnvironmentVariable("PORT");
-if (!string.IsNullOrEmpty(portStr))
-    app.Run($"http://0.0.0.0:{portStr}");
+// On Replit REPL_ID is always set; locally it is absent.
+// This avoids overriding launchSettings.json on developer machines.
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("REPL_ID")))
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    app.Run($"http://0.0.0.0:{port}");
+}
 else
+{
     app.Run();
+}
